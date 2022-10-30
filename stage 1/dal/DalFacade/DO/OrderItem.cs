@@ -11,9 +11,8 @@ internal class OrderItem
 
 
     public override string ToString() => $@"
-
-        product id: {ProductId}, 
-        order id: {OrderId},
-        price:{Price},
-        amount:{Amount}   ";
+    product id: {ProductId}, 
+    order id: {OrderId},
+    price:{Price},
+    amount:{Amount}   ";
 }
