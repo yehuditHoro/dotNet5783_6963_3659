@@ -1,6 +1,6 @@
 ﻿
 
-namespace DO;
+namespace Dalfaced.DO;
 
 internal class Product
 {
