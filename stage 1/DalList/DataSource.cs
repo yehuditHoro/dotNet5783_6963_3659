@@ -1,6 +1,6 @@
 ﻿using Dalfaced.DO;
 namespace DO;
-
+namespace Dal;
 internal static class DataSource
 {
     static internal int numOfProducts = 50;
@@ -10,14 +10,13 @@ internal static class DataSource
     static internal Order[] ProductsList = new Order[numOfOrders];
     static internal OrderItem[] ProductsList = new OrderItem[numOfOrderItems];
     static internal readonly Random random = new Random();
-
 }
 
 
 
 
 
-
+///
 using System;
 using System.Collections.Generic;
 using System.Linq;
