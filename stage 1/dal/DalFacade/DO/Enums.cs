@@ -6,7 +6,7 @@ internal class Enums
     public enum eCategory
     {
        men,
-       women,
+       woman,
        boys,
        girls,
        babies
