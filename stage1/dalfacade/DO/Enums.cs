@@ -1,7 +1,6 @@
-﻿namespace DalFaced.DO;
-namespace DO;
+﻿namespace Dal.DO;
 
-internal class Enums
+public class Enums
 {
     public enum eCategory
     {
