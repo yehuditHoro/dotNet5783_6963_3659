@@ -1,7 +1,7 @@
 ﻿using Dal.DO;
 namespace dalList;
 
-internal static class DataSource
+public static class DataSource
 {
     static internal int numOfProducts = 50;
     static internal int numOfOrders = 100;
@@ -73,7 +73,7 @@ internal static class DataSource
         }
     }
 
-    internal static class config
+    public static class config
     {
         public static int indexProduct = 0;
         public static int indexOrder = 0;

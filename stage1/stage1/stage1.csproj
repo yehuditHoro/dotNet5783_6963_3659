@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\dalfacade\dalfacade.csproj" />
+    <ProjectReference Include="..\dalList\dalList.csproj" />
+  </ItemGroup>
+
 </Project>

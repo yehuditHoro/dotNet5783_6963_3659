@@ -1,7 +1,6 @@
 ﻿using Dal.DO;
 namespace dalList;
-using dalTest;
-namespace dalfacade.DO;
+
 
 public class DalProduct
 {
