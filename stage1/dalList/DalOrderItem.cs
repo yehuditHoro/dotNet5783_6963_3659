@@ -18,52 +18,53 @@ public class DalOrderItem
         return newOrderItem.ID;
     }
 
-    public static Order Read(int id)
+    public static OrderItem Read(int id)
     {
-        for (int i = 0; i < DataSource.config.indexOrder; i++)
+        for (int i = 0; i < DataSource.config.indexOrderItem; i++)
         {
-            if (DataSource.OrdersList[i].ID == id)
+            if (DataSource.OrderItemsList[i].ID == id)
             {
-                return DataSource.OrdersList[i];
+                return DataSource.OrderItemsList[i];
             }
         }
         throw new Exception("this id doesn't exist");
     }
-    public static Order[] ReadAll()
+
+    public static OrderItem[] ReadAll()
     {
-        Order[] allOrders = new Order[DataSource.config.indexOrder];
-        for (int i = 0; i < DataSource.OrdersList.Length; i++)
+        Order[] allOrderItems = new Order[DataSource.config.indexOrderItem];
+        for (int i = 0; i < DataSource.OrderItemsList.Length; i++)
         {
-            allOrders[i] = DataSource.OrdersList[i];
+            allOrders[i] = DataSource.OrderItemsList[i];
         }
-        return allOrders;
+        return allOrderItems;
     }
 
-    public static void Update(Order newOrder)
+    public static void Update(OrderItem newOrderItem)
     {
-        int id = newOrder.ID;
-        for (int i = 0; i < DataSource.config.indexOrder; i++)
+        int id = newOrderItem.ID;
+        for (int i = 0; i < DataSource.config.indexOrderItem; i++)
         {
-            if (DataSource.OrdersList[i].ID == id)
+            if (DataSource.OrderItemsList[i].ID == id)
             {
-                DataSource.OrdersList[i] = newOrder;
+                DataSource.OrderItemsList[i] = newOrderItem;
                 return;
             }
         }
-        throw new Exception("this Order doesn't exist");
+        throw new Exception("this Order item doesn't exist");
     }
 
     public static void Delete(int id)
     {
-        for (int i = 0; i < DataSource.config.indexOrder; i++)
+        for (int i = 0; i < DataSource.config.indexOrderItem; i++)
         {
-            if (DataSource.OrdersList[i].ID == id)
+            if (DataSource.OrderItemsList[i].ID == id)
             {
-                DataSource.OrdersList[i] = DataSource.OrdersList[DataSource.config.indexOrder];
-                DataSource.config.indexOrder--;
+                DataSource.OrderItemsList[i] = DataSource.OrderItemsList[DataSource.config.indexOrderItem];
+                DataSource.config.indexOrderItem--;
                 return;
             }
         }
-        throw new Exception("this Order doesn't exist");
+        throw new Exception("this Order item doesn't exist");
     }
 }

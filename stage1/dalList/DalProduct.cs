@@ -1,6 +1,7 @@
 ﻿using Dal.DO;
 namespace dalList;
-
+using dalTest;
+namespace dalfacade.DO;
 
 public class DalProduct
 {
@@ -15,8 +16,8 @@ public class DalProduct
         }
         DataSource.ProductsList[DataSource.config.indexProduct++] = newProduct;
         return newProduct.ID;
-
     }
+
     public static Product Read(int id)
     {
         for (int i = 0; i < DataSource.config.indexProduct; i++)
@@ -28,6 +29,7 @@ public class DalProduct
         }
         throw new Exception("this id doesn't exist");
     }
+
     public static Product[] ReadAll()
     {
         Product[] allProducts = new Product[DataSource.config.indexProduct];
