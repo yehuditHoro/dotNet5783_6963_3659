@@ -1,8 +1,6 @@
 ﻿
 using Dal.DO;
 namespace dalList;
-
-
 public class DalOrderItem
 {
     public static int Create(OrderItem newOrderItem)
@@ -11,7 +9,7 @@ public class DalOrderItem
         {
             if (DataSource.OrderItemsList[i].ID == newOrderItem.ID)
             {
-                throw new Exception("this Order item already exist");
+                throw new Exception("this order item already exist");
             }
         }
         DataSource.OrderItemsList[DataSource.config.indexOrderItem++] = newOrderItem;
@@ -32,10 +30,10 @@ public class DalOrderItem
 
     public static OrderItem[] ReadAll()
     {
-        Order[] allOrderItems = new Order[DataSource.config.indexOrderItem];
+        OrderItem[] allOrderItems = new OrderItem[DataSource.config.indexOrderItem];
         for (int i = 0; i < DataSource.OrderItemsList.Length; i++)
         {
-            allOrders[i] = DataSource.OrderItemsList[i];
+            allOrderItems[i] = DataSource.OrderItemsList[i];
         }
         return allOrderItems;
     }
@@ -51,7 +49,7 @@ public class DalOrderItem
                 return;
             }
         }
-        throw new Exception("this Order item doesn't exist");
+        throw new Exception("this order item doesn't exist");
     }
 
     public static void Delete(int id)
@@ -65,6 +63,6 @@ public class DalOrderItem
                 return;
             }
         }
-        throw new Exception("this Order item doesn't exist");
+        throw new Exception("this order item doesn't exist");
     }
 }

@@ -1,9 +1,9 @@
 ﻿
 namespace Dal.DO;
 
-public class OrderItem
+public struct OrderItem
 {
-    //public int ID { get; set; }
+    public int ID { get; set; }
     public int ProductId { get; set; }
     public int OrderId { get; set; }
     public double Price { get; set; }
@@ -11,8 +11,9 @@ public class OrderItem
 
 
     public override string ToString() => $@"
+    order item id: {ID},
     product id: {ProductId}, 
     order id: {OrderId},
     price:{Price},
-    amount:{Amount}   ";
+    amount:{Amount}";
 }

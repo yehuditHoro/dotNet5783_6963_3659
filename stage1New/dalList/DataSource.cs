@@ -30,7 +30,7 @@ public static class DataSource
             newProduct.ID = config.ProductId;
             newProduct.Name = ProductName[i % 10];
             newProduct.Price = (int)rand.NextInt64(50, 450);
-            newProduct.Category = (Enums.eCategory)(i % 5);
+            newProduct.Category = (eCategory)(i % 5);
             newProduct.InStock = (int)rand.NextInt64(1, 50);
             ProductsList[config.indexProduct++] = newProduct;
         }

@@ -1,12 +1,12 @@
 ﻿
 namespace Dal.DO;
 
-public class Product
+public struct Product
 {
     public int ID { get; set; }
     public string Name { get; set; }
     public double Price { get; set; }
-    public Enums.eCategory Category { get; set;}
+    public eCategory Category { get; set; }
     public int InStock { get; set; }
 
     public override string ToString() => $@"

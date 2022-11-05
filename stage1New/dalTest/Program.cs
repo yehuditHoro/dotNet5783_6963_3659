@@ -3,27 +3,34 @@
 using dalList;
 using Dal.DO;
 
-do
+options choice;
+void main()
 {
-    Console.WriteLine("enter 0 to exit \n enter 1 to see the product options \n enter 2 to see the order options \n enter 3 to see the order item options \n ");
-    options choice;
-    choice = (options)Convert.ToInt32(Console.ReadLine());
-    switch (choice)
+    try
     {
-        case options.EXIT:
-            break;
-        case options.PRODUCT:
-            ProductOption();
-            break;
-        case options.ORDER:
-            OrderOption();
-            break;
-        case options.ORDERITEM:
-            OrderItemOption();
-            break;
+        do
+        {
+            Console.WriteLine("enter 0 to exit \n enter 1 to see the product options \n enter 2 to see the order options \n enter 3 to see the order item options \n ");
+            choice = (options)Convert.ToInt32(Console.ReadLine());
+            switch (choice)
+            {
+                case options.EXIT:
+                    break;
+                case options.PRODUCT:
+                    ProductOption();
+                    break;
+                case options.ORDER:
+                    OrderOption();
+                    break;
+                case options.ORDERITEM:
+                    OrderItemOption();
+                    break;
+            }
+        } while (choice != 0);
     }
-} while (true);
-
+    catch (Exception msg) { Console.WriteLine(msg); }
+}
+main();
 Product newProduct()
 {
     DataSource.config.indexProduct++;
@@ -64,7 +71,7 @@ void ProductOption()
             break;
         case CRUD.DELETE:
             Console.WriteLine("enter the id of the product you want to delete");
-             id = Convert.ToInt32(Console.ReadLine());
+            id = Convert.ToInt32(Console.ReadLine());
             DalProduct.Delete(id);
             break;
     }
@@ -80,54 +87,14 @@ Order newOrder()
     order.CustomerEmail = Console.ReadLine();
     Console.WriteLine("enter the customer address of the order");
     order.CustomerAddress = Console.ReadLine();
+    order.OrderDate = DateTime.Today;
+    TimeSpan shipDate = TimeSpan.FromDays(14);
+    order.ShipDate = order.OrderDate + shipDate;
+    TimeSpan delivDate = TimeSpan.FromDays(6);
+    order.DeliveryDate = order.ShipDate + delivDate;
     return order;
 }
 
- OrderItem newOrderItem()
-{
-    DataSource.config.indexOrderItem++;
-    OrderItem orderItem = new OrderItem();
-    Console.WriteLine("enter the product id ");
-    orderItem.ProductId = Convert.ToInt32(Console.ReadLine());
-    Console.WriteLine("enter the order id ");
-    orderItem.OrderId = Convert.ToInt32(Console.ReadLine());
-    Console.WriteLine("enter the price of the item");
-    orderItem.Price = Convert.ToInt32(Console.ReadLine());
-    Console.WriteLine("enter the amoubt of the item");
-    orderItem.Amount = Convert.ToInt32(Console.ReadLine());
-    return orderItem;
-}
-
- void OrderItemOption()
-{
-    CRUD num;
-    Console.WriteLine("enter 0 to add an order item \n enter 1 to see cpesific order item \n enter 2 to see all the order items \n enter 3 to update order item \n enter 4 to delete order item");
-     num = (CRUD)Convert.ToInt32(Console.ReadLine());
-    switch (num)
-    {
-        case CRUD.ADD:
-            OrderItem orderItem = newOrderItem();
-            dalList.DalOrderItem.Create(orderItem);
-            break;
-        case CRUD.READ:
-            Console.WriteLine("enter the id of the order item you want to see");
-            int id = Convert.ToInt32(Console.ReadLine());
-            DalOrderItem.Read(id);
-            break;
-        case CRUD.READALL:
-            DalOrderItem.ReadAll();
-            break;
-        case CRUD.UPDATE:
-            OrderItem oi = newOrderItem();
-            DalOrderItem.Update(oi);
-            break;
-        case CRUD.DELETE:
-            Console.WriteLine("enter the id of the order item you want to delete");
-            id = Convert.ToInt32(Console.ReadLine());
-            DalOrderItem.Delete(id);
-            break;
-    }
-}
 void OrderOption()
 {
     CRUD num;
@@ -153,9 +120,55 @@ void OrderOption()
             break;
         case CRUD.DELETE:
             Console.WriteLine("enter the id of the order you want to delete");
-             id = Convert.ToInt32(Console.ReadLine());
+            id = Convert.ToInt32(Console.ReadLine());
             DalOrder.Delete(id);
             break;
     }
 
+}
+
+OrderItem newOrderItem()
+{
+    DataSource.config.indexOrderItem++;
+    OrderItem orderItem = new OrderItem();
+    Console.WriteLine("enter the product id ");
+    orderItem.ProductId = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("enter the order id ");
+    orderItem.OrderId = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("enter the price of the item");
+    orderItem.Price = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("enter the amoubt of the item");
+    orderItem.Amount = Convert.ToInt32(Console.ReadLine());
+    return orderItem;
+}
+
+void OrderItemOption()
+{
+    CRUD num;
+    Console.WriteLine("enter 0 to add an order item \n enter 1 to see cpesific order item \n enter 2 to see all the order items \n enter 3 to update order item \n enter 4 to delete order item");
+    num = (CRUD)Convert.ToInt32(Console.ReadLine());
+    switch (num)
+    {
+        case CRUD.ADD:
+            OrderItem orderItem = newOrderItem();
+            dalList.DalOrderItem.Create(orderItem);
+            break;
+        case CRUD.READ:
+            Console.WriteLine("enter the id of the order item you want to see");
+            int id = Convert.ToInt32(Console.ReadLine());
+            DalOrderItem.Read(id);
+            break;
+        case CRUD.READALL:
+            DalOrderItem.ReadAll();
+            break;
+        case CRUD.UPDATE:
+            OrderItem oi = newOrderItem();
+            DalOrderItem.Update(oi);
+            break;
+        case CRUD.DELETE:
+            Console.WriteLine("enter the id of the order item you want to delete");
+            id = Convert.ToInt32(Console.ReadLine());
+            DalOrderItem.Delete(id);
+            break;
+    }
 }

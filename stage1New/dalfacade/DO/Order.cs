@@ -1,7 +1,7 @@
 ﻿
 namespace Dal.DO;
 
-public class Order
+public struct Order
 {
     public int ID { get; set; }
     public string CustomerName { get; set; }

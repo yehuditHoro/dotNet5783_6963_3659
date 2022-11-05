@@ -1,7 +1,6 @@
 ﻿using Dal.DO;
 namespace dalList;
 
-
 public class DalProduct
 {
     public static int Create(Product newProduct)
@@ -10,7 +9,7 @@ public class DalProduct
         {
             if (DataSource.ProductsList[i].ID == newProduct.ID)
             {
-                throw new Exception("this Product already exist");
+                throw new Exception("this product already exist");
             }
         }
         DataSource.ProductsList[DataSource.config.indexProduct++] = newProduct;
@@ -50,7 +49,7 @@ public class DalProduct
                 return;
             }
         }
-        throw new Exception("this Product doesn't exist");
+        throw new Exception("this product doesn't exist");
     }
 
     public static void Delete(int id)
@@ -64,6 +63,6 @@ public class DalProduct
                 return;
             }
         }
-        throw new Exception("this Product doesn't exist");
+        throw new Exception("this product doesn't exist");
     }
 }

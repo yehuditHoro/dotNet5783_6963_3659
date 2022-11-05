@@ -10,7 +10,7 @@ public class DalOrder
         {
             if (DataSource.OrdersList[i].ID == newOrder.ID)
             {
-                throw new Exception("this Order already exist");
+                throw new Exception("this order already exist");
             }
         }
         DataSource.OrdersList[DataSource.config.indexOrder++] = newOrder;
@@ -48,7 +48,7 @@ public class DalOrder
                 return;
             }
         }
-        throw new Exception("this Order doesn't exist");
+        throw new Exception("this order doesn't exist");
     }
 
     public static void Delete(int id)
@@ -62,7 +62,7 @@ public class DalOrder
                 return;
             }
         }
-        throw new Exception("this Order doesn't exist");
+        throw new Exception("this order doesn't exist");
     }
 
 }
