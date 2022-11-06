@@ -30,7 +30,8 @@ public class DalOrder
     public static Order[] ReadAll()
     {
         Order[] allOrders = new Order[DataSource.config.indexOrder];
-        for (int i = 0; i < DataSource.OrdersList.Length; i++)
+     
+        for (int i = 0; i < DataSource.config.indexOrder; i++)
         {
             allOrders[i] = DataSource.OrdersList[i];
         }

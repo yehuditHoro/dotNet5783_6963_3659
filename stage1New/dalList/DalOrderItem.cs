@@ -31,7 +31,7 @@ public class DalOrderItem
     public static OrderItem[] ReadAll()
     {
         OrderItem[] allOrderItems = new OrderItem[DataSource.config.indexOrderItem];
-        for (int i = 0; i < DataSource.OrderItemsList.Length; i++)
+        for (int i = 0; i < DataSource.config.indexOrderItem; i++)
         {
             allOrderItems[i] = DataSource.OrderItemsList[i];
         }

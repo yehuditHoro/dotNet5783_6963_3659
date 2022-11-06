@@ -3,26 +3,27 @@
 using dalList;
 using Dal.DO;
 
-options choice;
+eOptions choice;
 void main()
 {
     try
     {
+        DataSource ds = new DataSource();
         do
         {
             Console.WriteLine("enter 0 to exit \n enter 1 to see the product options \n enter 2 to see the order options \n enter 3 to see the order item options \n ");
-            choice = (options)Convert.ToInt32(Console.ReadLine());
+            choice = (eOptions)Convert.ToInt32(Console.ReadLine());
             switch (choice)
             {
-                case options.EXIT:
+                case eOptions.EXIT:
                     break;
-                case options.PRODUCT:
+                case eOptions.PRODUCT:
                     ProductOption();
                     break;
-                case options.ORDER:
+                case eOptions.ORDER:
                     OrderOption();
                     break;
-                case options.ORDERITEM:
+                case eOptions.ORDERITEM:
                     OrderItemOption();
                     break;
             }
@@ -48,28 +49,28 @@ Product newProduct()
 
 void ProductOption()
 {
-    CRUD num;
+    eCRUD num;
     Console.WriteLine("enter 0 to add a product \n enter 1 to see cpesific product \n enter 2 to see all the products \n enter 3 to update product \n enter 4 to delete product");
-    num = (CRUD)Convert.ToInt32(Console.ReadLine());
+    num = (eCRUD)Convert.ToInt32(Console.ReadLine());
     switch (num)
     {
-        case CRUD.ADD:
+        case eCRUD.ADD:
             Product product = newProduct();
             DalProduct.Create(product);
             break;
-        case CRUD.READ:
+        case eCRUD.READ:
             Console.WriteLine("enter the id of the product you want to see");
             int id = Convert.ToInt32(Console.ReadLine());
             DalProduct.Read(id);
             break;
-        case CRUD.READALL:
+        case eCRUD.READALL:
             DalProduct.ReadAll();
             break;
-        case CRUD.UPDATE:
+        case eCRUD.UPDATE:
             Product p = newProduct();
             DalProduct.Update(p);
             break;
-        case CRUD.DELETE:
+        case eCRUD.DELETE:
             Console.WriteLine("enter the id of the product you want to delete");
             id = Convert.ToInt32(Console.ReadLine());
             DalProduct.Delete(id);
@@ -97,28 +98,28 @@ Order newOrder()
 
 void OrderOption()
 {
-    CRUD num;
+    eCRUD num;
     Console.WriteLine("enter 0 to add an order \n enter 1 to see cpesific order \n enter 2 to see all the orders \n enter 3 to update order \n enter 4 to delete order");
-    num = (CRUD)Convert.ToInt32(Console.ReadLine());
+    num = (eCRUD)Convert.ToInt32(Console.ReadLine());
     switch (num)
     {
-        case CRUD.ADD:
+        case eCRUD.ADD:
             Order order = newOrder();
             DalOrder.Create(order);
             break;
-        case CRUD.READ:
+        case eCRUD.READ:
             Console.WriteLine("enter the id of the order you want to see");
             int id = Convert.ToInt32(Console.ReadLine());
             DalOrder.Read(id);
             break;
-        case CRUD.READALL:
+        case eCRUD.READALL:
             DalOrder.ReadAll();
             break;
-        case CRUD.UPDATE:
+        case eCRUD.UPDATE:
             Order o = newOrder();
             DalOrder.Update(o);
             break;
-        case CRUD.DELETE:
+        case eCRUD.DELETE:
             Console.WriteLine("enter the id of the order you want to delete");
             id = Convert.ToInt32(Console.ReadLine());
             DalOrder.Delete(id);
@@ -144,28 +145,28 @@ OrderItem newOrderItem()
 
 void OrderItemOption()
 {
-    CRUD num;
+    eCRUD num;
     Console.WriteLine("enter 0 to add an order item \n enter 1 to see cpesific order item \n enter 2 to see all the order items \n enter 3 to update order item \n enter 4 to delete order item");
-    num = (CRUD)Convert.ToInt32(Console.ReadLine());
+    num = (eCRUD)Convert.ToInt32(Console.ReadLine());
     switch (num)
     {
-        case CRUD.ADD:
+        case eCRUD.ADD:
             OrderItem orderItem = newOrderItem();
             dalList.DalOrderItem.Create(orderItem);
             break;
-        case CRUD.READ:
+        case eCRUD.READ:
             Console.WriteLine("enter the id of the order item you want to see");
             int id = Convert.ToInt32(Console.ReadLine());
             DalOrderItem.Read(id);
             break;
-        case CRUD.READALL:
+        case eCRUD.READALL:
             DalOrderItem.ReadAll();
             break;
-        case CRUD.UPDATE:
+        case eCRUD.UPDATE:
             OrderItem oi = newOrderItem();
             DalOrderItem.Update(oi);
             break;
-        case CRUD.DELETE:
+        case eCRUD.DELETE:
             Console.WriteLine("enter the id of the order item you want to delete");
             id = Convert.ToInt32(Console.ReadLine());
             DalOrderItem.Delete(id);

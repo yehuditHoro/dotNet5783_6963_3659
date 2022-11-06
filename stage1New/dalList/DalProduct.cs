@@ -31,7 +31,7 @@ public class DalProduct
     public static Product[] ReadAll()
     {
         Product[] allProducts = new Product[DataSource.config.indexProduct];
-        for (int i = 0; i < DataSource.ProductsList.Length; i++)
+        for (int i = 0; i < DataSource.config.indexProduct; i++)
         {
             allProducts[i] = DataSource.ProductsList[i];
         }

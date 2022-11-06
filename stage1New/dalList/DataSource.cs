@@ -1,7 +1,7 @@
 ﻿using Dal.DO;
 namespace dalList;
 
-public static class DataSource
+public class DataSource
 {
     static internal int numOfProducts = 50;
     static internal int numOfOrders = 100;
@@ -29,9 +29,9 @@ public static class DataSource
             Product newProduct = new Product();
             newProduct.ID = config.ProductId;
             newProduct.Name = ProductName[i % 10];
-            newProduct.Price = (int)rand.NextInt64(50, 450);
+            newProduct.Price = (int)rand.Next(50, 450);
             newProduct.Category = (eCategory)(i % 5);
-            newProduct.InStock = (int)rand.NextInt64(1, 50);
+            newProduct.InStock = (int)rand.Next(1, 50);
             ProductsList[config.indexProduct++] = newProduct;
         }
     }
@@ -57,15 +57,15 @@ public static class DataSource
     {
         for (int i = 0; i < 40; i++)
         {
-            int num = (int)rand.NextInt64(1, 4);
-            int OrderId = (int)rand.NextInt64(config.indexOrderItem);
+            int num = (int)rand.Next(1, 4);
+            //int OrderId = (int)rand.Next(config.indexOrderItem);
             for (int j = 0; j < num; j++)
             {
-                int indexProduct = (int)rand.NextInt64(ProductsList.Length);
+              // int indexProduct = (int)rand.Next(ProductsList.Length);
                 OrderItem newOrderItems = new OrderItem();
                 newOrderItems.ProductId = ProductsList[config.indexProduct].ID;
                 newOrderItems.OrderId = OrdersList[config.indexOrder].ID;
-                newOrderItems.Amount = (int)rand.NextInt64(1, ProductsList[config.indexProduct].InStock);
+                newOrderItems.Amount = (int)rand.Next(1, ProductsList[config.indexProduct].InStock);
                 newOrderItems.Price = (ProductsList[config.indexProduct].Price) * newOrderItems.Amount;
                 OrderItemsList[config.indexOrderItem++] = newOrderItems;
 
