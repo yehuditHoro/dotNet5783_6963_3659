@@ -13,6 +13,7 @@ public class DalOrderItem
             }
         }
         DataSource.OrderItemsList[DataSource.config.indexOrderItem++] = newOrderItem;
+        //DataSource.config.indexOrderItem++;
         return newOrderItem.ID;
     }
 

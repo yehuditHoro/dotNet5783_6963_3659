@@ -38,8 +38,8 @@ public class DataSource
 
     public static void CreateOrdersList()
     {
-        TimeSpan shipDate = TimeSpan.FromDays(6);
-        TimeSpan deliveryDate = TimeSpan.FromDays(10);
+        TimeSpan shipDate = TimeSpan.FromDays(10);
+        TimeSpan deliveryDate = TimeSpan.FromDays(6);
         for (int i = 0; i < 20; i++)
         {
             Order newOrder = new Order();
@@ -47,7 +47,7 @@ public class DataSource
             newOrder.CustomerName = customersNames[i % 26];
             newOrder.CustomerEmail = customersEmails[i % 26];
             newOrder.CustomerAddress = customersAddresses[i % 26];
-            newOrder.OrderDate = DateTime.MinValue;
+            newOrder.OrderDate = DateTime.Now;
             newOrder.ShipDate = newOrder.OrderDate + shipDate;
             newOrder.DeliveryDate = newOrder.ShipDate + deliveryDate;
             OrdersList[config.indexOrder++] = newOrder;
@@ -58,17 +58,17 @@ public class DataSource
         for (int i = 0; i < 40; i++)
         {
             int num = (int)rand.Next(1, 4);
-            //int OrderId = (int)rand.Next(config.indexOrderItem);
+            int IndexOrder = (int)rand.Next(0,config.indexOrder);
             for (int j = 0; j < num; j++)
             {
-              // int indexProduct = (int)rand.Next(ProductsList.Length);
+               int IndexProduct = (int)rand.Next(0,config.indexProduct);
                 OrderItem newOrderItems = new OrderItem();
-                newOrderItems.ProductId = ProductsList[config.indexProduct].ID;
-                newOrderItems.OrderId = OrdersList[config.indexOrder].ID;
-                newOrderItems.Amount = (int)rand.Next(1, ProductsList[config.indexProduct].InStock);
-                newOrderItems.Price = (ProductsList[config.indexProduct].Price) * newOrderItems.Amount;
+                newOrderItems.ID = config.OrderItemId;
+                newOrderItems.ProductId = ProductsList[IndexProduct].ID;
+                newOrderItems.OrderId = OrdersList[IndexOrder].ID;
+                newOrderItems.Amount = (int)rand.Next(1, 500);
+                newOrderItems.Price = (ProductsList[IndexProduct].Price) * newOrderItems.Amount;
                 OrderItemsList[config.indexOrderItem++] = newOrderItems;
-
             }
         }
     }
@@ -85,8 +85,8 @@ public class DataSource
         private static int orderId = 100;
         public static int OrderId { get { return orderId++; } }
 
-        private static int orderItem = 1000;
-        public static int OrderItem { get { return orderItem++; } }
+        private static int orderItemId = 1000;
+        public static int OrderItemId { get { return orderItemId++; } }
 
     }
 }

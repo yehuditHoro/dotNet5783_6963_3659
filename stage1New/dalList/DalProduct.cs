@@ -12,7 +12,8 @@ public class DalProduct
                 throw new Exception("this product already exist");
             }
         }
-        DataSource.ProductsList[DataSource.config.indexProduct++] = newProduct;
+        DataSource.ProductsList[DataSource.config.indexProduct] = newProduct;
+        DataSource.config.indexProduct++;
         return newProduct.ID;
     }
 
@@ -34,6 +35,7 @@ public class DalProduct
         for (int i = 0; i < DataSource.config.indexProduct; i++)
         {
             allProducts[i] = DataSource.ProductsList[i];
+            
         }
         return allProducts;
     }
