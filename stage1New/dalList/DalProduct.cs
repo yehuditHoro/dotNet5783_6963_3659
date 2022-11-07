@@ -39,7 +39,7 @@ public class DalProduct
         }
         return allProducts;
     }
-
+    
     public static void Update(Product newProduct)
     {
         int id = newProduct.ID;
