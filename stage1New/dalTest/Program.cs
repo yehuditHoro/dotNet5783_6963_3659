@@ -4,8 +4,7 @@ using dalList;
 using Dal.DO;
 
 eOptions choice;
-void main()
-{
+
     try
     {
         DataSource ds = new DataSource();
@@ -30,8 +29,7 @@ void main()
         } while (choice != 0);
     }
     catch (Exception msg) { Console.WriteLine(msg); }
-}
-main();
+
 Product newProduct()
 {
     Product product = new Product();
@@ -149,7 +147,7 @@ void OrderOption()
 
 }
 
-OrderItem newOrderItem()
+OrderItem NewOrderItem()
 {
    
     OrderItem orderItem = new OrderItem();
@@ -173,7 +171,7 @@ void OrderItemOption()
     switch (num)
     {
         case eCRUD.ADD:
-            OrderItem orderItem = newOrderItem();
+            OrderItem orderItem = NewOrderItem();
             dalList.DalOrderItem.Create(orderItem);
             break;
         case eCRUD.READ:
@@ -194,7 +192,7 @@ void OrderItemOption()
             id = Convert.ToInt32(Console.ReadLine());
             OrderItem updateOrderItem = DalOrderItem.Read(id);
             Console.WriteLine(updateOrderItem.ToString());
-            OrderItem oi = newOrderItem();
+            OrderItem oi = NewOrderItem();
             oi.ID = id;
             DalOrderItem.Update(oi);
             break;
