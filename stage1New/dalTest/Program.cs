@@ -55,7 +55,7 @@ void ProductOption()
         case eCRUD.ADD:
             Product product = newProduct();
             product.ID = DataSource.config.ProductId;
-            DalProduct.Create(product);
+            DalProduct.Add(product);
             break;
         case eCRUD.READ:
             Console.WriteLine("enter the id of the product you want to see");
@@ -114,7 +114,7 @@ void OrderOption()
     {
         case eCRUD.ADD:
             Order order = newOrder();
-            DalOrder.Create(order);
+            DalOrder.Add(order);
             break;
         case eCRUD.READ:
             Console.WriteLine("enter the id of the order you want to see");
@@ -172,7 +172,7 @@ void OrderItemOption()
     {
         case eCRUD.ADD:
             OrderItem orderItem = NewOrderItem();
-            dalList.DalOrderItem.Create(orderItem);
+            DalOrderItem.Add(orderItem);
             break;
         case eCRUD.READ:
             Console.WriteLine("enter the id of the order item you want to see");

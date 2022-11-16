@@ -1,47 +1,47 @@
-﻿
+﻿using DalApi;
 using Dal.DO;
-namespace dalList;
 
-public class DalOrder
-{
-    public static int Create(Order newOrder)
+namespace dalList;
+internal class DalOrder : Iorder
+{ 
+    public int Add(Order newOrder)
     {
-        for (int i = 0; i < DataSource.config.indexOrder; i++)
+        for (int i = 0; i < DataSource.OrdersList.Count(); i++)
         {
             if (DataSource.OrdersList[i].ID == newOrder.ID)
             {
-                throw new Exception("this order already exist");
+                throw new EntityDuplicateException("this order already exist");
             }
         }
-        DataSource.OrdersList[DataSource.config.indexOrder++] = newOrder;
+        DataSource.OrdersList.Add(newOrder);
         return newOrder.ID;
     }
-    public static Order Read(int id)
+    public Order Read(int id)
     {
-        for (int i = 0; i < DataSource.config.indexOrder; i++)
+        for (int i = 0; i < DataSource.OrdersList.Count(); i++)
         {
             if (DataSource.OrdersList[i].ID == id)
             {
                 return DataSource.OrdersList[i];
             }
         }
-        throw new Exception("this id doesn't exist");
+        throw new EntityDuplicateException("this id doesn't exist");
     }
-    public static Order[] ReadAll()
+    public IEnumerable<Order> ReadAll()
     {
-        Order[] allOrders = new Order[DataSource.config.indexOrder];
+        List<Order> allOrders = new List<Order>();
      
-        for (int i = 0; i < DataSource.config.indexOrder; i++)
+        for (int i = 0; i < DataSource.OrdersList.Count(); i++)
         {
             allOrders[i] = DataSource.OrdersList[i];
         }
         return allOrders;
     }
     
-    public static void Update(Order newOrder)
+    public void Update(Order newOrder)
     {
         int id = newOrder.ID;
-        for (int i = 0; i < DataSource.config.indexOrder; i++)
+        for (int i = 0; i < DataSource.OrdersList.Count(); i++)
         {
             if (DataSource.OrdersList[i].ID == id)
             {
@@ -49,21 +49,20 @@ public class DalOrder
                 return;
             }
         }
-        throw new Exception("this order doesn't exist");
+        throw new EntityDuplicateException("this order doesn't exist");
     }
 
-    public static void Delete(int id)
+    public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.config.indexOrder; i++)
+        for (int i = 0; i < DataSource.OrdersList.Count(); i++)
         {
             if (DataSource.OrdersList[i].ID == id)
             {
-                DataSource.OrdersList[i] = DataSource.OrdersList[DataSource.config.indexOrder];
-                DataSource.config.indexOrder--;
+                DataSource.OrdersList.Remove(DataSource.OrdersList[i]);
                 return;
             }
         }
-        throw new Exception("this order doesn't exist");
+        throw new EntityDuplicateException("this order doesn't exist");
     }
 
 }

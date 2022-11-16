@@ -3,12 +3,9 @@ namespace dalList;
 
 public class DataSource
 {
-    static internal int _numOfProducts = 50;
-    static internal int _numOfOrders = 100;
-    static internal int _numOfOrderItems = 200;
-    static public Product[] ProductsList = new Product[_numOfProducts];
-    static public Order[] OrdersList = new Order[_numOfOrders];
-    static public OrderItem[] OrderItemsList = new OrderItem[_numOfOrderItems];
+    static public List<Product> ProductsList = new List<Product>();
+    static public List<Order> OrdersList = new List<Order>();
+    static public List<OrderItem> OrderItemsList = new List<OrderItem>();
     static internal readonly Random rand = new Random();
     static string[] customersNames = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
     static string[] customersEmails = { "A@a", "B@b", "C@c", "D@d", "E@e", "F@f", "G@g", "H@h", "I@i", "J@j", "K@k", "L@l", "M@m", "N@n", "O@o", "P@p", "Q@q", "R@r", "S@s", "T@t", "U@u", "V@v", "W@w", "X@x", "Y@y", "Z@z" };
@@ -32,7 +29,7 @@ public class DataSource
             newProduct.Price = (int)rand.Next(50, 450);
             newProduct.Category = (eCategory)(i % 5);
             newProduct.InStock = (int)rand.Next(1, 50);
-            ProductsList[config.indexProduct++] = newProduct;
+            ProductsList.Add(newProduct);
         }
     }
 
@@ -58,7 +55,7 @@ public class DataSource
             else
                 newOrder.DeliveryDate = DateTime.MinValue;
 
-            OrdersList[config.indexOrder++] = newOrder;
+            OrdersList.Add(newOrder);
         }
     }
     static public void CreateOrderItemList()
@@ -66,27 +63,23 @@ public class DataSource
         for (int i = 0; i < 40; i++)
         {
             int num = (int)rand.Next(1, 4);
-            int IndexOrder = (int)rand.Next(0,config.indexOrder);
+            int IndexOrder = (int)rand.Next(0, OrdersList.Count());
             for (int j = 0; j < num; j++)
             {
-               int IndexProduct = (int)rand.Next(0,config.indexProduct);
+               int IndexProduct = (int)rand.Next(0, OrdersList.Count());
                 OrderItem newOrderItems = new OrderItem();
                 newOrderItems.ID = config.OrderItemId;
                 newOrderItems.ProductId = ProductsList[IndexProduct].ID;
                 newOrderItems.OrderId = OrdersList[IndexOrder].ID;
                 newOrderItems.Amount = (int)rand.Next(1, 500);
                 newOrderItems.Price = (ProductsList[IndexProduct].Price) * newOrderItems.Amount;
-                OrderItemsList[config.indexOrderItem++] = newOrderItems;
+                OrderItemsList.Add(newOrderItems);
             }
         }
     }
 
     public static class config
     {
-        public static int indexProduct = 0;
-        public static int indexOrder = 0;
-        public static int indexOrderItem = 0;
-
         private static int _productId = 0;
         public static int ProductId { get { return  _productId++; } }
 
