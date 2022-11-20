@@ -8,7 +8,7 @@ public class Order
     public string CustomerEmail { get; set; }
     public string CustomerAddress { get; set; }
     public DateTime OrderDate { get; set; }
-    public BO.Enums.OrderStatus Status { get; set; }
+    public BO.Enums.eOrderStatus Status { get; set; }
     public DateTime PaymentDate { get; set; }
     public DateTime ShipDate { get; set; }
     public DateTime DeliveryDate { get; set; }

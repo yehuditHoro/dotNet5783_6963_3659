@@ -11,6 +11,10 @@ public class Enums
         girls,
         babies
     }
-    public enum OrderStatus { }
+    public enum eOrderStatus {
+    confirmed,
+    shiped,
+    delivered
+    }
 }
 
