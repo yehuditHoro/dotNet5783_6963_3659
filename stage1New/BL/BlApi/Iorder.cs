@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using BO;
 namespace BlApi;
 
 public interface Iorder
 {
-
+    public IEnumerable<OrderForList> GetOrdersList(OrderForList ordersList);
+    public Order GetOrderItem(int id);
+    public Order ShipedOrder(int id);
+    public Order DeliveredOrder(int id);
+    
+    //public void UpdateOrder(int id); //bonus
 }

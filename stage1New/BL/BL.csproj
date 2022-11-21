@@ -21,11 +21,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="BlImplementation\" />
-    <Folder Include="BlImplementation\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\dalfacade\dalfacade.csproj" />
     <ProjectReference Include="..\dalList\dalList.csproj" />
   </ItemGroup>
