@@ -6,8 +6,16 @@ namespace BlImplementation;
 internal class BlCart : BlApi.Icart
 {
     IDal Dal = new DalList();
-    public BO.Cart addToCart(BO.Cart c, int id)
+    public BO.Cart addToCart(BO.Cart c, int pId)
     {
+       foreach (BO.OrderItem oi in c.Items)
+        {
+            if (oi.ID== pId)
+            {
+                if(Dal.)
+            }
+
+        }
         throw new NotImplementedException();
     }
 
