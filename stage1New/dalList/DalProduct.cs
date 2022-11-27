@@ -65,4 +65,19 @@ public class DalProduct:Iproduct
         }
         throw new EntityDuplicateException("this product doesn't exist");
     }
+
+    public void UpdateAmount(int id,int amount)
+    {
+        for (int i = 0; i < DataSource.ProductsList.Count(); i++)
+        {
+            if (DataSource.ProductsList[i].ID == id)
+            {
+                Product p = DataSource.ProductsList[i];
+                p.InStock-=amount;
+                DataSource.ProductsList[i] = p;
+                return;
+            }
+        }
+        throw new EntityDuplicateException("this product doesn't exist");
+    }
 }

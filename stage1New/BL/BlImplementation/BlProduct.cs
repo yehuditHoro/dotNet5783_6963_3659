@@ -101,8 +101,6 @@ internal class BlProduct : BlApi.Iproduct
         }
     }
 
-
-
     public void RemoveProduct(int id)
     {
         IEnumerable<Dal.DO.OrderItem> AllItems = Dal.orderItem.ReadAll();
@@ -131,6 +129,7 @@ internal class BlProduct : BlApi.Iproduct
             throw new Exception();
         }
     }
+    
 }
 
 
