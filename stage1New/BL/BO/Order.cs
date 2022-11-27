@@ -9,7 +9,7 @@ public class Order
     public string CustomerAddress { get; set; }
     public DateTime OrderDate { get; set; }
     public BO.Enums.eOrderStatus Status { get; set; }
-    public DateTime PaymentDate { get; set; }
+    ///public DateTime PaymentDate { get; set; }
     public DateTime ShipDate { get; set; }
     public DateTime DeliveryDate { get; set; }
     public List<OrderItem> Items { get; set; }
@@ -22,7 +22,6 @@ public class Order
     Customet Adress: {CustomerAddress},
     Order Date: {OrderDate},
     Status: {Status},
-    Payment Date: {PaymentDate},
     Ship Date: {ShipDate},
     Delivery Date: {DeliveryDate},
     Items: {Items},

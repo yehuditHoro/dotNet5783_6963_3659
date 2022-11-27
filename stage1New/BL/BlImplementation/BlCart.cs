@@ -18,7 +18,6 @@ internal class BlCart : BlApi.Icart
                     oi.Amount++;
                     oi.TotalPrice += oi.Price;
                     c.TotalPrice += oi.Price;
-
                 }
             }
             else
@@ -45,7 +44,6 @@ internal class BlCart : BlApi.Icart
 
     public BO.Cart UpdateQuantity(BO.Cart c, int id, int quantity)
     {
-
         foreach (BO.OrderItem oi in c.Items)
         {
             if (quantity == 0)
@@ -91,21 +89,26 @@ internal class BlCart : BlApi.Icart
                 if (oi.Amount < 0 || oi.Amount < Dal.product.Read(oi.ID).InStock)
                     throw new NotImplementedException();
             }
-            BO.Order newOrder = new();
+            Dal.DO.Order newOrder = new();
             newOrder.ID = (dalList.DataSource.config.OrderId);
             newOrder.CustomerName = name;
             newOrder.CustomerEmail = email;
             newOrder.CustomerAddress = address;
             newOrder.OrderDate = DateTime.Now;
             newOrder.ShipDate = DateTime.MinValue;
-            newOrder.PaymentDate = DateTime.MinValue;
+            //newOrder.PaymentDate = DateTime.MinValue;
             newOrder.DeliveryDate = DateTime.MinValue;
-            newOrder.Status = BO.Enums.eOrderStatus.confirmed;
-            newOrder.Items = c.Items;
-            newOrder.TotalPrice = c.TotalPrice;
-            /// int OrderNumber AddOrder(newOrder)
-            /// לחזור על דברים שעקפנו
-            foreach (BO.OrderItem item in c.Items)
+            int id = Dal.order.Add(newOrder);
+            /// לעשות את הפונקציה האחרונה בקארט
+            List<Dal.DO.OrderItem> allItems = dalList.DataSource.OrderItemsList;
+            foreach (Dal.DO.OrderItem item in allItems)///רץ על כל הפריטים
+            {
+                if (item.OrderId == newOrder.ID)
+                {
+                 
+                }
+            }
+            foreach (BO.OrderItem item in c.Items)///רץ על הסל קניה
             {
                 Dal.product.UpdateAmount(item.ID, item.Amount);
             }
