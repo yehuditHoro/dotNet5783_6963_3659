@@ -101,16 +101,27 @@ internal class BlCart : BlApi.Icart
             int id = Dal.order.Add(newOrder);
             /// לעשות את הפונקציה האחרונה בקארט
             List<Dal.DO.OrderItem> allItems = dalList.DataSource.OrderItemsList;
-            foreach (Dal.DO.OrderItem item in allItems)///רץ על כל הפריטים
-            {
-                if (item.OrderId == newOrder.ID)
-                {
-                 
-                }
-            }
+            //foreach (Dal.DO.OrderItem item in allItems)///רץ על כל הפריטים
+            //{
+            //    if (item.OrderId == newOrder.ID)
+            //    {
+            //        Dal.DO.OrderItem cartItem = new();
+            //        cartItem.ID = item.ID;
+            //        cartItem.OrderId = newOrder.ID;
+            //        cartItem.
+            //    }
+            //}
             foreach (BO.OrderItem item in c.Items)///רץ על הסל קניה
             {
+                Dal.DO.OrderItem cartItem = new();
+                cartItem.ID=dalList.DataSource.config.OrderItemId;
+                cartItem.Amount = item.Amount;  
+                cartItem.Price = item.Price;
+                cartItem.OrderId=newOrder.ID;
+                cartItem.ProductId = item.ID;
+                Dal.orderItem.Add(cartItem);
                 Dal.product.UpdateAmount(item.ID, item.Amount);
+
             }
         }
         catch
