@@ -54,7 +54,6 @@ internal class BlOrder : BlApi.Iorder
             newO.ShipDate = currOrder.ShipDate;
             newO.CustomerEmail = currOrder.CustomerEmail;
             newO.Status = CheckStatus(currOrder);
-            double OrderTotal = 0;
             newO.Items = convertDToB(allItems).Item1;
             newO.TotalPrice = convertDToB(allItems).Item2;
         }

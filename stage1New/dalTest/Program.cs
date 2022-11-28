@@ -66,7 +66,7 @@ void ProductOption()
             Console.WriteLine(specificProduct.ToString());
             break;
         case eCRUD.READALL:
-           Product[] allProducts= (Product[])idal.product.ReadAll();
+            Product[] allProducts= (Product[])idal.product.ReadAll();
             for(int i = 0; i < allProducts.Length;i++)
             {
                 Console.WriteLine(allProducts[i].ToString());

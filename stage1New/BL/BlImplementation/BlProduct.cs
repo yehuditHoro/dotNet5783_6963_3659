@@ -1,6 +1,5 @@
 ﻿using DalApi;
 using dalList;
-
 namespace BlImplementation;
 
 internal class BlProduct : BlApi.Iproduct
@@ -43,7 +42,6 @@ internal class BlProduct : BlApi.Iproduct
             productItem.Price = p.Price;
             productItem.Category = (BO.Enums.eCategory)p.Category;
             productItem.InStock = (p.InStock != 0 ? true : false);
-            //productItem.Amount =
             Catalog.Add(productItem);
         }
         return Catalog;
@@ -62,9 +60,9 @@ internal class BlProduct : BlApi.Iproduct
             prod.InStock = p.InStock;
             return prod;
         }
-
         throw new Exception();
     }
+
     public BO.Product GetProductItemsForCustomer(int id)
     {
         /// לשאול את המורה למה הכפילות?
@@ -128,8 +126,7 @@ internal class BlProduct : BlApi.Iproduct
         {
             throw new Exception();
         }
-    }
-    
+    }    
 }
 
 

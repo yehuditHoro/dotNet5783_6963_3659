@@ -120,7 +120,7 @@ internal class BlCart : BlApi.Icart
 
     }
 
-    bool IsValidEmail(string email)
+    private bool IsValidEmail(string email)
     {
         var trimmedEmail = email.Trim();
 
