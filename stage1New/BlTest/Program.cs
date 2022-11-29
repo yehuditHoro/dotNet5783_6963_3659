@@ -7,7 +7,7 @@ BO.Enums.eMenuOptions choice;
 try
 {
     do
-    {     
+    {
         Console.WriteLine("enter 0 to exit \n enter 1 to see the product options \n enter 2 to see the order options \n enter 3 to see the cart options \n ");
         choice = (BO.Enums.eMenuOptions)Convert.ToInt32(Console.ReadLine());
         switch (choice)
@@ -47,7 +47,7 @@ void ProductOption()
     BO.Enums.eProductOptions num;
     Console.WriteLine("enter 0 to get all the products " +
         "\n enter 1 to get the catalog " +
-        "\n enter 2 to get the items for manager " +   //????????
+        "\n enter 2 to get the items for manager " +
         "\n enter 3 to get the items for customer " +
         "\n enter 4 to add product " +
         "\n enter 5 to update product " +
@@ -57,13 +57,13 @@ void ProductOption()
     {
         case BO.Enums.eProductOptions.GetProducts:
             List<BO.ProductForList> allProducts = (List<BO.ProductForList>)ibl.product.GetProducts();
-            foreach(BO.ProductForList product in allProducts)
+            foreach (BO.ProductForList productItem in allProducts)
             {
-                Console.WriteLine(product);
+                Console.WriteLine(productItem);
             }
             break;
         case BO.Enums.eProductOptions.GetCatalog:
-            List <BO.ProductItem> catalog = (List<BO.ProductItem>)ibl.product.GetCatalog();
+            List<BO.ProductItem> catalog = (List<BO.ProductItem>)ibl.product.GetCatalog();
             foreach (BO.ProductItem catalogItem in catalog)
             {
                 Console.WriteLine(catalogItem);
@@ -72,12 +72,14 @@ void ProductOption()
         case BO.Enums.eProductOptions.GetItemsManager:
             Console.WriteLine("enter the id of the product that you want to get");
             int id = Convert.ToInt32(Console.ReadLine());
-            ibl.product.GetProductItemsForManager(id);
+            BO.Product p = ibl.product.GetProductItemsForManager(id);
+            Console.WriteLine(p);
             break;
         case BO.Enums.eProductOptions.GetItemsCustomer:
             Console.WriteLine("enter the id of the product that you want to get");
             int Id = Convert.ToInt32(Console.ReadLine());
-            ibl.product.GetProductItemsForCustomer(Id);
+            p = ibl.product.GetProductItemsForCustomer(Id);
+            Console.WriteLine(p);
             break;
         case BO.Enums.eProductOptions.Add:
             //how to increase the id?
@@ -108,31 +110,72 @@ void OrderOption()
     {
         case BO.Enums.eOrderOptions.GetOrders:
             List<BO.OrderForList> allOrders = (List<BO.OrderForList>)ibl.order.GetOrdersList();
-            foreach (BO.OrderForList order in allOrders)
+            foreach (BO.OrderForList orderItem in allOrders)
             {
-                Console.WriteLine(order);
+                Console.WriteLine(orderItem);
             }
             break;
         case BO.Enums.eOrderOptions.GetOrder:
-            List<BO.ProductItem> catalog = (List<BO.ProductItem>)ibl.product.GetCatalog();
-            foreach (BO.ProductItem catalogItem in catalog)
-            {
-                Console.WriteLine(catalogItem);
-            }
+            Console.WriteLine("enter the id of the order that you want to get");
+            int id = Convert.ToInt32(Console.ReadLine());
+            BO.Order order = ibl.order.GetOrder(id);
+            Console.WriteLine(order);
             break;
         case BO.Enums.eOrderOptions.ShipedOrder:
-            Console.WriteLine("enter the id of the product that you want to get");
-            int id = Convert.ToInt32(Console.ReadLine());
-            ibl.product.GetProductItemsForManager(id);
+            Console.WriteLine("enter the id of the order that you want to update her ship date");
+            int Id = Convert.ToInt32(Console.ReadLine());
+            ibl.order.ShipedOrder(Id);
             break;
         case BO.Enums.eOrderOptions.DeliveredOrder:
-            Console.WriteLine("enter the id of the product that you want to get");
-            int Id = Convert.ToInt32(Console.ReadLine());
-            ibl.product.GetProductItemsForCustomer(Id);
-            break;       
+            Console.WriteLine("enter the id of the order that you want to update her delivery date");
+            int ID = Convert.ToInt32(Console.ReadLine());
+            ibl.order.DeliveredOrder(ID);
+            break;
     }
 }
+
+BO.Cart newCart()
+{
+    BO.Cart cart = new();
+    Console.WriteLine("enter the customer name");
+    cart.CustomerName = Console.ReadLine();
+    Console.WriteLine("enter the customer email");
+    cart.CustomerEmail = Console.ReadLine();
+    Console.WriteLine("enter the customer address");
+    cart.CustomerAddress = Console.ReadLine();
+    Console.WriteLine("");
+    //המשתמש אמור להכניס את כל הפריטים ומחיר כולל?
+    return cart;
+}
+
 void CartOption()
 {
-
+    BO.Enums.eCartOptions num;
+    Console.WriteLine("enter 0 to get all the orders " +
+        "\n enter 1 to get single order " +
+        "\n enter 2 to update the ship date " +
+        "\n enter 3 to update the delivery date ");
+    num = (BO.Enums.eCartOptions)Convert.ToInt32(Console.ReadLine());
+    switch (num)
+    {
+        case BO.Enums.eCartOptions.Add:
+            Console.WriteLine("enter the product id that you want add to your cart");
+            int productId = Convert.ToInt32(Console.ReadLine());
+            BO.Cart c = newCart();
+            ibl.cart.addToCart(c, productId);
+            break;
+        case BO.Enums.eCartOptions.UpdateQuantity:
+            Console.WriteLine("enter the product id that you want to update his quantity");
+            int PId = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("enter the amount that you want to change to");
+            int quantity = Convert.ToInt32(Console.ReadLine());
+            BO.Cart cart = newCart();
+            ibl.cart.UpdateQuantity(cart, PId, quantity);
+            break;
+        case BO.Enums.eCartOptions.MakeOrder: //???????????
+            Console.WriteLine("enter the id of the order that you want to update her ship date");
+            int Id = Convert.ToInt32(Console.ReadLine());
+            ibl.order.ShipedOrder(Id);
+            break;
+    }
 }
