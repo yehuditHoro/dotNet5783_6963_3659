@@ -33,8 +33,7 @@ public class DalProduct:Iproduct
         List<Product> allProducts = new List<Product>();
         for (int i = 0; i < DataSource.ProductsList.Count(); i++)
         {
-            allProducts[i] = DataSource.ProductsList[i];
-            
+            allProducts.Add(DataSource.ProductsList[i]);
         }
         return allProducts;
     }

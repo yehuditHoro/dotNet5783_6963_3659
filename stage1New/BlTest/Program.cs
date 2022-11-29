@@ -1,13 +1,16 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using BlApi;
 using BlImplementation;
-
+using dalList;
 IBl ibl = new Bl();
 BO.Enums.eMenuOptions choice;
+BO.Cart gCart = new BO.Cart();
+
 try
 {
     do
     {
+        dalList.DataSource ds = new DataSource();
         Console.WriteLine("enter 0 to exit \n enter 1 to see the product options \n enter 2 to see the order options \n enter 3 to see the cart options \n ");
         choice = (BO.Enums.eMenuOptions)Convert.ToInt32(Console.ReadLine());
         switch (choice)
@@ -30,7 +33,9 @@ catch (Exception msg) { Console.WriteLine(msg); }
 
 BO.Product newProduct()
 {
+
     BO.Product p = new();
+    p.ID = dalList.DataSource.config.ProductId;
     Console.WriteLine("enter the name of the product");
     p.Name = Console.ReadLine();
     Console.WriteLine("enter the price of the product");
@@ -82,7 +87,7 @@ void ProductOption()
             Console.WriteLine(p);
             break;
         case BO.Enums.eProductOptions.Add:
-            //how to increase the id?
+
             BO.Product product = newProduct();
             ibl.product.AddProduct(product);
             break;
@@ -134,48 +139,36 @@ void OrderOption()
     }
 }
 
-BO.Cart newCart()
-{
-    BO.Cart cart = new();
-    Console.WriteLine("enter the customer name");
-    cart.CustomerName = Console.ReadLine();
-    Console.WriteLine("enter the customer email");
-    cart.CustomerEmail = Console.ReadLine();
-    Console.WriteLine("enter the customer address");
-    cart.CustomerAddress = Console.ReadLine();
-    Console.WriteLine("");
-    //המשתמש אמור להכניס את כל הפריטים ומחיר כולל?
-    return cart;
-}
 
 void CartOption()
 {
     BO.Enums.eCartOptions num;
-    Console.WriteLine("enter 0 to get all the orders " +
-        "\n enter 1 to get single order " +
-        "\n enter 2 to update the ship date " +
-        "\n enter 3 to update the delivery date ");
+    Console.WriteLine("enter 0 to add product to the cart " +
+        "\n enter 1 to update the quantity of a product " +
+        "\n enter 2 to make an order ");
     num = (BO.Enums.eCartOptions)Convert.ToInt32(Console.ReadLine());
     switch (num)
     {
         case BO.Enums.eCartOptions.Add:
             Console.WriteLine("enter the product id that you want add to your cart");
             int productId = Convert.ToInt32(Console.ReadLine());
-            BO.Cart c = newCart();
-            ibl.cart.addToCart(c, productId);
+            gCart = ibl.cart.addToCart(gCart, productId);
             break;
         case BO.Enums.eCartOptions.UpdateQuantity:
             Console.WriteLine("enter the product id that you want to update his quantity");
             int PId = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("enter the amount that you want to change to");
             int quantity = Convert.ToInt32(Console.ReadLine());
-            BO.Cart cart = newCart();
-            ibl.cart.UpdateQuantity(cart, PId, quantity);
+            gCart = ibl.cart.UpdateQuantity(gCart, PId, quantity);
             break;
-        case BO.Enums.eCartOptions.MakeOrder: //???????????
-            Console.WriteLine("enter the id of the order that you want to update her ship date");
-            int Id = Convert.ToInt32(Console.ReadLine());
-            ibl.order.ShipedOrder(Id);
+        case BO.Enums.eCartOptions.MakeOrder:
+            Console.WriteLine("enter customer name");
+            string Name = Console.ReadLine();
+            Console.WriteLine("enter customer email");
+            string Email = Console.ReadLine();
+            Console.WriteLine("enter customer address");
+            string Address = Console.ReadLine();
+            ibl.cart.MakeAnOrder(gCart, Name, Email, Address);
             break;
     }
 }

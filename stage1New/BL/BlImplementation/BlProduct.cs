@@ -7,6 +7,9 @@ internal class BlProduct : BlApi.Iproduct
     IDal Dal = new DalList();
     public IEnumerable<BO.ProductForList> GetProducts()
     {
+        try
+        {
+
         IEnumerable<Dal.DO.Product> getProducts = Dal.product.ReadAll();
         if (getProducts.Count() <= 0)
         {
@@ -24,10 +27,20 @@ internal class BlProduct : BlApi.Iproduct
             boProducts.Add(bp);
         }
         return boProducts;
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
 
     public IEnumerable<BO.ProductItem> GetCatalog()
     {
+        try
+        {
+
         IEnumerable<Dal.DO.Product> getCatalog = Dal.product.ReadAll();
         if (getCatalog.Count() <= 0)
         {
@@ -45,22 +58,37 @@ internal class BlProduct : BlApi.Iproduct
             Catalog.Add(productItem);
         }
         return Catalog;
+            
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
     }
 
     public BO.Product GetProductItemsForManager(int id)
     {
-        if (id > 0)
-        {
-            Dal.DO.Product p = Dal.product.Read(id);
-            BO.Product prod = new BO.Product();
-            prod.ID = p.ID;
-            prod.Name = p.Name;
-            prod.Price = p.Price;
-            prod.Category = (BO.Enums.eCategory)p.Category;
-            prod.InStock = p.InStock;
-            return prod;
-        }
+        //try
+        //{
+            if (id > 0)
+            {
+                Dal.DO.Product p = Dal.product.Read(id);
+                BO.Product prod = new BO.Product();
+                prod.ID = p.ID;
+                prod.Name = p.Name;
+                prod.Price = p.Price;
+                prod.Category = (BO.Enums.eCategory)p.Category;
+                prod.InStock = p.InStock;
+                return prod;
+            }
         throw new Exception();
+        //}למה זה עושה בעיות ???
+        //catch (Exception e)
+        //{
+        //    throw e;
+        //}
+        
     }
 
     public BO.Product GetProductItemsForCustomer(int id)

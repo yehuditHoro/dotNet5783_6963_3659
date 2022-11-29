@@ -9,41 +9,55 @@ internal class BlCart : BlApi.Icart
     IDal Dal = new DalList();
     public BO.Cart addToCart(BO.Cart c, int pId)
     {
-        foreach (BO.OrderItem oi in c.Items)
+        try
         {
-            if (oi.ID == pId)
+        if (c.Items != null)
+        {
+
+            foreach (BO.OrderItem oi in c.Items)
             {
-                if (Dal.product.Read(pId).InStock > 0)
+                if (oi.ID == pId)
                 {
-                    oi.Amount++;
-                    oi.TotalPrice += oi.Price;
-                    c.TotalPrice += oi.Price;
+                    if (Dal.product.Read(pId).InStock > 0)
+                    {
+                        oi.Amount++;
+                        oi.TotalPrice += oi.Price;
+                        c.TotalPrice += oi.Price;
+                    }
                 }
-            }
-            else
-            {
-                throw new NotImplementedException();
+                else
+                {
+                    throw new NotImplementedException();
+                }
             }
         }
         Dal.DO.Product prod = Dal.product.Read(pId);
         if (prod.InStock > 0)
         {
             BO.OrderItem newP = new BO.OrderItem();
-
             newP.ID = (dalList.DataSource.config.OrderItemId);
             newP.Name = prod.Name;
             newP.Price = prod.Price;
             newP.ProductID = pId;
             newP.Amount = 1;
             newP.TotalPrice = prod.Price;
-            c.Items.Add(newP);
+            c.Items.Add(newP);// שגיאת זמן ריצה
             c.TotalPrice += newP.Price;
         }
         return c;
+        }
+        catch (Exception e)
+        {
+
+            throw new Exception();
+        }
     }
 
     public BO.Cart UpdateQuantity(BO.Cart c, int id, int quantity)
     {
+        try
+        {
+
         foreach (BO.OrderItem oi in c.Items)
         {
             if (quantity == 0)
@@ -75,6 +89,13 @@ internal class BlCart : BlApi.Icart
             }
         }
         return c;
+
+        }
+        catch (Exception e)
+        {
+
+            throw new Exception();
+        }
     }
 
     public void MakeAnOrder(BO.Cart c, string name, string email, string address)
@@ -126,7 +147,7 @@ internal class BlCart : BlApi.Icart
         }
         catch
         {
-
+            throw new Exception();
         }
 
     }

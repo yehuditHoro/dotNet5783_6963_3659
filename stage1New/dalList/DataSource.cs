@@ -66,7 +66,7 @@ public class DataSource
             int IndexOrder = (int)rand.Next(0, OrdersList.Count());
             for (int j = 0; j < num; j++)
             {
-               int IndexProduct = (int)rand.Next(0, OrdersList.Count());
+               int IndexProduct = (int)rand.Next(0, ProductsList.Count());
                 OrderItem newOrderItems = new OrderItem();
                 newOrderItems.ID = config.OrderItemId;
                 newOrderItems.ProductId = ProductsList[IndexProduct].ID;

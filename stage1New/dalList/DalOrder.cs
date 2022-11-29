@@ -33,7 +33,7 @@ internal class DalOrder : Iorder
      
         for (int i = 0; i < DataSource.OrdersList.Count(); i++)
         {
-            allOrders[i] = DataSource.OrdersList[i];
+            allOrders.Add(DataSource.OrdersList[i]);
         }
         return allOrders;
     }

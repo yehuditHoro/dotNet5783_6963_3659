@@ -36,7 +36,7 @@ public class DalOrderItem : IorderItem
         List <OrderItem> allOrderItems = new List<OrderItem>();
         for (int i = 0; i < DataSource.OrderItemsList.Count(); i++)
         {
-            allOrderItems[i] = DataSource.OrderItemsList[i];
+            allOrderItems.Add(DataSource.OrderItemsList[i]);
         }
         return allOrderItems;
     }
