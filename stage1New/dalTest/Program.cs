@@ -31,7 +31,7 @@ try
         } while (choice != 0);
     }
     catch (Exception msg) { Console.WriteLine(msg); }
-
+///create a new product
 Product newProduct()
 {
     Product product = new Product();
@@ -46,7 +46,7 @@ Product newProduct()
     return product;
 }
 
-
+/// show the product options
 void ProductOption()
 {
     eCRUD num;
@@ -88,7 +88,7 @@ void ProductOption()
             break;
     }
 }
-
+/// create a new order
 Order newOrder()
 {
     Order order = new Order();
@@ -106,7 +106,7 @@ Order newOrder()
     order.DeliveryDate = order.ShipDate + delivDate;
     return order;
 }
-
+/// show the order options
 void OrderOption()
 {
     eCRUD num;
@@ -148,7 +148,7 @@ void OrderOption()
     }
 
 }
-
+/// create a new order item
 OrderItem NewOrderItem()
 {
    
@@ -164,7 +164,7 @@ OrderItem NewOrderItem()
     orderItem.Amount = Convert.ToInt32(Console.ReadLine());
     return orderItem;
 }
-
+/// show the order item options
 void OrderItemOption()
 {
     eCRUD num;

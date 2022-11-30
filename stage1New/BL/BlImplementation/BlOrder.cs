@@ -7,7 +7,12 @@ internal class BlOrder : BlApi.Iorder
 {
     IDal Dal = new DalList();
     List<Dal.DO.OrderItem> allItems = dalList.DataSource.OrderItemsList;
-
+    /// <summary>
+    /// the function return all the orders from the datasource
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BlFailedToGet"></exception>
+    /// <exception cref="BlIdNotFound"></exception>
     public IEnumerable<BO.OrderForList> GetOrdersList()
     {
         try
@@ -45,7 +50,13 @@ internal class BlOrder : BlApi.Iorder
             throw new BlIdNotFound();
         }
     }
-
+    /// <summary>
+    /// the function gets id and return its 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BlInvalidInputException"></exception>
+    /// <exception cref="BlIdNotFound"></exception>
     public BO.Order GetOrder(int id)
     {
         try
@@ -72,7 +83,13 @@ internal class BlOrder : BlApi.Iorder
             throw new BlIdNotFound();
         }
     }
-
+    /// <summary>
+    /// the function gets id of an order and change the shiping date
+    /// </summary>
+    /// <param name="id"></param>
+    /// returns></returns>
+    /// <exception cref="BlFailedToUpdate"></exception>
+    /// <exception cref="BlIdNotFound"></exception>
     public BO.Order ShipedOrder(int id)
     {
         try
@@ -99,7 +116,13 @@ internal class BlOrder : BlApi.Iorder
             throw new BlIdNotFound();
         }
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BlFailedToUpdate"></exception>
+    /// <exception cref="BlIdNotFound"></exception>
     public BO.Order DeliveredOrder(int id)
     {
         try
@@ -137,6 +160,12 @@ internal class BlOrder : BlApi.Iorder
     //    TOrder.Status=
     //}
 
+    /// <summary>
+    /// the function convert item of type Dal.do to item of type BO
+    /// </summary>
+    /// <param name="DItems"></param>
+    /// <param name="orderId"></param>
+    /// <returns></returns>
     private (List<BO.OrderItem>, double) convertDToB(List<Dal.DO.OrderItem> DItems, int orderId)
     {
         double OrderTotalPrice = 0;
@@ -158,7 +187,11 @@ internal class BlOrder : BlApi.Iorder
         }
         return (items, OrderTotalPrice);
     }
-
+    /// <summary>
+    /// globak function that checks the status of the order
+    /// </summary>
+    /// <param name="o"></param>
+    /// <returns></returns>
     private BO.Enums.eOrderStatus CheckStatus(Dal.DO.Order o)
     {
         BO.Enums.eOrderStatus orderStatus = o.ShipDate > DateTime.Now ? BO.Enums.eOrderStatus.confirmed

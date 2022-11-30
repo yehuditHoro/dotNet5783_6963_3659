@@ -11,14 +11,23 @@ public class DataSource
     static string[] customersEmails = { "A@a", "B@b", "C@c", "D@d", "E@e", "F@f", "G@g", "H@h", "I@i", "J@j", "K@k", "L@l", "M@m", "N@n", "O@o", "P@p", "Q@q", "R@r", "S@s", "T@t", "U@u", "V@v", "W@w", "X@x", "Y@y", "Z@z" };
     static string[] customersAddresses = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
     static string[] ProductName = { "dresses", "shirts", "pants", "shoes", "skirts", "socks", "sweaters", "tights", "vests", "coats" };
-
+    /// <summary>
+    /// ctor
+    /// </summary>
     static DataSource() { s_Initialize(); }
+    /// <summary>
+    /// Initialize the creatives functions
+    /// </summary>
+
     static private void s_Initialize()
     {
         CreateProductsList();
         CreateOrdersList();
         CreateOrderItemList();
     }
+    /// <summary>
+    /// create the product list
+    /// </summary>
     static public void CreateProductsList()
     {
         for (int i = 0; i < 10; i++)
@@ -32,7 +41,9 @@ public class DataSource
             ProductsList.Add(newProduct);
         }
     }
-
+    /// <summary>
+    /// create the orders list
+    /// </summary>
     public static void CreateOrdersList()
     {
         TimeSpan shipDate = TimeSpan.FromDays(10);
@@ -56,6 +67,9 @@ public class DataSource
             OrdersList.Add(newOrder);
         }
     }
+    /// <summary>
+    /// create the order items list
+    /// </summary>
     static public void CreateOrderItemList()
     {
         for (int i = 0; i < 40; i++)
@@ -75,7 +89,9 @@ public class DataSource
             }
         }
     }
-
+    /// <summary>
+    /// the4 function return the id of any item and increase it
+    /// </summary>
     public static class config
     {
         private static int _productId = 0;

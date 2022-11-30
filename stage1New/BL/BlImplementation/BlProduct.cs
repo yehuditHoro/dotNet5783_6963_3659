@@ -6,6 +6,12 @@ namespace BlImplementation;
 internal class BlProduct : BlApi.Iproduct
 {
     IDal Dal = new DalList();
+    /// <summary>
+    /// the function returns all the products from the datasource
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BlFailedToGet"></exception>
+    /// <exception cref="BlIdNotFound"></exception>
     public IEnumerable<BO.ProductForList> GetProducts()
     {
         try
@@ -32,7 +38,12 @@ internal class BlProduct : BlApi.Iproduct
             throw new BlIdNotFound();
         }
     }
-
+    /// <summary>
+    /// the function returns all the products in the catalog 
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BlFailedToGet"></exception>
+    /// <exception cref="BlIdNotFound"></exception>
     public IEnumerable<BO.ProductItem> GetCatalog()
     {
         try
@@ -61,7 +72,13 @@ internal class BlProduct : BlApi.Iproduct
             throw new BlIdNotFound();
         }
     }
-
+    /// <summary>
+    /// the function get id from the manager and returns the specific product for the costumer
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BlInvalidInputException"></exception>
+    /// <exception cref="BlIdNotFound"></exception>
     public BO.Product GetProductItemsForManager(int id)
     {
         try
@@ -84,7 +101,13 @@ internal class BlProduct : BlApi.Iproduct
             throw new BlIdNotFound();
         }
     }
-
+    /// <summary>
+    /// the function get id from the customer and returns the specific product for the costumer
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BlInvalidInputException"></exception>
+    /// <exception cref="BlIdNotFound"></exception>
     public BO.Product GetProductItemsForCustomer(int id)
     {
         try
@@ -107,7 +130,14 @@ internal class BlProduct : BlApi.Iproduct
             throw new BlIdNotFound();
         }
     }
-
+    /// <summary>
+    /// gets the new product and add send it to the add function in the dalProduct
+    /// </summary>
+    /// <param name="p"></param>
+    /// <exception cref="BlNullException"></exception>
+    /// <exception cref="BlInvalidInputException"></exception>
+    /// <exception cref="BlOutOfStockException"></exception>
+    /// <exception cref="BlEntityDuplicate"></exception>
     public void AddProduct(BO.Product p)
     {
         try
@@ -131,16 +161,20 @@ internal class BlProduct : BlApi.Iproduct
             throw new BlEntityDuplicate();
         }
     }
-
+    /// <summary>
+    /// gets the id of the product and sent it to the delete function in the dalProduct to
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="BlIdNotFound"></exception>
     public void RemoveProduct(int id)
     {
         try
         {
-            IEnumerable<Dal.DO.OrderItem> AllItems = Dal.orderItem.ReadAll();
-            foreach (Dal.DO.OrderItem item in AllItems)
+            IEnumerable<Dal.DO.Product> AllProducts = Dal.product.ReadAll();
+            foreach (Dal.DO.Product item in AllProducts)
             {
                 if (item.ID == id)
-                    Dal.orderItem.Delete(item.ID);
+                    Dal.product.Delete(item.ID);
             }
         }
         catch (DalApi.EntityNotFoundException)
@@ -148,7 +182,14 @@ internal class BlProduct : BlApi.Iproduct
             throw new BlIdNotFound();
         }
     }
-
+    /// <summary>
+    ///  the function gets the id of the product and update it
+    /// </summary>
+    /// <param name="p"></param>
+    /// <exception cref="BlNullException"></exception>
+    /// <exception cref="BlInvalidInputException"></exception>
+    /// <exception cref="BlOutOfStockException"></exception>
+    /// <exception cref="BlIdNotFound"></exception>
     public void UpdateProduct(BO.Product p)
     {
         try

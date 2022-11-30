@@ -43,7 +43,7 @@ catch (BlOutOfStockException msg) { Console.WriteLine(msg); }
 catch (BlNullException msg) { Console.WriteLine(msg); }
 catch (Exception msg) { Console.WriteLine(msg); }
 
-
+/// create a new product
 BO.Product newProduct(int id)
 {
 
@@ -72,7 +72,7 @@ BO.Product newProduct(int id)
         throw new BlInvalidInputException("invalid negative input");
     return p;
 }
-
+/// show the product options
 void ProductOption()
 {
     BO.Enums.eProductOptions num;
@@ -144,7 +144,7 @@ void ProductOption()
             break;
     }
 }
-
+/// show the order options
 void OrderOption()
 {
     BO.Enums.eOrderOptions num;
@@ -175,7 +175,7 @@ void OrderOption()
             Console.WriteLine("enter the id of the order that you want to update her ship date");
             int Id = Convert.ToInt32(Console.ReadLine());
             if (Id < 0) throw new BlInvalidInputException("invalid negative input");
-            ibl.order.ShipedOrder(Id);
+            ibl.order.ShipedOrder(Id);///failed here why???
             break;
         case BO.Enums.eOrderOptions.DeliveredOrder:
             Console.WriteLine("enter the id of the order that you want to update her delivery date");
@@ -186,7 +186,7 @@ void OrderOption()
     }
 }
 
-
+/// show the cart options
 void CartOption()
 {
     BO.Enums.eCartOptions num;

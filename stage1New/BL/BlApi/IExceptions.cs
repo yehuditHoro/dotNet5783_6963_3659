@@ -14,7 +14,7 @@ public class BlIdNotFound : Exception {
                     "id not found";
 }
 /// <summary>
-/// 
+/// if the user try to add item with an existing id
 /// </summary>
 public class BlEntityDuplicate : Exception
 {
@@ -33,7 +33,7 @@ public class BlInvalidInputException : Exception
    
 }
 /// <summary>
-/// 
+/// when the user's input is more than the amount in stock in the datasource
 /// </summary>
 public class BlOutOfStockException : Exception
 {
@@ -41,7 +41,7 @@ public class BlOutOfStockException : Exception
                     "out of stock";
 }
 /// <summary>
-/// 
+/// when the user's input is null
 /// </summary>
 public class BlNullException : Exception
 {
@@ -49,7 +49,7 @@ public class BlNullException : Exception
                     "null value exception";
 }
 /// <summary>
-/// 
+/// when it failed to add an item
 /// </summary>
  public class BlFailedToAdd : Exception
 {
@@ -57,15 +57,15 @@ public class BlNullException : Exception
                     "failed to add this item";
 }
 /// <summary>
-/// 
+/// when it failed to get an item
 /// </summary>
- public class BlFailedToGet : Exception
+public class BlFailedToGet : Exception
 {
     public override string Message =>
                     "failed to get this item";
 }
 /// <summary>
-/// 
+/// when it failed to update an item
 /// </summary>
 public class BlFailedToUpdate : Exception
 {
@@ -73,16 +73,14 @@ public class BlFailedToUpdate : Exception
                     "failed to update this item";
 }
 /// <summary>
-/// 
+/// when it failed to delete an item
 /// </summary>
 public class BlFailedToDelete : Exception
 {
     public override string Message =>
                     "failed to delete this item";
 }
-/// <summary>
-/// 
-/// </summary>
+
 
 
 

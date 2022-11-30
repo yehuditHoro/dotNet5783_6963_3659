@@ -8,6 +8,13 @@ internal class BlCart : BlApi.Icart
 {
     IDal Dal = new DalList();
 
+    /// <summary>
+    /// the function add product to the cart
+    /// </summary>
+    /// <param name="c"></param>
+    /// <param name="pId"></param>
+    /// <returns></returns>
+    /// <exception cref="BlIdNotFound"></exception>
     public BO.Cart addToCart(BO.Cart c, int pId)
     {
         try
@@ -24,18 +31,19 @@ internal class BlCart : BlApi.Icart
                             oi.TotalPrice += oi.Price;
                             c.TotalPrice += oi.Price;
                         }
+                        else
+                        {
+                            throw new BlOutOfStockException();
+                        }
                     }
-                    else
-                    {
-                        throw new BlIdNotFound();
-                    }
+                   
                 }
             }
             Dal.DO.Product prod = Dal.product.Read(pId);
             if (prod.InStock > 0)
             {
                 BO.OrderItem newP = new BO.OrderItem();
-                newP.ID = 0;
+                newP.ID = prod.ID;
                 newP.Name = prod.Name;
                 newP.Price = prod.Price;
                 newP.ProductID = pId;
@@ -51,7 +59,14 @@ internal class BlCart : BlApi.Icart
         }
         return c;
     }
-
+    /// <summary>
+    /// the function gets the the id and the new quantity and update it
+    /// </summary>
+    /// <param name="c"></param>
+    /// <param name="id"></param>
+    /// <param name="quantity"></param>
+    /// <returns></returns>
+    /// <exception cref="BlIdNotFound"></exception>
     public BO.Cart UpdateQuantity(BO.Cart c, int id, int quantity)
     {
         try
@@ -93,7 +108,14 @@ internal class BlCart : BlApi.Icart
         }
         return c;
     }
-
+    /// <summary>
+    /// the function add the order with all the items of the cart and add it to the order list
+    /// </summary>
+    /// <param name="c"></param>
+    /// <param name="name"></param>
+    /// <param name="email"></param>
+    /// <param name="address"></param>
+    /// <exception cref="Exception"></exception>
     public void MakeAnOrder(BO.Cart c, string name, string email, string address)
     {
         try
@@ -107,11 +129,11 @@ internal class BlCart : BlApi.Icart
                 Dal.product.Read(oi.ID);
                 if (oi.Amount < 0 )
                     throw new BlInvalidInputException("invalid negative input for the amount");
-                if (oi.Amount < Dal.product.Read(oi.ID).InStock)
+                if (oi.Amount > Dal.product.Read(oi.ID).InStock)
                     throw new BlOutOfStockException();
             }
             Dal.DO.Order newOrder = new();
-            newOrder.ID = (dalList.DataSource.config.OrderId); //????????????
+            newOrder.ID = 0;
             newOrder.CustomerName = name;
             newOrder.CustomerEmail = email;
             newOrder.CustomerAddress = address;
@@ -132,13 +154,17 @@ internal class BlCart : BlApi.Icart
                 Dal.product.UpdateAmount(item.ID, item.Amount);
             }
         }
-        catch
+        catch(Exception e)
         {
-            throw new Exception();
+            Console.WriteLine("cant make the order "+e.Message);
         }
 
     }
-
+    /// <summary>
+    /// the function do a validation on the email address
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns></returns>
     private bool IsValidEmail(string email)
     {
         var trimmedEmail = email.Trim();
