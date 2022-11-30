@@ -1,4 +1,5 @@
-﻿using DalApi;
+﻿using BlApi;
+using DalApi;
 using dalList;
 namespace BlImplementation;
 
@@ -9,30 +10,26 @@ internal class BlProduct : BlApi.Iproduct
     {
         try
         {
-
-        IEnumerable<Dal.DO.Product> getProducts = Dal.product.ReadAll();
-        if (getProducts.Count() <= 0)
-        {
-            throw new Exception();
+            IEnumerable<Dal.DO.Product> getProducts = Dal.product.ReadAll();
+            if (getProducts.Count() <= 0)
+            {
+                throw new BlFailedToGet();
+            }
+            List<BO.ProductForList> boProducts = new List<BO.ProductForList>();
+            foreach (Dal.DO.Product p in getProducts)
+            {
+                BO.ProductForList bp = new BO.ProductForList();
+                bp.ID = p.ID;
+                bp.Name = p.Name;
+                bp.Price = p.Price;
+                bp.Category = (BO.Enums.eCategory)p.Category;
+                boProducts.Add(bp);
+            }
+            return boProducts;
         }
-        List<BO.ProductForList> boProducts = new List<BO.ProductForList>();
-        foreach (Dal.DO.Product p in getProducts)
+        catch (DalApi.EntityNotFoundException)
         {
-            BO.ProductForList bp = new BO.ProductForList();
-            bp.ID = p.ID;
-            bp.Name = p.Name;
-            bp.Price = p.Price;
-            bp.Category = (BO.Enums.eCategory)p.Category;
-            //bp.InStock = p.InStock;
-            boProducts.Add(bp);
-        }
-        return boProducts;
-
-        }
-        catch (Exception)
-        {
-
-            throw;
+            throw new BlIdNotFound();
         }
     }
 
@@ -40,37 +37,35 @@ internal class BlProduct : BlApi.Iproduct
     {
         try
         {
-
-        IEnumerable<Dal.DO.Product> getCatalog = Dal.product.ReadAll();
-        if (getCatalog.Count() <= 0)
-        {
-            throw new Exception();
+            IEnumerable<Dal.DO.Product> getCatalog = Dal.product.ReadAll();
+            if (getCatalog.Count() <= 0)
+            {
+                throw new BlFailedToGet();
+            }
+            List<BO.ProductItem> Catalog = new List<BO.ProductItem>();
+            foreach (Dal.DO.Product p in getCatalog)
+            {
+                BO.ProductItem productItem = new BO.ProductItem();
+                productItem.ID = p.ID;
+                productItem.Name = p.Name;
+                productItem.Price = p.Price;
+                productItem.Category = (BO.Enums.eCategory)p.Category;
+                productItem.Amount = p.InStock;
+                productItem.InStock = (p.InStock != 0 ? true : false);
+                Catalog.Add(productItem);
+            }
+            return Catalog;
         }
-        List<BO.ProductItem> Catalog = new List<BO.ProductItem>();
-        foreach (Dal.DO.Product p in getCatalog)
+        catch (DalApi.EntityNotFoundException)
         {
-            BO.ProductItem productItem = new BO.ProductItem();
-            productItem.ID = p.ID;
-            productItem.Name = p.Name;
-            productItem.Price = p.Price;
-            productItem.Category = (BO.Enums.eCategory)p.Category;
-            productItem.InStock = (p.InStock != 0 ? true : false);
-            Catalog.Add(productItem);
-        }
-        return Catalog;
-            
-        }
-        catch (Exception)
-        {
-
-            throw;
+            throw new BlIdNotFound();
         }
     }
 
     public BO.Product GetProductItemsForManager(int id)
     {
-        //try
-        //{
+        try
+        {
             if (id > 0)
             {
                 Dal.DO.Product p = Dal.product.Read(id);
@@ -82,36 +77,47 @@ internal class BlProduct : BlApi.Iproduct
                 prod.InStock = p.InStock;
                 return prod;
             }
-        throw new Exception();
-        //}למה זה עושה בעיות ???
-        //catch (Exception e)
-        //{
-        //    throw e;
-        //}
-        
+            else throw new BlInvalidInputException("invalid negative input");
+        }
+        catch (DalApi.EntityNotFoundException)
+        {
+            throw new BlIdNotFound();
+        }
     }
 
     public BO.Product GetProductItemsForCustomer(int id)
     {
-        if (id > 0)
+        try
         {
-            Dal.DO.Product p = Dal.product.Read(id);
-            BO.Product prod = new BO.Product();
-            prod.ID = p.ID;
-            prod.Name = p.Name;
-            prod.Price = p.Price;
-            prod.Category = (BO.Enums.eCategory)p.Category;
-            prod.InStock = p.InStock;
-            return prod;
+            if (id > 0)
+            {
+                Dal.DO.Product p = Dal.product.Read(id);
+                BO.Product prod = new BO.Product();
+                prod.ID = p.ID;
+                prod.Name = p.Name;
+                prod.Price = p.Price;
+                prod.Category = (BO.Enums.eCategory)p.Category;
+                prod.InStock = p.InStock;
+                return prod;
+            }
+            else throw new BlInvalidInputException("invalid negative input");
         }
-
-        throw new Exception();
+        catch (DalApi.EntityNotFoundException)
+        {
+            throw new BlIdNotFound();
+        }
     }
 
     public void AddProduct(BO.Product p)
     {
-        if (p.Name != null && p.Price > 0 && p.InStock > 0)
+        try
         {
+            if (p.Name == null)
+                throw new BlNullException();
+            if (p.Price < 0)
+                throw new BlInvalidInputException("invalid negative input");
+            if (p.InStock < 0)
+                throw new BlOutOfStockException();
             Dal.DO.Product prod = new Dal.DO.Product();
             prod.ID = p.ID;
             prod.Name = p.Name;
@@ -120,27 +126,39 @@ internal class BlProduct : BlApi.Iproduct
             prod.InStock = p.InStock;
             Dal.product.Add(prod);
         }
-        else
+        catch (DalApi.EntityDuplicateException)
         {
-            throw new Exception();
+            throw new BlEntityDuplicate();
         }
     }
 
     public void RemoveProduct(int id)
     {
-        IEnumerable<Dal.DO.OrderItem> AllItems = Dal.orderItem.ReadAll();
-        foreach (Dal.DO.OrderItem item in AllItems)
+        try
         {
-            if (item.ID == id)
-                Dal.orderItem.Delete(item.ID);
+            IEnumerable<Dal.DO.OrderItem> AllItems = Dal.orderItem.ReadAll();
+            foreach (Dal.DO.OrderItem item in AllItems)
+            {
+                if (item.ID == id)
+                    Dal.orderItem.Delete(item.ID);
+            }
         }
-        throw new Exception();
+        catch (DalApi.EntityNotFoundException)
+        {
+            throw new BlIdNotFound();
+        }
     }
 
     public void UpdateProduct(BO.Product p)
     {
-        if (p.Name != null && p.Price > 0 && p.InStock > 0)
+        try
         {
+            if (p.Name == null)
+                throw new BlNullException();
+            if (p.Price < 0)
+                throw new BlInvalidInputException("invalid negative input");
+            if (p.InStock < 0)
+                throw new BlOutOfStockException();
             Dal.DO.Product prod = new Dal.DO.Product();
             prod.ID = p.ID;
             prod.Name = p.Name;
@@ -149,11 +167,11 @@ internal class BlProduct : BlApi.Iproduct
             prod.InStock = p.InStock;
             Dal.product.Update(prod);
         }
-        else
+        catch (DalApi.EntityNotFoundException)
         {
-            throw new Exception();
+            throw new BlIdNotFound();
         }
-    }    
+    }
 }
 
 

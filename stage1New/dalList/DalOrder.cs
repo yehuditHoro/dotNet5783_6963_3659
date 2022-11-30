@@ -26,7 +26,7 @@ internal class DalOrder : Iorder
                 return DataSource.OrdersList[i];
             }
         }
-        throw new EntityDuplicateException("this id doesn't exist");
+        throw new EntityNotFoundException("this id doesn't exist");
     }
     public IEnumerable<Order> ReadAll()
     {
@@ -50,7 +50,7 @@ internal class DalOrder : Iorder
                 return;
             }
         }
-        throw new EntityDuplicateException("this order doesn't exist");
+        throw new EntityNotFoundException("this order doesn't exist");
     }
 
     public void Delete(int id)
@@ -63,7 +63,7 @@ internal class DalOrder : Iorder
                 return;
             }
         }
-        throw new EntityDuplicateException("this order doesn't exist");
+        throw new EntityNotFoundException("this order doesn't exist");
     }
 
 }

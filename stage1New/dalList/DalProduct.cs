@@ -26,7 +26,7 @@ public class DalProduct:Iproduct
                 return DataSource.ProductsList[i];
             }
         }
-        throw new EntityDuplicateException("this id doesn't exist");
+        throw new EntityNotFoundException("this id doesn't exist");
     }
 
     public  IEnumerable<Product> ReadAll()
@@ -50,7 +50,7 @@ public class DalProduct:Iproduct
                 return;
             }
         }
-        throw new EntityDuplicateException("this product doesn't exist");
+        throw new EntityNotFoundException("this product doesn't exist");
     }
 
     public void Delete(int id)
@@ -63,7 +63,7 @@ public class DalProduct:Iproduct
                 return;
             }
         }
-        throw new EntityDuplicateException("this product doesn't exist");
+        throw new EntityNotFoundException("this product doesn't exist");
     }
 
     public void UpdateAmount(int id,int amount)
@@ -78,6 +78,6 @@ public class DalProduct:Iproduct
                 return;
             }
         }
-        throw new EntityDuplicateException("this product doesn't exist");
+        throw new EntityNotFoundException("this product doesn't exist");
     }
 }

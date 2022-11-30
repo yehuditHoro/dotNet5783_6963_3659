@@ -44,7 +44,6 @@ public class DataSource
             newOrder.CustomerName = customersNames[i % 26];
             newOrder.CustomerEmail = customersEmails[i % 26];
             newOrder.CustomerAddress = customersAddresses[i % 26];
-
             if (i % 10 < 8)  // 80% have ship date
                 newOrder.OrderDate = DateTime.Now;
             else
@@ -54,7 +53,6 @@ public class DataSource
                 newOrder.DeliveryDate = newOrder.ShipDate + deliveryDate;
             else
                 newOrder.DeliveryDate = DateTime.MinValue;
-
             OrdersList.Add(newOrder);
         }
     }

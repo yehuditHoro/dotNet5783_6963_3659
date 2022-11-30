@@ -7,6 +7,7 @@ namespace BlImplementation;
 internal class BlCart : BlApi.Icart
 {
     IDal Dal = new DalList();
+
     public BO.Cart addToCart(BO.Cart c, int pId)
     {
         try
@@ -43,29 +44,27 @@ internal class BlCart : BlApi.Icart
                 c.Items.Add(newP);
                 c.TotalPrice += newP.Price;
             }
-            return c;
         }
         catch (Exception e)
         {
-            Console.WriteLine("cant add this product "+e.Message);
+            Console.WriteLine("can't add this product " + e.Message);
         }
-        return null;
+        return c;
     }
 
     public BO.Cart UpdateQuantity(BO.Cart c, int id, int quantity)
     {
         try
         {
-
             foreach (BO.OrderItem oi in c.Items)
             {
-                if (quantity == 0)
-                {
-                    c.Items.Remove(oi);
-                    c.TotalPrice -= oi.TotalPrice;
-                }
                 if (oi.ID == id)
                 {
+                    if (quantity == 0)
+                    {
+                        c.Items.Remove(oi);
+                        c.TotalPrice -= oi.TotalPrice;
+                    }
                     if (quantity > oi.Amount)
                     {
                         if (Dal.product.Read(id).InStock > 0)
@@ -84,54 +83,53 @@ internal class BlCart : BlApi.Icart
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    throw new BlIdNotFound();
                 }
             }
-            return c;
-
         }
         catch (Exception e)
         {
-
-            throw new Exception();
+            Console.WriteLine("can't update the quantity " + e.Message);
         }
+        return c;
     }
 
     public void MakeAnOrder(BO.Cart c, string name, string email, string address)
     {
         try
         {
-            if (address == null || name == null || IsValidEmail(email) == false)
-                throw new NotImplementedException();
+            if (address == null || name == null)
+                throw new BlNullException();
+            if (IsValidEmail(email) == false)
+                throw new BlInvalidInputException("the email is not correct");
             foreach (BO.OrderItem oi in c.Items)
             {
                 Dal.product.Read(oi.ID);
-                if (oi.Amount < 0 || oi.Amount < Dal.product.Read(oi.ID).InStock)
-                    throw new NotImplementedException();
+                if (oi.Amount < 0 )
+                    throw new BlInvalidInputException("invalid negative input for the amount");
+                if (oi.Amount < Dal.product.Read(oi.ID).InStock)
+                    throw new BlOutOfStockException();
             }
             Dal.DO.Order newOrder = new();
-            newOrder.ID = (dalList.DataSource.config.OrderId);
+            newOrder.ID = (dalList.DataSource.config.OrderId); //????????????
             newOrder.CustomerName = name;
             newOrder.CustomerEmail = email;
             newOrder.CustomerAddress = address;
             newOrder.OrderDate = DateTime.Now;
             newOrder.ShipDate = DateTime.MinValue;
-            //newOrder.PaymentDate = DateTime.MinValue;
             newOrder.DeliveryDate = DateTime.MinValue;
             int id = Dal.order.Add(newOrder);
             List<Dal.DO.OrderItem> allItems = Dal.orderItem.ReadAll().ToList();
-            ///dalList.DataSource.OrderItemsList
-            foreach (BO.OrderItem item in c.Items)///רץ על הסל קניה
+            foreach (BO.OrderItem item in c.Items)
             {
                 Dal.DO.OrderItem cartItem = new();
-                cartItem.ID =0;
+                cartItem.ID = 0;
                 cartItem.Amount = item.Amount;
                 cartItem.Price = item.Price;
                 cartItem.OrderId = newOrder.ID;
                 cartItem.ProductId = item.ID;
                 Dal.orderItem.Add(cartItem);
                 Dal.product.UpdateAmount(item.ID, item.Amount);
-
             }
         }
         catch

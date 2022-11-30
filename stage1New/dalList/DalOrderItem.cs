@@ -16,7 +16,6 @@ public class DalOrderItem : IorderItem
             }
         }
         DataSource.OrderItemsList.Add(newOrderItem);
-        //DataSource.config.indexOrderItem++;
         return newOrderItem.ID;
     }
 
@@ -29,7 +28,7 @@ public class DalOrderItem : IorderItem
                 return DataSource.OrderItemsList[i];
             }
         }
-        throw new EntityDuplicateException("this id doesn't exist");
+        throw new EntityNotFoundException("this id doesn't exist");
     }
 
     public IEnumerable<OrderItem> ReadAll()
@@ -53,7 +52,7 @@ public class DalOrderItem : IorderItem
                 return;
             }
         }
-        throw new EntityDuplicateException("this order item doesn't exist");
+        throw new EntityNotFoundException("this order item doesn't exist");
     }
 
     public void Delete(int id)
@@ -66,6 +65,6 @@ public class DalOrderItem : IorderItem
                 return;
             }
         }
-        throw new EntityDuplicateException("this order item doesn't exist");
+        throw new EntityNotFoundException("this order item doesn't exist");
     }
 }
