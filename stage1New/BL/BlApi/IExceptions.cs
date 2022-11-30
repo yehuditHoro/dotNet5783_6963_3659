@@ -8,8 +8,8 @@ namespace BlApi;
 /// <summary>
 /// if the id from the user does not exist
 /// </summary>
-public class BlEntityNotFound : Exception {
-    public BlEntityNotFound(DalApi.EntityNotFoundException? inner = null) : base("id not found", inner) { }
+public class BlIdNotFound : Exception {
+    public BlIdNotFound(DalApi.EntityNotFoundException? inner = null) : base("id not found", inner) { }
     public override string Message =>
                     "id not found";
 }

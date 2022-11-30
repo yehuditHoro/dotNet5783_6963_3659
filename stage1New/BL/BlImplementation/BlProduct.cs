@@ -110,7 +110,7 @@ internal class BlProduct : BlApi.Iproduct
 
     public void AddProduct(BO.Product p)
     {
-        if (p.ID > 0 && p.Name != null && p.Price > 0 && p.InStock > 0)
+        if (p.Name != null && p.Price > 0 && p.InStock > 0)
         {
             Dal.DO.Product prod = new Dal.DO.Product();
             prod.ID = p.ID;
@@ -139,7 +139,7 @@ internal class BlProduct : BlApi.Iproduct
 
     public void UpdateProduct(BO.Product p)
     {
-        if (p.ID > 0 && p.Name != null && p.Price > 0 && p.InStock > 0)
+        if (p.Name != null && p.Price > 0 && p.InStock > 0)
         {
             Dal.DO.Product prod = new Dal.DO.Product();
             prod.ID = p.ID;

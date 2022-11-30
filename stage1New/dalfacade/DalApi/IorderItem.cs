@@ -4,4 +4,5 @@ namespace DalApi;
 
 public interface IorderItem:Icrud<OrderItem>
 {
+
 }

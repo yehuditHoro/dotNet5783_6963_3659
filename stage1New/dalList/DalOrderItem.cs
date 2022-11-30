@@ -7,7 +7,7 @@ public class DalOrderItem : IorderItem
 {
     public int Add(OrderItem newOrderItem)
     {
-        
+        newOrderItem.ID = DataSource.config.OrderItemId;
         for (int i = 0; i < DataSource.OrderItemsList.Count(); i++)
         {
             if (DataSource.OrderItemsList[i].ID == newOrderItem.ID)

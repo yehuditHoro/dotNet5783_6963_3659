@@ -1,6 +1,6 @@
 ﻿using DalApi;
 using dalList;
-
+using BlApi;
 
 namespace BlImplementation;
 
@@ -13,7 +13,6 @@ internal class BlCart : BlApi.Icart
         {
             if (c.Items != null)
             {
-
                 foreach (BO.OrderItem oi in c.Items)
                 {
                     if (oi.ID == pId)
@@ -27,7 +26,7 @@ internal class BlCart : BlApi.Icart
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        throw new BlIdNotFound();
                     }
                 }
             }
@@ -48,9 +47,9 @@ internal class BlCart : BlApi.Icart
         }
         catch (Exception e)
         {
-
-            throw new Exception();
+            Console.WriteLine("cant add this product "+e.Message);
         }
+        return null;
     }
 
     public BO.Cart UpdateQuantity(BO.Cart c, int id, int quantity)
@@ -120,22 +119,12 @@ internal class BlCart : BlApi.Icart
             //newOrder.PaymentDate = DateTime.MinValue;
             newOrder.DeliveryDate = DateTime.MinValue;
             int id = Dal.order.Add(newOrder);
-            /// לעשות את הפונקציה האחרונה בקארט
-            List<Dal.DO.OrderItem> allItems = dalList.DataSource.OrderItemsList;
-            //foreach (Dal.DO.OrderItem item in allItems)///רץ על כל הפריטים
-            //{
-            //    if (item.OrderId == newOrder.ID)
-            //    {
-            //        Dal.DO.OrderItem cartItem = new();
-            //        cartItem.ID = item.ID;
-            //        cartItem.OrderId = newOrder.ID;
-            //        cartItem.
-            //    }
-            //}
+            List<Dal.DO.OrderItem> allItems = Dal.orderItem.ReadAll().ToList();
+            ///dalList.DataSource.OrderItemsList
             foreach (BO.OrderItem item in c.Items)///רץ על הסל קניה
             {
                 Dal.DO.OrderItem cartItem = new();
-                cartItem.ID = dalList.DataSource.config.OrderItemId;
+                cartItem.ID =0;
                 cartItem.Amount = item.Amount;
                 cartItem.Price = item.Price;
                 cartItem.OrderId = newOrder.ID;
