@@ -2,6 +2,7 @@
 using BlApi;
 using BlImplementation;
 using dalList;
+
 IBl ibl = new Bl();
 BO.Enums.eMenuOptions choice;
 BO.Cart gCart = new BO.Cart();
@@ -10,9 +11,13 @@ try
 {
     do
     {
-        dalList.DataSource ds = new DataSource();
+        //dalList.DataSource ds = new DataSource();
         Console.WriteLine("enter 0 to exit \n enter 1 to see the product options \n enter 2 to see the order options \n enter 3 to see the cart options \n ");
         choice = (BO.Enums.eMenuOptions)Convert.ToInt32(Console.ReadLine());
+        if (choice <0)
+            throw new BlInvalidInputException("invalid choice");
+        if(choice > 3)
+            throw new BlInvalidInputException("invalid choice");
         switch (choice)
         {
             case BO.Enums.eMenuOptions.EXIT:
@@ -29,19 +34,29 @@ try
         }
     } while (choice != 0);
 }
+catch(BlEntityNotFound msg) { Console.WriteLine(msg); } 
+catch(BlEntityDuplicate msg) { Console.WriteLine(msg); }
+catch (BlFailedToAdd msg) { Console.WriteLine(msg); }
+catch (BlFailedToGet msg) { Console.WriteLine(msg); }
+catch (BlFailedToUpdate msg) { Console.WriteLine(msg); }
+catch (BlFailedToDelete msg) { Console.WriteLine(msg); }
+catch (BlInvalidInputException msg) { Console.WriteLine(msg); }
+catch (BlOutOfStockException msg) { Console.WriteLine(msg); }
+catch (BlNullException msg) { Console.WriteLine(msg); }
 catch (Exception msg) { Console.WriteLine(msg); }
+
 
 BO.Product newProduct()
 {
 
     BO.Product p = new();
-    p.ID = dalList.DataSource.config.ProductId;
+    p.ID =0;
     Console.WriteLine("enter the name of the product");
     p.Name = Console.ReadLine();
     Console.WriteLine("enter the price of the product");
     p.Price = Convert.ToDouble(Console.ReadLine());
     Console.WriteLine("enter the category of the product");
-    p.Category = (BO.Enums.eCategory)Convert.ToInt32(Console.ReadLine());
+    p.Category =Enum.GetValues<BO.Enums.eCategory>().FirstOrDefault(x=>x.ToString()== Console.ReadLine());
     Console.WriteLine("enter the amount in stock of the product");
     p.InStock = Convert.ToInt32(Console.ReadLine());
     return p;

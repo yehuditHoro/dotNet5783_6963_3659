@@ -6,6 +6,7 @@ internal class DalOrder : Iorder
 { 
     public int Add(Order newOrder)
     {
+        newOrder.ID = DataSource.config.OrderId;
         for (int i = 0; i < DataSource.OrdersList.Count(); i++)
         {
             if (DataSource.OrdersList[i].ID == newOrder.ID)

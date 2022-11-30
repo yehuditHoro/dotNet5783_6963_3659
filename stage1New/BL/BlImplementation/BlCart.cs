@@ -11,40 +11,40 @@ internal class BlCart : BlApi.Icart
     {
         try
         {
-        if (c.Items != null)
-        {
-
-            foreach (BO.OrderItem oi in c.Items)
+            if (c.Items != null)
             {
-                if (oi.ID == pId)
+
+                foreach (BO.OrderItem oi in c.Items)
                 {
-                    if (Dal.product.Read(pId).InStock > 0)
+                    if (oi.ID == pId)
                     {
-                        oi.Amount++;
-                        oi.TotalPrice += oi.Price;
-                        c.TotalPrice += oi.Price;
+                        if (Dal.product.Read(pId).InStock > 0)
+                        {
+                            oi.Amount++;
+                            oi.TotalPrice += oi.Price;
+                            c.TotalPrice += oi.Price;
+                        }
+                    }
+                    else
+                    {
+                        throw new NotImplementedException();
                     }
                 }
-                else
-                {
-                    throw new NotImplementedException();
-                }
             }
-        }
-        Dal.DO.Product prod = Dal.product.Read(pId);
-        if (prod.InStock > 0)
-        {
-            BO.OrderItem newP = new BO.OrderItem();
-            newP.ID = (dalList.DataSource.config.OrderItemId);
-            newP.Name = prod.Name;
-            newP.Price = prod.Price;
-            newP.ProductID = pId;
-            newP.Amount = 1;
-            newP.TotalPrice = prod.Price;
-            c.Items.Add(newP);// שגיאת זמן ריצה
-            c.TotalPrice += newP.Price;
-        }
-        return c;
+            Dal.DO.Product prod = Dal.product.Read(pId);
+            if (prod.InStock > 0)
+            {
+                BO.OrderItem newP = new BO.OrderItem();
+                newP.ID = 0;
+                newP.Name = prod.Name;
+                newP.Price = prod.Price;
+                newP.ProductID = pId;
+                newP.Amount = 1;
+                newP.TotalPrice = prod.Price;
+                c.Items.Add(newP);
+                c.TotalPrice += newP.Price;
+            }
+            return c;
         }
         catch (Exception e)
         {
@@ -58,37 +58,37 @@ internal class BlCart : BlApi.Icart
         try
         {
 
-        foreach (BO.OrderItem oi in c.Items)
-        {
-            if (quantity == 0)
+            foreach (BO.OrderItem oi in c.Items)
             {
-                c.Items.Remove(oi);
-                c.TotalPrice -= oi.TotalPrice;
-            }
-            if (oi.ID == id)
-            {
-                if (quantity > oi.Amount)
+                if (quantity == 0)
                 {
-                    if (Dal.product.Read(id).InStock > 0)
+                    c.Items.Remove(oi);
+                    c.TotalPrice -= oi.TotalPrice;
+                }
+                if (oi.ID == id)
+                {
+                    if (quantity > oi.Amount)
                     {
-                        c.TotalPrice += oi.Price * (quantity - oi.Amount);
+                        if (Dal.product.Read(id).InStock > 0)
+                        {
+                            c.TotalPrice += oi.Price * (quantity - oi.Amount);
+                            oi.TotalPrice = quantity * oi.Price;
+                            oi.Amount = quantity;
+                        }
+                    }
+                    if (quantity < oi.Amount)
+                    {
+                        c.TotalPrice -= oi.Price * (oi.Amount - quantity);
                         oi.TotalPrice = quantity * oi.Price;
                         oi.Amount = quantity;
                     }
                 }
-                if (quantity < oi.Amount)
+                else
                 {
-                    c.TotalPrice -= oi.Price * (oi.Amount - quantity);
-                    oi.TotalPrice = quantity * oi.Price;
-                    oi.Amount = quantity;
+                    throw new NotImplementedException();
                 }
             }
-            else
-            {
-                throw new NotImplementedException();
-            }
-        }
-        return c;
+            return c;
 
         }
         catch (Exception e)
@@ -135,10 +135,10 @@ internal class BlCart : BlApi.Icart
             foreach (BO.OrderItem item in c.Items)///רץ על הסל קניה
             {
                 Dal.DO.OrderItem cartItem = new();
-                cartItem.ID=dalList.DataSource.config.OrderItemId;
-                cartItem.Amount = item.Amount;  
+                cartItem.ID = dalList.DataSource.config.OrderItemId;
+                cartItem.Amount = item.Amount;
                 cartItem.Price = item.Price;
-                cartItem.OrderId=newOrder.ID;
+                cartItem.OrderId = newOrder.ID;
                 cartItem.ProductId = item.ID;
                 Dal.orderItem.Add(cartItem);
                 Dal.product.UpdateAmount(item.ID, item.Amount);

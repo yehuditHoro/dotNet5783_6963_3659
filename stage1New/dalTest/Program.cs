@@ -56,7 +56,7 @@ void ProductOption()
     {
         case eCRUD.ADD:
             Product product = newProduct();
-            product.ID = DataSource.config.ProductId;
+            product.ID = 0;
             idal.product.Add(product);
             break;
         case eCRUD.READ:

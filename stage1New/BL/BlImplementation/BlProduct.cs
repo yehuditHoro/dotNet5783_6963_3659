@@ -93,7 +93,6 @@ internal class BlProduct : BlApi.Iproduct
 
     public BO.Product GetProductItemsForCustomer(int id)
     {
-        /// לשאול את המורה למה הכפילות?
         if (id > 0)
         {
             Dal.DO.Product p = Dal.product.Read(id);

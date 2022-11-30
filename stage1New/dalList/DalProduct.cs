@@ -5,6 +5,7 @@ public class DalProduct:Iproduct
 {
     public int Add(Product newProduct)
     {
+        newProduct.ID = DataSource.config.ProductId;
         for (int i = 0; i < DataSource.ProductsList.Count(); i++)
         {
             if (DataSource.ProductsList[i].ID == newProduct.ID)
