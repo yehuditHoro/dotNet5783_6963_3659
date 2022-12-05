@@ -11,7 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-//using WpfApp1;
+using BO;
+using BlApi;
 namespace PL;
 
 /// <summary>
@@ -19,20 +20,25 @@ namespace PL;
 /// </summary>
 public partial class Window2 : Window
 {
-    public Window2()
+    private IBl bl;
+
+    public Window2(IBl BL)
     {
         InitializeComponent();
-        
-
+        bl = BL;
+        ProductsListview.ItemsSource = bl.product.GetProducts();
+        ComboBoxSelector.ItemsSource= BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
     }
 
     private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-
+        string category = ((sender).Content.ToString());
+        
     }
 
     private void ComboBoxSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
 
     }
+
 }
