@@ -37,8 +37,8 @@ public partial class Window2 : Window
 
     private void ComboBoxSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        IEnumerable<BO.ProductForList> allProduct
-        ProductsListview.ItemsSource = bl.product.GetProducts()/.Where(category = ComboBoxSelector.SelectedItem);
+        ProductsListview.ItemsSource = bl.product.GetByFilter((x=>x.Category ==(Enums.eCategory)ComboBoxSelector.SelectedItem));
+        ComboBoxSelector.ItemsSource = BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
     }
 
 }

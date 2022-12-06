@@ -44,6 +44,16 @@ internal class BlProduct : BlApi.Iproduct
     /// <returns></returns>
     /// <exception cref="BlFailedToGet"></exception>
     /// <exception cref="BlIdNotFound"></exception>
+    /// 
+
+
+    public IEnumerable<BO.ProductForList> GetByFilter(Func<BO.ProductForList, bool>? func = null)
+    {
+        IEnumerable<BO.ProductForList> filteredProducts = GetProducts();
+
+        return func == null ? filteredProducts : filteredProducts.Where(func);
+
+    }
     public IEnumerable<BO.ProductItem> GetCatalog()
     {
         try
