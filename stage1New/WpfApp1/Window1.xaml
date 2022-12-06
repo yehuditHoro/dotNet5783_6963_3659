@@ -7,6 +7,12 @@
         mc:Ignorable="d"
         Title="Window1" Height="450" Width="800">
     <Grid>
-        
+        <TextBox HorizontalAlignment="Left" Margin="328,91,0,0" TextWrapping="Wrap" Text="        name here" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged" Height="27"/>
+        <TextBox HorizontalAlignment="Left" Margin="328,154,0,0" TextWrapping="Wrap" Text="        category here" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged" Height="27"/>
+
+        <TextBox HorizontalAlignment="Left" Margin="328,217,0,0" TextWrapping="Wrap" Text="        price here" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged" Height="27"/>
+        <TextBox HorizontalAlignment="Left" Margin="328,279,0,0" TextWrapping="Wrap" Text="        amount here" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged" Height="27"/>
+
+
     </Grid>
 </Window>

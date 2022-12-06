@@ -29,6 +29,7 @@ VerticalAlignment="Stretch" Width="auto">
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button Content="add item" HorizontalAlignment="Left" Margin="289,121,0,0" Grid.Row="2" VerticalAlignment="Top" Click="Button_Click"/>
 
     </Grid>
 </Window>

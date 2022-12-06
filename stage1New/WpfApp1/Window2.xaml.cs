@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BO;
 using BlApi;
+using MainWindow;
 namespace PL;
 
 /// <summary>
@@ -47,4 +48,10 @@ public partial class Window2 : Window
         //ComboBoxSelector.ItemsSource = o;
     }
 
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        Window1 window = new Window1(bl);
+        window.Show();
+        this.Hide();
+    }
 }

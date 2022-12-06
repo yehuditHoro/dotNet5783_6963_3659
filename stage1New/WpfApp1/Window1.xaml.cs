@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BlApi;
 namespace MainWindow
 {
     /// <summary>
@@ -19,9 +19,18 @@ namespace MainWindow
     /// </summary>
     public partial class Window1 : Window
     {
-        public Window1()
+        private IBl bl;
+        public Window1(IBl BL)
         {
             InitializeComponent();
+            bl = BL;
+            
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string name=(sender as Button).Content.ToString();
+            string k = name;
         }
     }
 }
