@@ -20,7 +20,7 @@ VerticalAlignment="Stretch" Width="auto">
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="ComboBoxSelector" Grid.Column="1" Margin="40,41,40,0" VerticalAlignment="Stretch" Width="120" Height="25" SelectionChanged="ComboBoxSelector_SelectionChanged"/>
+            <ComboBox ItemsSource="{Binding category}" Name="ComboBoxSelector" Grid.Column="1" Margin="40,41,40,0" VerticalAlignment="Stretch" Width="120" Height="25" SelectionChanged="ComboBoxSelector_SelectionChanged"/>
         </Grid>
         <ListView x:Name="ProductsListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListview_SelectionChanged">
             <ListView.View>
