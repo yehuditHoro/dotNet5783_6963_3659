@@ -27,18 +27,18 @@ public partial class Window2 : Window
         InitializeComponent();
         bl = BL;
         ProductsListview.ItemsSource = bl.product.GetProducts();
-        ComboBoxSelector.ItemsSource= BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
+        ComboBoxSelector.ItemsSource = BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
     }
 
     private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        string category = ((sender).Content.ToString());
         
     }
 
     private void ComboBoxSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-
+        IEnumerable<BO.ProductForList> allProduct
+        ProductsListview.ItemsSource = bl.product.GetProducts()/.Where(category = ComboBoxSelector.SelectedItem);
     }
 
 }
