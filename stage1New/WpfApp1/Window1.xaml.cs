@@ -24,13 +24,30 @@ namespace MainWindow
         {
             InitializeComponent();
             bl = BL;
-            
+            category.ItemsSource = BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string name=(sender as Button).Content.ToString();
-            string k = name;
+            //string name=(sender as Button).Content.ToString();
+            //string k = name;
         }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //BO.Product p = new BO.Product()
+            //{
+            //    Name = productName.ToString(),
+            //    Category = category.SelectedItem.,
+
+            //}
+
+
     }
+}
 }

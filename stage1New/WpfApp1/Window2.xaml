@@ -7,29 +7,25 @@
         mc:Ignorable="d"
         Title="Window2" Height="640" Width="800">
     <Grid Name="MainGrid">
+       
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-VerticalAlignment="Stretch" Width="auto">
+        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Grid.ColumnSpan="2" Margin="0,0,0,447" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox ItemsSource="{Binding category}" Name="ComboBoxSelector" Grid.Column="1" Margin="40,41,40,0" VerticalAlignment="Stretch" Width="120" Height="25" SelectionChanged="ComboBoxSelector_SelectionChanged"/>
+            <ComboBox ItemsSource="{Binding category}" Name="ComboBoxSelector" Height="15" Grid.Column="1" Margin="-2,0,0,0" Width="100" SelectionChanged="ComboBoxSelector_SelectionChanged"/>
         </Grid>
-        <ListView x:Name="ProductsListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListview_SelectionChanged">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
+        <ListView x:Name="ProductsListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListview_SelectionChanged" Grid.ColumnSpan="2" RenderTransformOrigin="0.412,-0.045">
+            
         </ListView>
-        <Button Content="add item" HorizontalAlignment="Left" Margin="289,121,0,0" Grid.Row="2" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button Content="add item" HorizontalAlignment="Left" Margin="152,121,0,0" Grid.Row="2" VerticalAlignment="Top" Click="Button_Click" Grid.Column="1"/>
 
     </Grid>
 </Window>
