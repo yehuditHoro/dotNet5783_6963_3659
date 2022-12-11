@@ -3,7 +3,7 @@ using Dal.DO;
 
 namespace dalList;
 internal class DalOrder : Iorder
-{ 
+{
     /// <summary>
     /// add a new order to the order list
     /// </summary>
@@ -44,15 +44,34 @@ internal class DalOrder : Iorder
     /// returns all the orders in the order list
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Order> ReadAll()
+    public IEnumerable<Order> ReadAll(Func<Order, bool>? func = null)
     {
-        List<Order> allOrders = new List<Order>();
-     
-        for (int i = 0; i < DataSource.OrdersList.Count(); i++)
+
+        try
         {
-            allOrders.Add(DataSource.OrdersList[i]);
+            List<Order> allOrders = new List<Order>();
+            for (int i = 0; i < DataSource.OrdersList.Count(); i++)
+            {
+                allOrders.Add(DataSource.OrdersList[i]);
+            }
+            return func == null ? allOrders : allOrders.Where(func);
         }
-        return allOrders;
+        catch (DalApi.EntityNotFoundException)
+        {
+            throw new EntityNotFoundException("entity not found");
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns></returns>
+    /// <exception cref="EntityNotFoundException"></exception>
+    public Order ReadSingle(Func<Order, bool> func)
+    {
+        return DataSource.OrdersList.Where(func).ToList()[0];
+        throw new EntityNotFoundException("order not found");
     }
     /// <summary>
     /// update the order in the order list

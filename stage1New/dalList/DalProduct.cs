@@ -1,7 +1,7 @@
 ﻿using Dal.DO;
 namespace dalList;
 using DalApi;
-public class DalProduct:Iproduct
+public class DalProduct : Iproduct
 {
     /// <summary>
     /// add a new product to the product list
@@ -43,14 +43,32 @@ public class DalProduct:Iproduct
     ///  returns all the products in the products list
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<Product> ReadAll()
+    public IEnumerable<Product> ReadAll(Func<Product, bool>? func = null)
     {
-        List<Product> allProducts = new List<Product>();
-        for (int i = 0; i < DataSource.ProductsList.Count(); i++)
+        try
         {
-            allProducts.Add(DataSource.ProductsList[i]);
+            List<Product> allProducts = new List<Product>();
+            for (int i = 0; i < DataSource.ProductsList.Count(); i++)
+            {
+                allProducts.Add(DataSource.ProductsList[i]);
+            }
+            return func == null ? allProducts : allProducts.Where(func);
         }
-        return allProducts;
+        catch (DalApi.EntityNotFoundException)
+        {
+            throw new EntityNotFoundException("entity not found");
+        }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns></returns>
+    /// <exception cref="EntityNotFoundException"></exception>
+    public Product ReadSingle(Func<Product, bool> func)
+    {
+        return DataSource.ProductsList.Where(func).ToList()[0];
+        throw new EntityNotFoundException("product not found");
     }
     /// <summary>
     /// update the product in the products list
@@ -93,14 +111,14 @@ public class DalProduct:Iproduct
     /// <param name="id"></param>
     /// <param name="amount"></param>
     /// <exception cref="EntityNotFoundException"></exception>
-    public void UpdateAmount(int id,int amount)
+    public void UpdateAmount(int id, int amount)
     {
         for (int i = 0; i < DataSource.ProductsList.Count(); i++)
         {
             if (DataSource.ProductsList[i].ID == id)
             {
                 Product p = DataSource.ProductsList[i];
-                p.InStock-=amount;
+                p.InStock -= amount;
                 DataSource.ProductsList[i] = p;
                 return;
             }

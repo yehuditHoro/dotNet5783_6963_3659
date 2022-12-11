@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using DalApi;
 using dalList;
+using dalfacade;
 namespace BlImplementation;
 
 internal class BlProduct : BlApi.Iproduct
@@ -12,11 +13,14 @@ internal class BlProduct : BlApi.Iproduct
     /// <returns></returns>
     /// <exception cref="BlFailedToGet"></exception>
     /// <exception cref="BlIdNotFound"></exception>
-    public IEnumerable<BO.ProductForList> GetProducts()
+    public IEnumerable<BO.ProductForList> GetProducts(BO.Enums.eCategory? category)
     {
         try
         {
-            IEnumerable<Dal.DO.Product> getProducts = Dal.product.ReadAll();
+            IEnumerable<Dal.DO.Product> getProducts;
+            if (category == null)
+                getProducts = Dal.product.ReadAll();
+            else { getProducts = Dal.product.ReadAll(x => (BO.Enums.eCategory)x.Category == category); }
             if (getProducts.Count() <= 0)
             {
                 throw new BlFailedToGet();
@@ -46,14 +50,6 @@ internal class BlProduct : BlApi.Iproduct
     /// <exception cref="BlIdNotFound"></exception>
     /// 
 
-
-    public IEnumerable<BO.ProductForList> GetByFilter(Func<BO.ProductForList, bool>? func = null)
-    {
-        IEnumerable<BO.ProductForList> filteredProducts = GetProducts();
-
-        return func == null ? filteredProducts : filteredProducts.Where(func);
-
-    }
     public IEnumerable<BO.ProductItem> GetCatalog()
     {
         try

@@ -7,25 +7,24 @@
         mc:Ignorable="d"
         Title="Window2" Height="640" Width="800">
     <Grid Name="MainGrid">
-       
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="8*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Grid.ColumnSpan="2" Margin="0,0,0,447" Grid.RowSpan="2">
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox ItemsSource="{Binding category}" Name="ComboBoxSelector" Height="15" Grid.Column="1" Margin="-2,0,0,0" Width="100" SelectionChanged="ComboBoxSelector_SelectionChanged"/>
+            <Label Content="Category:"  Grid.Column="1" HorizontalAlignment= "Left"  VerticalAlignment="Center" FontSize="20" FontWeight="Bold" FontFamily="AdamGorry-Inline" Margin="10,0,0,0"/>
+            <ComboBox ItemsSource="{Binding category}" Name="ComboBoxSelector" Grid.Column="1" Margin="156,12,55,10" SelectionChanged="ComboBoxSelector_SelectionChanged"/>
         </Grid>
         <ListView x:Name="ProductsListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListview_SelectionChanged" Grid.ColumnSpan="2" RenderTransformOrigin="0.412,-0.045">
-            
+
         </ListView>
-        <Button Content="add item" HorizontalAlignment="Left" Margin="152,121,0,0" Grid.Row="2" VerticalAlignment="Top" Click="Button_Click" Grid.Column="1"/>
+        <Button Content="add item" HorizontalAlignment="Center" Margin="0,50,0,50" FontSize="20" Grid.Row="2" VerticalAlignment="Top" Click="Button_Click" RenderTransformOrigin="3.424,-2.504" Height="40" Width="107"/>
 
     </Grid>
 </Window>

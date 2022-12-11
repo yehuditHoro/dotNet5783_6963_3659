@@ -31,21 +31,9 @@ public partial class Window2 : Window
         ComboBoxSelector.ItemsSource = BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
     }
 
-    private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
-    }
-
     private void ComboBoxSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ProductsListview.ItemsSource = bl.product.GetByFilter((x => x.Category == (Enums.eCategory)ComboBoxSelector.SelectedItem));
-        //List<Enums.eCategory> o = new();
-        //foreach (Enums.eCategory i in Enums.eCategory.GetValues(typeof(BO.Enums.eCategory)))
-        //{
-        //    if (i != (Enums.eCategory)ComboBoxSelector.SelectedItem)
-        //        o.Add(i);
-        //}
-        //ComboBoxSelector.ItemsSource = o;
+        ProductsListview.ItemsSource = bl.product.GetProducts((Enums.eCategory)ComboBoxSelector.SelectedItem);
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)
