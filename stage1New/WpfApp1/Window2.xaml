@@ -20,8 +20,9 @@
             </Grid.ColumnDefinitions >
             <Label Content="Category:"  Grid.Column="1" HorizontalAlignment= "Left"  VerticalAlignment="Center" FontSize="20" FontWeight="Bold" FontFamily="AdamGorry-Inline" Margin="10,0,0,0"/>
             <ComboBox ItemsSource="{Binding category}" Name="ComboBoxSelector" Grid.Column="1" Margin="156,12,55,10" SelectionChanged="ComboBoxSelector_SelectionChanged"/>
+            <Button Content="X" Name="deleteFilter" Grid.Column="1" HorizontalAlignment= "Left" Margin="350,12,0,10" Width="30" Click="deleteFilter_Click"/>
         </Grid>
-        <ListView x:Name="ProductsListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListview_SelectionChanged" Grid.ColumnSpan="2" RenderTransformOrigin="0.412,-0.045">
+        <ListView x:Name="ProductsListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.ColumnSpan="2" RenderTransformOrigin="0.412,-0.045">
 
         </ListView>
         <Button Content="add item" HorizontalAlignment="Center" Margin="0,50,0,50" FontSize="20" Grid.Row="2" VerticalAlignment="Top" Click="Button_Click" RenderTransformOrigin="3.424,-2.504" Height="40" Width="107"/>

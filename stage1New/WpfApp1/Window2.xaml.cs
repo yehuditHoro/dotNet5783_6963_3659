@@ -28,7 +28,14 @@ public partial class Window2 : Window
         InitializeComponent();
         bl = BL;
         ProductsListview.ItemsSource = bl.product.GetProducts();
-        ComboBoxSelector.ItemsSource = BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
+        //List<String> l = new();
+        //foreach (object item in BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory)))
+        //{
+        //    l.Add(item.ToString());
+        //}
+        //l.Add("All");
+        //ComboBoxSelector.ItemsSource = l;
+        ComboBoxSelector.ItemsSource =  BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
     }
 
     private void ComboBoxSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -42,4 +49,15 @@ public partial class Window2 : Window
         window.Show();
         this.Hide();
     }
+
+    private void deleteFilter_Click(object sender, RoutedEventArgs e)
+    {
+        ProductsListview.ItemsSource = bl.product.GetProducts();
+
+    }
+
+    /* private void ProductsListview_SelectionChanged(object s, EventArgs e)
+     {
+
+     }*/
 }

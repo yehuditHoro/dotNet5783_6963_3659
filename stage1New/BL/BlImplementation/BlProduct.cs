@@ -13,7 +13,7 @@ internal class BlProduct : BlApi.Iproduct
     /// <returns></returns>
     /// <exception cref="BlFailedToGet"></exception>
     /// <exception cref="BlIdNotFound"></exception>
-    public IEnumerable<BO.ProductForList> GetProducts(BO.Enums.eCategory? category)
+    public IEnumerable<BO.ProductForList?> GetProducts(BO.Enums.eCategory? category)
     {
         try
         {
@@ -50,7 +50,7 @@ internal class BlProduct : BlApi.Iproduct
     /// <exception cref="BlIdNotFound"></exception>
     /// 
 
-    public IEnumerable<BO.ProductItem> GetCatalog()
+    public IEnumerable<BO.ProductItem?> GetCatalog()
     {
         try
         {

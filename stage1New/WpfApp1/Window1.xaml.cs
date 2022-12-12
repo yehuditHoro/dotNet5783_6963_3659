@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
+using PL;
+
 namespace MainWindow
 {
     /// <summary>
@@ -27,27 +29,30 @@ namespace MainWindow
             category.ItemsSource = BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //string name=(sender as Button).Content.ToString();
-            //string k = name;
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //BO.Product p = new BO.Product()
-            //{
-            //    Name = productName.ToString(),
-            //    Category = category.SelectedItem.,
+            BO.Product p = new BO.Product()
+            {
+                ID = 0,
+                Name = productName.Text,
+                Category = (BO.Enums.eCategory)category.SelectedItem,
+                InStock = int.Parse(productAmount.Text),
+                Price = int.Parse(productPrice.Text)
+            };
+            bl.product.AddProduct(p);
+            MessageBox.Show("Product successfully added");
+        }
 
-            //}
+        private void back(object sender, RoutedEventArgs e)
+        {
+            Window2 window = new Window2(bl);
+            window.Show();
+            this.Hide();
+        }
 
+        private void productName_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
+        }
     }
-}
 }
