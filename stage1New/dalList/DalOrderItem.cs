@@ -14,13 +14,6 @@ public class DalOrderItem : IorderItem
     public int Add(OrderItem newOrderItem)
     {
         newOrderItem.ID = DataSource.config.OrderItemId;
-        for (int i = 0; i < DataSource.OrderItemsList.Count(); i++)
-        {
-            if (DataSource.OrderItemsList[i].ID == newOrderItem.ID)
-            {
-                throw new EntityDuplicateException("this order item already exist");
-            }
-        }
         DataSource.OrderItemsList.Add(newOrderItem);
         return newOrderItem.ID;
     }
@@ -32,13 +25,7 @@ public class DalOrderItem : IorderItem
     /// <exception cref="EntityNotFoundException"></exception>
     public OrderItem Read(int id)
     {
-        for (int i = 0; i < DataSource.OrderItemsList.Count(); i++)
-        {
-            if (DataSource.OrderItemsList[i].ID == id)
-            {
-                return DataSource.OrderItemsList[i];
-            }
-        }
+        return DataSource.OrderItemsList.Find(OI => OI.ID == id);
         throw new EntityNotFoundException("this id doesn't exist");
     }
     /// <summary>
@@ -48,13 +35,8 @@ public class DalOrderItem : IorderItem
     public IEnumerable<OrderItem> ReadAll(Func<OrderItem, bool>? func = null)
     {
         try
-        {
-            List<OrderItem> allOrderItems = new List<OrderItem>();
-
-            for (int i = 0; i < DataSource.OrderItemsList.Count(); i++)
-            {
-                allOrderItems.Add(DataSource.OrderItemsList[i]);
-            }
+        { 
+            List<OrderItem> allOrderItems = new (DataSource.OrderItemsList);
             return func == null ? allOrderItems : allOrderItems.Where(func);
         }
         catch (DalApi.EntityNotFoundException)

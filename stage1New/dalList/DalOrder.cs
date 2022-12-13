@@ -13,13 +13,6 @@ internal class DalOrder : Iorder
     public int Add(Order newOrder)
     {
         newOrder.ID = DataSource.config.OrderId;
-        for (int i = 0; i < DataSource.OrdersList.Count(); i++)
-        {
-            if (DataSource.OrdersList[i].ID == newOrder.ID)
-            {
-                throw new EntityDuplicateException("this order already exist");
-            }
-        }
         DataSource.OrdersList.Add(newOrder);
         return newOrder.ID;
     }
@@ -31,13 +24,7 @@ internal class DalOrder : Iorder
     /// <exception cref="EntityNotFoundException"></exception>
     public Order Read(int id)
     {
-        for (int i = 0; i < DataSource.OrdersList.Count(); i++)
-        {
-            if (DataSource.OrdersList[i].ID == id)
-            {
-                return DataSource.OrdersList[i];
-            }
-        }
+        return DataSource.OrdersList.Find(O => O.ID == id);
         throw new EntityNotFoundException("this id doesn't exist");
     }
     /// <summary>
@@ -46,14 +33,9 @@ internal class DalOrder : Iorder
     /// <returns></returns>
     public IEnumerable<Order> ReadAll(Func<Order, bool>? func = null)
     {
-
         try
         {
-            List<Order> allOrders = new List<Order>();
-            for (int i = 0; i < DataSource.OrdersList.Count(); i++)
-            {
-                allOrders.Add(DataSource.OrdersList[i]);
-            }
+            List<Order> allOrders = new(DataSource.OrdersList);
             return func == null ? allOrders : allOrders.Where(func);
         }
         catch (DalApi.EntityNotFoundException)

@@ -12,13 +12,6 @@ public class DalProduct : Iproduct
     public int Add(Product newProduct)
     {
         newProduct.ID = DataSource.config.ProductId;
-        for (int i = 0; i < DataSource.ProductsList.Count(); i++)
-        {
-            if (DataSource.ProductsList[i].ID == newProduct.ID)
-            {
-                throw new EntityDuplicateException("this product already exist");
-            }
-        }
         DataSource.ProductsList.Add(newProduct);
         return newProduct.ID;
     }
@@ -30,13 +23,7 @@ public class DalProduct : Iproduct
     /// <exception cref="EntityNotFoundException"></exception>
     public Product Read(int id)
     {
-        for (int i = 0; i < DataSource.ProductsList.Count(); i++)
-        {
-            if (DataSource.ProductsList[i].ID == id)
-            {
-                return DataSource.ProductsList[i];
-            }
-        }
+        return DataSource.ProductsList.Find(p => p.ID == id);
         throw new EntityNotFoundException("this id doesn't exist");
     }
     /// <summary>
@@ -47,11 +34,7 @@ public class DalProduct : Iproduct
     {
         try
         {
-            List<Product> allProducts = new List<Product>();
-            for (int i = 0; i < DataSource.ProductsList.Count(); i++)
-            {
-                allProducts.Add(DataSource.ProductsList[i]);
-            }
+            List<Product> allProducts = new (DataSource.ProductsList);
             return func == null ? allProducts : allProducts.Where(func);
         }
         catch (DalApi.EntityNotFoundException)

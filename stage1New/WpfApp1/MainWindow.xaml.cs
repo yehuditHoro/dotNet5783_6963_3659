@@ -27,10 +27,14 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
-
+    /// <summary>
+    /// move the user to the product window in order to see all the products
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void GetProducts(object sender, RoutedEventArgs e)
     {
-        Window2 ListWindow = new Window2(bl);
+        ProductListWindow ListWindow = new ProductListWindow(bl);
         ListWindow.Show();
         this.Hide();
     }

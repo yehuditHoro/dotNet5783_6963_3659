@@ -89,7 +89,7 @@ internal class BlProduct : BlApi.Iproduct
     {
         try
         {
-            if (id > 0)
+            if (id >= 0)
             {
                 Dal.DO.Product p = Dal.product.Read(id);
                 BO.Product prod = new BO.Product();
