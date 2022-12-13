@@ -81,7 +81,11 @@ namespace MainWindow
             window.Show();
             this.Hide();
         }
-
+        /// <summary>
+        /// delete the product
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Delete(object sender, RoutedEventArgs e)
         {
             bl.product.RemoveProduct(p_id);
