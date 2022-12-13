@@ -32,6 +32,7 @@ namespace MainWindow
             {
                 p_id = 0;
                 addOrUpdate.Content = "add";
+                btnDelete.Visibility = Visibility.Hidden;
             }
             else
             {
@@ -81,6 +82,11 @@ namespace MainWindow
             this.Hide();
         }
 
+        private void Delete(object sender, RoutedEventArgs e)
+        {
+            bl.product.RemoveProduct(p_id);
+            MessageBox.Show("Done successfully");
 
+        }
     }
 }
