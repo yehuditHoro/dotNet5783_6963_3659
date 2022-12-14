@@ -148,7 +148,7 @@ internal class BlProduct : BlApi.Iproduct
     {
         try
         {
-            if (p.Name == null)
+            if (p.Name == "")
                 throw new BlNullException();
             if (p.Price < 0)
                 throw new BlInvalidInputException("invalid negative input");
