@@ -25,10 +25,17 @@ public partial class ProductListWindow : Window
 
     public ProductListWindow(IBl BL)
     {
-        InitializeComponent();
-        bl = BL;
-        ProductsListview.ItemsSource = bl.product.GetProducts();
-        ComboBoxSelector.ItemsSource =  BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
+        try
+        {
+            InitializeComponent();
+            bl = BL;
+            ProductsListview.ItemsSource = bl.product.GetProducts();
+            ComboBoxSelector.ItemsSource = BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
     }
     /// <summary>
     /// show all the categories
@@ -37,7 +44,14 @@ public partial class ProductListWindow : Window
     /// <param name="e"></param>
     private void ShowCategories(object sender, SelectionChangedEventArgs e)
     {
-        ProductsListview.ItemsSource = bl.product.GetProducts((Enums.eCategory)ComboBoxSelector.SelectedItem);
+        try
+        {
+            ProductsListview.ItemsSource = bl.product.GetProducts((Enums.eCategory)ComboBoxSelector.SelectedItem);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
     }
     /// <summary>
     /// move the user to the add product window(product window)
@@ -57,8 +71,11 @@ public partial class ProductListWindow : Window
     /// <param name="e"></param>
     private void DeleteFilter_Click(object sender, RoutedEventArgs e)
     {
-        ProductsListview.ItemsSource = bl.product.GetProducts();
-
+        try
+        {
+            ProductsListview.ItemsSource = bl.product.GetProducts();
+        }catch(Exception ex)
+        { MessageBox.Show(ex.Message); }
     }
     /// <summary>
     /// move the user to the update product window(product window)
@@ -71,5 +88,4 @@ public partial class ProductListWindow : Window
         Close();
     }
 
- 
 }

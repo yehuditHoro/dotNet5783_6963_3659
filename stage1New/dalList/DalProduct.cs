@@ -34,7 +34,7 @@ public class DalProduct : Iproduct
     {
         try
         {
-            List<Product> allProducts = new (DataSource.ProductsList);
+            List<Product> allProducts = new(DataSource.ProductsList);
             return func == null ? allProducts : allProducts.Where(func);
         }
         catch (DalApi.EntityNotFoundException)
@@ -60,17 +60,13 @@ public class DalProduct : Iproduct
     /// <exception cref="EntityNotFoundException"></exception>
     public void Update(Product newProduct)
     {
-        int id = newProduct.ID;
-        for (int i = 0; i < DataSource.ProductsList.Count(); i++)
-        {
-            if (DataSource.ProductsList[i].ID == id)
-            {
-                DataSource.ProductsList[i] = newProduct;
-                return;
-            }
-        }
-        throw new EntityNotFoundException("this product doesn't exist");
+        int idx = DataSource.ProductsList.FindIndex(O => O.ID == newProduct.ID);
+        if (idx == -1)
+            throw new EntityNotFoundException("this product doesn't exist");
+        DataSource.ProductsList[idx] = newProduct;
+        return;
     }
+
     /// <summary>
     /// gets id and delete the specific item of the products list
     /// </summary>
@@ -78,15 +74,11 @@ public class DalProduct : Iproduct
     /// <exception cref="EntityNotFoundException"></exception>
     public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.ProductsList.Count(); i++)
-        {
-            if (DataSource.ProductsList[i].ID == id)
-            {
-                DataSource.ProductsList.Remove(DataSource.ProductsList[i]);
-                return;
-            }
-        }
-        throw new EntityNotFoundException("this product doesn't exist");
+        Product? p = DataSource.ProductsList.Find(O => O.ID == id);
+        if (p == null)
+            throw new EntityNotFoundException("This product does not exist");
+        DataSource.ProductsList.Remove((Product)p);
+        return;
     }
     /// <summary>
     /// gets id and new amount and change the amount of the item

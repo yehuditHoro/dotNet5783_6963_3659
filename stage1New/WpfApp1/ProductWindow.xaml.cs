@@ -14,23 +14,26 @@ using System.Windows.Shapes;
 using BlApi;
 using PL;
 
-namespace MainWindow
+namespace MainWindow;
+
+/// <summary>
+/// Interaction logic for Window1.xaml
+/// </summary>
+public partial class ProductWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for Window1.xaml
-    /// </summary>
-    public partial class ProductWindow : Window
+    private IBl bl;
+    private int p_id;
+    public ProductWindow(IBl BL, int? pId = null)
     {
-        private IBl bl;
-        private int p_id;
-        public ProductWindow(IBl BL, int? pId = null)
+        try
         {
             InitializeComponent();
             bl = BL;
             category.ItemsSource = BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
+            category.Text = ((BO.Enums.eCategory)0).ToString();
             if (pId == null)
             {
-                p_id = 0;
+                p_id = -1;
                 addOrUpdate.Content = "add";
                 btnDelete.Visibility = Visibility.Hidden;
             }
@@ -45,12 +48,19 @@ namespace MainWindow
                 productAmount.Text = product.InStock.ToString();
             }
         }
-        /// <summary>
-        /// add or update the product due to the request
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Submit(object sender, RoutedEventArgs e)
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+    }
+    /// <summary>
+    /// add or update the product due to the request
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void Submit(object sender, RoutedEventArgs e)
+    {
+        try
         {
             BO.Product p = new BO.Product()
             {
@@ -60,37 +70,45 @@ namespace MainWindow
                 InStock = int.Parse(productAmount.Text),
                 Price = int.Parse(productPrice.Text)
             };
-            if(p_id == 0)
+            if (p_id == -1)
             {
                 bl.product.AddProduct(p);
             }
             else
             {
-               bl.product.UpdateProduct(p);
-            } 
+                bl.product.UpdateProduct(p);
+            }
             MessageBox.Show("Done successfully");
         }
-        /// <summary>
-        /// return the user to thg products window
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Back(object sender, RoutedEventArgs e)
-        {
-            ProductListWindow window = new ProductListWindow(bl);
-            window.Show();
-            this.Hide();
-        }
-        /// <summary>
-        /// delete the product
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Delete(object sender, RoutedEventArgs e)
+        catch (Exception ex)
+        { MessageBox.Show(ex.Message); }
+
+    }
+    /// <summary>
+    /// return the user to thg products window
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void Back(object sender, RoutedEventArgs e)
+    {
+        ProductListWindow window = new ProductListWindow(bl);
+        window.Show();
+        this.Hide();
+    }
+    /// <summary>
+    /// delete the product
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void Delete(object sender, RoutedEventArgs e)
+    {
+        try
         {
             bl.product.RemoveProduct(p_id);
             MessageBox.Show("Done successfully");
-
         }
+        catch (Exception ex)
+
+        { MessageBox.Show(ex.Message); }
     }
 }

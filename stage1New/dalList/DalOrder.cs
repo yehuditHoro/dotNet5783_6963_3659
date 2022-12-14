@@ -62,16 +62,11 @@ internal class DalOrder : Iorder
     /// <exception cref="EntityNotFoundException"></exception>
     public void Update(Order newOrder)
     {
-        int id = newOrder.ID;
-        for (int i = 0; i < DataSource.OrdersList.Count(); i++)
-        {
-            if (DataSource.OrdersList[i].ID == id)
-            {
-                DataSource.OrdersList[i] = newOrder;
-                return;
-            }
-        }
-        throw new EntityNotFoundException("this order doesn't exist");
+        int idx = DataSource.OrdersList.FindIndex(O => O.ID == newOrder.ID);
+        if (idx == -1)
+            throw new EntityNotFoundException("this order doesn't exist");
+        DataSource.OrdersList[idx] = newOrder;
+        return;
     }
     /// <summary>
     /// gets id and delete the specific item of the order list
@@ -80,15 +75,11 @@ internal class DalOrder : Iorder
     /// <exception cref="EntityNotFoundException"></exception>
     public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.OrdersList.Count(); i++)
-        {
-            if (DataSource.OrdersList[i].ID == id)
-            {
-                DataSource.OrdersList.Remove(DataSource.OrdersList[i]);
-                return;
-            }
-        }
-        throw new EntityNotFoundException("this order doesn't exist");
+        Order? o = DataSource.OrdersList.Find(O => O.ID == id);
+        if (o == null)
+            throw new EntityNotFoundException("This order does not exist");
+        DataSource.OrdersList.Remove((Order)o);
+        return;
     }
 
 }

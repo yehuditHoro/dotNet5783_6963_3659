@@ -63,17 +63,13 @@ public class DalOrderItem : IorderItem
     /// <exception cref="EntityNotFoundException"></exception>
     public void Update(OrderItem newOrderItem)
     {
-        int id = newOrderItem.ID;
-        for (int i = 0; i < DataSource.OrderItemsList.Count(); i++)
-        {
-            if (DataSource.OrderItemsList[i].ID == id)
-            {
-                DataSource.OrderItemsList[i] = newOrderItem;
-                return;
-            }
-        }
-        throw new EntityNotFoundException("this order item doesn't exist");
+        int idx = DataSource.OrderItemsList.FindIndex(O => O.ID == newOrderItem.ID);
+        if (idx == -1)
+            throw new EntityNotFoundException("this order item doesn't exist");
+        DataSource.OrderItemsList[idx] = newOrderItem;
+        return;
     }
+
     /// <summary>
     /// gets id and delete the specific item of the order item list
     /// </summary>
@@ -81,14 +77,10 @@ public class DalOrderItem : IorderItem
     /// <exception cref="EntityNotFoundException"></exception>
     public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.OrderItemsList.Count(); i++)
-        {
-            if (DataSource.OrderItemsList[i].ID == id)
-            {
-                DataSource.OrderItemsList.Remove(DataSource.OrderItemsList[i]);
-                return;
-            }
-        }
-        throw new EntityNotFoundException("this order item doesn't exist");
+        OrderItem? oi = DataSource.OrderItemsList.Find(O => O.ID == id);
+        if (oi == null)
+            throw new EntityNotFoundException("This order item does not exist");
+        DataSource.OrderItemsList.Remove((OrderItem)oi);
+        return;
     }
 }
