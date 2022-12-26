@@ -5,7 +5,7 @@ namespace BlImplementation;
 
 internal class BlOrder : BlApi.Iorder
 {
-    IDal Dal = new DalList();
+    IDal Dal =DalApi.Factory.Get();
     List<Dal.DO.OrderItem> allItems = dalList.DataSource.OrderItemsList;
     /// <summary>
     /// the function return all the orders from the datasource

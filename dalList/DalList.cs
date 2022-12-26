@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using DalApi;
 using Dal.DO;
 namespace dalList;
-sealed public class DalList : IDal
+sealed internal class DalList : IDal
 {
+    public static IDal Instance { get; } = new DalList();
     public Iorder order => new DalOrder();
     public IorderItem orderItem => new DalOrderItem();
     public Iproduct product => new DalProduct();

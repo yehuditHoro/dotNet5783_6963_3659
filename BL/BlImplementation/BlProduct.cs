@@ -1,12 +1,11 @@
 ﻿using BlApi;
 using DalApi;
-using dalList;
-using dalfacade;
+
 namespace BlImplementation;
 
 internal class BlProduct : BlApi.Iproduct
 {
-    IDal Dal = new DalList();
+    IDal Dal = DalApi.Factory.Get();
     /// <summary>
     /// the function returns all the products from the datasource
     /// </summary>
