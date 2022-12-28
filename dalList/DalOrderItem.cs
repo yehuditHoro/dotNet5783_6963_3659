@@ -1,6 +1,6 @@
 ﻿
 using Dal.DO;
-namespace dalList;
+namespace Dal;
 using System.Collections.Generic;
 using DalApi;
 public class DalOrderItem : IorderItem

@@ -1,12 +1,18 @@
 ﻿using BlApi;
 using DalApi;
-using dalList;
+using Dal;
 namespace BlImplementation;
 
 internal class BlOrder : BlApi.Iorder
 {
-    IDal Dal =DalApi.Factory.Get();
-    List<Dal.DO.OrderItem> allItems = dalList.DataSource.OrderItemsList;
+    private IDal Dal_;
+    List<Dal.DO.OrderItem> allItems;
+    public BlOrder()
+    {
+        
+        Dal_ = DalApi.Factory.Get();
+        allItems = Dal_.orderItem.ReadAll().ToList(); 
+    }
     /// <summary>
     /// the function return all the orders from the datasource
     /// </summary>
@@ -17,7 +23,7 @@ internal class BlOrder : BlApi.Iorder
     {
         try
         {
-            IEnumerable<Dal.DO.Order> getOrders = Dal.order.ReadAll();
+            IEnumerable<Dal.DO.Order> getOrders = Dal_.order.ReadAll();
             if (getOrders.Count() <= 0)
             {
                 throw new BlFailedToGet();
@@ -63,7 +69,7 @@ internal class BlOrder : BlApi.Iorder
         {
             if (id > 0)
             {
-                Dal.DO.Order currOrder = Dal.order.Read(id);
+                Dal.DO.Order currOrder = Dal_.order.Read(id);
                 BO.Order newO = new();
                 newO.ID = currOrder.ID;
                 newO.CustomerName = currOrder.CustomerName;
@@ -94,11 +100,11 @@ internal class BlOrder : BlApi.Iorder
     {
         try
         {
-            Dal.DO.Order currOrder = Dal.order.Read(id);
+            Dal.DO.Order currOrder = Dal_.order.Read(id);
             if (currOrder.ShipDate < DateTime.Now)
                 throw new BlFailedToUpdate();
             currOrder.ShipDate = DateTime.Now;
-            Dal.order.Update(currOrder);
+            Dal_.order.Update(currOrder);
             BO.Order order = new BO.Order();
             order.ID = currOrder.ID;
             order.OrderDate = currOrder.OrderDate;
@@ -127,11 +133,11 @@ internal class BlOrder : BlApi.Iorder
     {
         try
         {
-            Dal.DO.Order currOrder = Dal.order.Read(id);
+            Dal.DO.Order currOrder = Dal_.order.Read(id);
             if (currOrder.DeliveryDate > DateTime.Now && currOrder.ShipDate < DateTime.Now)
             {
                 currOrder.DeliveryDate = DateTime.Now;
-                Dal.order.Update(currOrder);
+                Dal_.order.Update(currOrder);
                 BO.Order order = new BO.Order();
                 order.ID = currOrder.ID;
                 order.OrderDate = currOrder.OrderDate;
@@ -176,7 +182,7 @@ internal class BlOrder : BlApi.Iorder
             {
                 BO.OrderItem oi = new();
                 oi.ID = item.ID;
-                oi.Name = Dal.product.Read(item.ProductId).Name;
+                oi.Name = Dal_.product.Read(item.ProductId).Name;
                 oi.ProductID = item.ProductId;
                 oi.Amount = item.Amount;
                 oi.Price = item.Price;

@@ -1,5 +1,5 @@
 ﻿using Dal.DO;
-namespace dalList;
+namespace Dal;
 using DalApi;
 public class DalProduct : Iproduct
 {

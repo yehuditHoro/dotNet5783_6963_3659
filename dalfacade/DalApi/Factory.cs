@@ -1,7 +1,6 @@
 ﻿namespace DalApi;
 using System.Reflection;
 using static DalApi.DalConfig;
-
 public static class Factory
 {
     public static IDal? Get()
@@ -20,8 +19,10 @@ public static class Factory
             throw new DalConfigException("Failed to load {dal}.dll package");
         }
 
-        Type? type = Type.GetType($"Dal.{dal}, {dal}")
-            ?? throw new DalConfigException($"Class Dal.{dal} was not found in {dal}.dll");
+        //Type? type = Type.GetType($"Dal.{dal}, {dal}") //Before changes
+        
+        Type? type = Type.GetType($"Dal.{dal}, {dal}");
+           // ?? throw new DalConfigException($"Class Dal.{dal} was not found in {dal}.dll");
 
         return type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static)?
                    .GetValue(null) as IDal

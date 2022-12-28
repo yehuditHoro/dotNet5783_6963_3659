@@ -1,11 +1,11 @@
 ﻿
 //namespace dalTest;
-using dalList;
+using Dal;
 using Dal.DO;
 using DalApi;
 
 eOptions choice;
-IDal idal = new DalList();
+IDal idal = DalApi.Factory.Get();
 
 try
     {

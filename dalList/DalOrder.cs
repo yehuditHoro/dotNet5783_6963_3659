@@ -1,7 +1,7 @@
 ﻿using DalApi;
 using Dal.DO;
 
-namespace dalList;
+namespace Dal;
 internal class DalOrder : Iorder
 {
     /// <summary>

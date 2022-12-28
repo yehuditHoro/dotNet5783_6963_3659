@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DalApi;
 using Dal.DO;
-namespace dalList;
+namespace Dal;
 sealed internal class DalList : IDal
 {
     public static IDal Instance { get; } = new DalList();

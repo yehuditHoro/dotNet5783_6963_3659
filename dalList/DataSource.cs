@@ -1,5 +1,5 @@
 ﻿using Dal.DO;
-namespace dalList;
+namespace Dal;
 
 public class DataSource
 {
