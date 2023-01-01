@@ -11,10 +11,24 @@ namespace Dal;
 
 internal class DalProduct : Iproduct
 {
-    
-    public int Add(Product item)
+    XElement? root = XDocument.Load("..\\..\\Product.xml").Root;
+    private Product Casting(XElement element)
     {
-        throw new NotImplementedException();
+        Product p = new();
+        return p;
+    }
+
+    public int Add(Product p)
+    {
+        XElement element = new XElement("product",
+            new XAttribute("ID", p.ID),
+            new XAttribute("Name", p.Name),
+            new XAttribute("Category", p.Category),
+            new XAttribute("Price", p.Price),
+            new XAttribute("InStock", p.InStock));
+        root?.Element("products")?.Add(element);
+        root?.Save("..\\..\\Product.xml");
+        return p.ID;
     }
 
     public void Delete(int id)
@@ -24,28 +38,34 @@ internal class DalProduct : Iproduct
 
     public Product Read(int id)
     {
-        throw new NotImplementedException();
+        IEnumerable<XElement> xElements = root?.Descendants("products")?.Elements("student") ?? throw new Exception();
+        List<Dal.DO.Product> ProductsList = new();
+        foreach (XElement element in xElements)
+        {
+            ProductsList.Add(Casting(element));
+        }
+        return ProductsList.Where(p => p.ID == id).FirstOrDefault();  //?? throw new Exception();
     }
 
-    public IEnumerable<Product> ReadAll(Func<Product, bool>? func = null)
-    {
-        throw new NotImplementedException();
-    }
+public IEnumerable<Product> ReadAll(Func<Product, bool>? func = null)
+{
+    throw new NotImplementedException();
+}
 
-    public Product ReadSingle(Func<Product, bool> func)
-    {
-        throw new NotImplementedException();
-    }
+public Product ReadSingle(Func<Product, bool> func)
+{
+    throw new NotImplementedException();
+}
 
-    public void Update(Product item)
-    {
-        throw new NotImplementedException();
-    }
+public void Update(Product item)
+{
+    throw new NotImplementedException();
+}
 
-    public void UpdateAmount(int id, int amount)
-    {
-        throw new NotImplementedException();
-    }
+public void UpdateAmount(int id, int amount)
+{
+    throw new NotImplementedException();
+}
 
     
 }
