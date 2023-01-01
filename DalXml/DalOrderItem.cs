@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DalApi;
 namespace Dal;
 
-    internal class DalOrderItem
+    internal class DalOrderItem : IorderItem
     {
     }
 
