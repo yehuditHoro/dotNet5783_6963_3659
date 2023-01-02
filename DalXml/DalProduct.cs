@@ -33,7 +33,6 @@ internal class DalProduct : Iproduct
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
     }
 
     public Product Read(int id)

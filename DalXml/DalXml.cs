@@ -10,7 +10,7 @@ sealed internal class DalXml : IDal
     public Iorder order { get; } = new Dal.DalOrder();
     public IorderItem orderItem { get; } = new Dal.DalOrderItem();
 
-    public List<Dal.DO.Product> ProductsList = new();
+    private List<Dal.DO.Product> ProductsList = new();
 
     static readonly Random rand = new Random();
 
