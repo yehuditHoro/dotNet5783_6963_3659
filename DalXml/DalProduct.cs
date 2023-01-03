@@ -38,7 +38,9 @@ internal class DalProduct : Iproduct
 
     public void Delete(int id)
     {
-
+        root?.Elements("products").
+            Where(p => Convert.ToInt32(p?.Attribute("ID")?.Value) == id).Remove();
+        root?.Save("..\\..\\Product.xml");
     }
 
     public Product Read(int id)
@@ -60,7 +62,7 @@ internal class DalProduct : Iproduct
         {
             ProductsList.Add(Casting(element));
         }
-        return ProductsList.Where(func) ?? throw new Exception();
+        return func == null ? ProductsList : ProductsList.Where(func);
     }
 
     public Product ReadSingle(Func<Product, bool> func)
@@ -76,21 +78,18 @@ internal class DalProduct : Iproduct
 
     public void Update(Product p)
     {
-        XElement element = new XElement("product",
-            new XAttribute("ID", p.ID),
-            new XAttribute("Name", p.Name),
-            new XAttribute("Category", p.Category),
-            new XAttribute("Price", p.Price),
-            new XAttribute("InStock", p.InStock));
         XElement? e = root?.Elements("products")?.
                     Where(e => Convert.ToInt32(e.Attribute("ID")?.Value) == p.ID).FirstOrDefault();
-        e?.Name = p.Name;
+        e?.Attribute("Name")?.SetValue(p.Name);
+        e?.Attribute("Category")?.SetValue(p.Category);
+        e?.Attribute("Price")?.SetValue(p.Price);
+        e?.Attribute("InStock")?.SetValue(p.InStock);
+        root?.Save("..\\..\\Product.xml");
     }
 
     public void UpdateAmount(int id, int amount)
     {
-        throw new NotImplementedException();
-    }
 
+    }
 
 }
