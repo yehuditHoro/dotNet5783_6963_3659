@@ -1,1 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<productId>0</productId>
+	<orderId>100</orderId>
+	<orderItemId>1000</orderItemId>
+</config>
