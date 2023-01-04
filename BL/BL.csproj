@@ -22,7 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\dalfacade\dalfacade.csproj" />
-    <ProjectReference Include="..\dalList\dalList.csproj" />
+    <ProjectReference Include="..\DalXml\DalXml.csproj" />
   </ItemGroup>
 
 </Project>

@@ -11,7 +11,8 @@ namespace Dal;
 
 internal class DalProduct : Iproduct
 {
-    XElement? root = XDocument.Load("..\\..\\Product.xml").Root;
+    private const string url = "..\\xml\\Product.xml";
+
     private Product Casting(XElement element)
     {
         Product p = new();
@@ -25,26 +26,29 @@ internal class DalProduct : Iproduct
 
     public int Add(Product p)
     {
-        XElement element = new XElement("product",
-            new XAttribute("ID", p.ID),
-            new XAttribute("Name", p.Name),
-            new XAttribute("Category", p.Category),
-            new XAttribute("Price", p.Price),
-            new XAttribute("InStock", p.InStock));
+        XElement? root = XDocument.Load("..\\xml\\Product.xml").Root;
+        XElement element = new ("product",
+            new XElement("ID", Convert.ToInt32(root?.Descendants("config").Elements("productId")?.FirstOrDefault()?.Value + 1)),
+            new XElement("Name", p.Name),
+            new XElement("Category", p.Category),
+            new XElement("Price", p.Price),
+            new XElement("InStock", p.InStock));
         root?.Element("products")?.Add(element);
-        root?.Save("..\\..\\Product.xml");
+        root?.Save("..\\xml\\Product.xml");
         return p.ID;
     }
 
     public void Delete(int id)
     {
+        XElement? root = XDocument.Load("..\\xml\\Product.xml").Root;
         root?.Elements("products").
             Where(p => Convert.ToInt32(p?.Attribute("ID")?.Value) == id).Remove();
-        root?.Save("..\\..\\Product.xml");
+        root?.Save(url);
     }
 
     public Product Read(int id)
     {
+        XElement? root = XDocument.Load("..\\xml\\Product.xml").Root;
         IEnumerable<XElement> xElements = root?.Descendants("products")?.Elements("product") ?? throw new Exception();
         List<Dal.DO.Product> ProductsList = new();
         foreach (XElement element in xElements)
@@ -56,6 +60,7 @@ internal class DalProduct : Iproduct
 
     public IEnumerable<Product> ReadAll(Func<Product, bool>? func = null)
     {
+        XElement? root = XDocument.Load("..\\xml\\Product.xml").Root;
         IEnumerable<XElement> xElements = root?.Descendants("products")?.Elements("product") ?? throw new Exception();
         List<Dal.DO.Product> ProductsList = new();
         foreach (XElement element in xElements)
@@ -67,6 +72,7 @@ internal class DalProduct : Iproduct
 
     public Product ReadSingle(Func<Product, bool> func)
     {
+        XElement? root = XDocument.Load("..\\xml\\Product.xml").Root;
         IEnumerable<XElement> xElements = root?.Descendants("products")?.Elements("product") ?? throw new Exception();
         List<Dal.DO.Product> ProductsList = new();
         foreach (XElement element in xElements)
@@ -78,13 +84,14 @@ internal class DalProduct : Iproduct
 
     public void Update(Product p)
     {
+        XElement? root = XDocument.Load("..\\xml\\Product.xml").Root;
         XElement? e = root?.Elements("products")?.
                     Where(e => Convert.ToInt32(e.Attribute("ID")?.Value) == p.ID).FirstOrDefault();
         e?.Attribute("Name")?.SetValue(p.Name);
         e?.Attribute("Category")?.SetValue(p.Category);
         e?.Attribute("Price")?.SetValue(p.Price);
         e?.Attribute("InStock")?.SetValue(p.InStock);
-        root?.Save("..\\..\\Product.xml");
+        root?.Save(url);
     }
 
     public void UpdateAmount(int id, int amount)

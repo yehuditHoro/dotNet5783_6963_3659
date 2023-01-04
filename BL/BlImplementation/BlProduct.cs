@@ -5,7 +5,7 @@ namespace BlImplementation;
 
 internal class BlProduct : BlApi.Iproduct
 {
-    IDal Dal = DalApi.Factory.Get();
+    private IDal? dal = DalApi.Factory.Get();
     /// <summary>
     /// the function returns all the products from the datasource
     /// </summary>
@@ -18,8 +18,8 @@ internal class BlProduct : BlApi.Iproduct
         {
             IEnumerable<Dal.DO.Product> getProducts;
             if (category == null)
-                getProducts = Dal.product.ReadAll();
-            else { getProducts = Dal.product.ReadAll(x => (BO.Enums.eCategory)x.Category == category); }
+                getProducts = dal.product.ReadAll();
+            else { getProducts = dal.product.ReadAll(x => (BO.Enums.eCategory)x.Category == category); }
             if (getProducts.Count() <= 0)
             {
                 throw new BlFailedToGet();
@@ -53,7 +53,7 @@ internal class BlProduct : BlApi.Iproduct
     {
         try
         {
-            IEnumerable<Dal.DO.Product> getCatalog = Dal.product.ReadAll();
+            IEnumerable<Dal.DO.Product> getCatalog = dal.product.ReadAll();
             if (getCatalog.Count() <= 0)
             {
                 throw new BlFailedToGet();
@@ -90,7 +90,7 @@ internal class BlProduct : BlApi.Iproduct
         {
             if (id >= 0)
             {
-                Dal.DO.Product p = Dal.product.Read(id);
+                Dal.DO.Product p = dal.product.Read(id);
                 BO.Product prod = new BO.Product();
                 prod.ID = p.ID;
                 prod.Name = p.Name;
@@ -119,7 +119,7 @@ internal class BlProduct : BlApi.Iproduct
         {
             if (id > 0)
             {
-                Dal.DO.Product p = Dal.product.Read(id);
+                Dal.DO.Product p = dal.product.Read(id);
                 BO.Product prod = new BO.Product();
                 prod.ID = p.ID;
                 prod.Name = p.Name;
@@ -159,7 +159,7 @@ internal class BlProduct : BlApi.Iproduct
             prod.Price = p.Price;
             prod.Category = (Dal.DO.eCategory)p.Category;
             prod.InStock = p.InStock;
-            Dal.product.Add(prod);
+            dal.product.Add(prod);
         }
         catch (DalApi.EntityDuplicateException)
         {
@@ -175,11 +175,11 @@ internal class BlProduct : BlApi.Iproduct
     {
         try
         {
-            IEnumerable<Dal.DO.Product> AllProducts = Dal.product.ReadAll();
+            IEnumerable<Dal.DO.Product> AllProducts = dal.product.ReadAll();
             foreach (Dal.DO.Product item in AllProducts)
             {
                 if (item.ID == id)
-                    Dal.product.Delete(item.ID);
+                    dal.product.Delete(item.ID);
             }
         }
         catch (DalApi.EntityNotFoundException)
@@ -211,7 +211,7 @@ internal class BlProduct : BlApi.Iproduct
             prod.Price = p.Price;
             prod.Category = (Dal.DO.eCategory)p.Category;
             prod.InStock = p.InStock;
-            Dal.product.Update(prod);
+            dal.product.Update(prod);
         }
         catch (DalApi.EntityNotFoundException)
         {
