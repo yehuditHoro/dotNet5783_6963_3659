@@ -21,6 +21,9 @@ internal class BlCart : BlApi.Icart
         {
             if (c.Items != null)
             {
+                var oi = from item in c.Items
+                         where item.ProductID == pId
+                         select item;
                 BO.OrderItem? oi = c.Items.Find(x => x.ProductID == pId);
                 if (oi?.ProductID == pId)
                 {
@@ -56,6 +59,7 @@ internal class BlCart : BlApi.Icart
         }
         return c;
     }
+
     /// <summary>
     /// the function gets the the id and the new quantity and update it
     /// </summary>
@@ -139,6 +143,7 @@ internal class BlCart : BlApi.Icart
             newOrder.DeliveryDate = DateTime.MinValue;
             int id = Dal.order.Add(newOrder);
             List<Dal.DO.OrderItem> allItems = Dal.orderItem.ReadAll().ToList();
+
             foreach (BO.OrderItem item in c.Items)
             {
                 Dal.DO.OrderItem cartItem = new();

@@ -177,8 +177,11 @@ internal class BlProduct : BlApi.Iproduct
     {
         try
         {
-            IEnumerable<Dal.DO.Product> AllProducts = dal.product.ReadAll();
-            Dal.DO.Product product = AllProducts.Where(p => p.ID == id).FirstOrDefault();
+            Dal.DO.Product product = dal.product.ReadSingle(p => p.ID == id);
+            IEnumerable<Dal.DO.OrderItem> AllOrderItems = dal.orderItem.ReadAll();
+            AllOrderItems = AllOrderItems.Where(item => item.ProductId == id);
+            if (AllOrderItems.Count() > 0)
+                throw new Exception("the product is already ordered");
             dal.product.Delete(product.ID);
         }
         catch (DalApi.EntityNotFoundException)
@@ -210,7 +213,7 @@ internal class BlProduct : BlApi.Iproduct
             prod.Price = p.Price;
             prod.Category = (Dal.DO.eCategory)p.Category;
             prod.InStock = p.InStock;
-            dal.product.Update(prod);
+            dal?.product.Update(prod);
         }
         catch (DalApi.EntityNotFoundException)
         {

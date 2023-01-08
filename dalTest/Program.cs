@@ -5,7 +5,7 @@ using Dal.DO;
 using DalApi;
 
 eOptions choice;
-IDal idal = DalApi.Factory.Get();
+IDal? idal = DalApi.Factory.Get();
 
 try
     {
@@ -62,7 +62,7 @@ void ProductOption()
         case eCRUD.READ:
             Console.WriteLine("enter the id of the product you want to see");
             int id = Convert.ToInt32(Console.ReadLine());
-            Product specificProduct=idal.product.Read(id);
+            Product specificProduct=idal.product.ReadSingle(x => x.ID == id);
             Console.WriteLine(specificProduct.ToString());
             break;
         case eCRUD.READALL:
@@ -75,7 +75,7 @@ void ProductOption()
         case eCRUD.UPDATE:
             Console.WriteLine("enter the id of the product you want to update");
             id = Convert.ToInt32(Console.ReadLine());
-            Product updateProduct = idal.product.Read(id);
+            Product updateProduct = idal.product.ReadSingle(x => x.ID == id);
             Console.WriteLine(updateProduct.ToString());
             Product p = newProduct();
             p.ID = id;
@@ -121,7 +121,7 @@ void OrderOption()
         case eCRUD.READ:
             Console.WriteLine("enter the id of the order you want to see");
             int id = Convert.ToInt32(Console.ReadLine());
-            Order specificOrder = idal.order.Read(id);
+            Order specificOrder = idal.order.ReadSingle(x => x.ID == id);
             Console.WriteLine(specificOrder.ToString());
             break;
         case eCRUD.READALL:
@@ -134,7 +134,7 @@ void OrderOption()
         case eCRUD.UPDATE:
             Console.WriteLine("enter the id of the order you want to update");
             id = Convert.ToInt32(Console.ReadLine());
-            Order updateOrder = idal.order.Read(id);
+            Order updateOrder = idal.order.ReadSingle(x => x.ID == id);
             Console.WriteLine(updateOrder.ToString());
             Order o = newOrder();
             o.ID = id;
@@ -143,7 +143,7 @@ void OrderOption()
         case eCRUD.DELETE:
             Console.WriteLine("enter the id of the order you want to delete");
             id = Convert.ToInt32(Console.ReadLine());
-            idal.order.Delete(id);
+            idal?.order.Delete(id);
             break;
     }
 
@@ -179,7 +179,7 @@ void OrderItemOption()
         case eCRUD.READ:
             Console.WriteLine("enter the id of the order item you want to see");
             int id = Convert.ToInt32(Console.ReadLine());
-            OrderItem specificOrderItem = idal.orderItem.Read(id);
+            OrderItem specificOrderItem = idal.orderItem.ReadSingle(x => x.ID == id);
             Console.WriteLine(specificOrderItem.ToString());
             break;
         case eCRUD.READALL:
@@ -192,7 +192,7 @@ void OrderItemOption()
         case eCRUD.UPDATE:
             Console.WriteLine("enter the id of the order item you want to update");
             id = Convert.ToInt32(Console.ReadLine());
-            OrderItem updateOrderItem = idal.orderItem.Read(id);
+            OrderItem updateOrderItem = idal.orderItem.ReadSingle(x => x.ID == id);
             Console.WriteLine(updateOrderItem.ToString());
             OrderItem oi = NewOrderItem();
             oi.ID = id;
@@ -201,7 +201,7 @@ void OrderItemOption()
         case eCRUD.DELETE:
             Console.WriteLine("enter the id of the order item you want to delete");
             id = Convert.ToInt32(Console.ReadLine());
-            idal.orderItem.Delete(id);
+            idal?.orderItem.Delete(id);
             break;
     }
 }

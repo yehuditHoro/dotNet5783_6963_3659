@@ -7,7 +7,7 @@ namespace BlImplementation;
 
 internal class BlOrder : BlApi.Iorder
 {
-    private IDal dal;
+    private IDal? dal;
     List<Dal.DO.OrderItem> allItems;
     public BlOrder()
     {
@@ -24,72 +24,31 @@ internal class BlOrder : BlApi.Iorder
     {
         try
         {
-            IEnumerable<Dal.DO.Order> getOrders = dal.order.ReadAll();
-            if (getOrders.Count() <= 0)
+            IEnumerable<Dal.DO.Order>? getOrders = dal?.order.ReadAll();
+            if (getOrders?.Count() <= 0)
             {
                 throw new BlFailedToGet();
             }
             List<BO.OrderForList> boOrders = new();
             double sum = 0;
             int itemsAmount = 0;
-            getOrders.Select(o =>
+            getOrders?.Select(o =>
             {
-                BO.OrderForList bO = new();// מתודת הרחבה
-
-                bO.ID = o.ID;
-                bO.CustomerName = o.CustomerName;
-                bO.Status = CheckStatus(o);
-
+                BO.OrderForList boOrder = new();
+                boOrder.ID = o.ID;
+                boOrder.CustomerName = o.CustomerName;
+                boOrder.Status = CheckStatus(o);
                 allItems.Where(oi => oi.OrderId == o.ID).Select(oi =>
                 {
                     sum = sum + (double)(oi.Amount * oi.Price);
                     itemsAmount = itemsAmount + 1;
                     return oi;
                 }).ToList();
-
-                bO.TotalPrice = sum;
-                bO.AmountOfItems = itemsAmount;
-                boOrders.Add(bO);
-                return bO;
+                boOrder.TotalPrice = sum;
+                boOrder.AmountOfItems = itemsAmount;
+                boOrders.Add(boOrder);
+                return boOrder;
             }).ToList();
-            //getOrders.ToList().ForEach(o => boOrders.Add(new BO.OrderForList()// מתודת הרחבה
-            //{
-            //    ID = o.ID,
-            //    CustomerName = o.CustomerName,
-            //    Status = CheckStatus(o),
-
-                //    allItems.Where(oi => oi.OrderId == o.ID).Select(oi =>
-                //    {
-                //        sum = sum + (double)(oi.Amount * oi.Price);
-                //        itemsAmount = itemsAmount + 1;
-                //        return oi;
-                //    }).ToList()
-                //,
-                //    TotalPrice = sum,
-                //    AmountOfItems = itemsAmount
-                //})) ;
-
-            foreach (Dal.DO.OrderItem item in allItems)
-            {
-                if (item.OrderId == o.ID)
-                {
-                    sum += (double)(item.Amount * item.Price);
-                    itemsAmount++;
-                }
-            }
-
-
-
-            //from item in allItems
-            //where item.OrderId == o.ID
-            //let sum1 = (double)(item.Amount * item.Price)
-            //let a = itemsAmout + 1;
-
-
-            //order.TotalPrice = sum;
-            //order.AmountOfItems = itemsAmount;
-            //boOrders.Add(order);
-
             return boOrders;
         }
         catch (DalApi.EntityNotFoundException)
@@ -97,6 +56,7 @@ internal class BlOrder : BlApi.Iorder
             throw new BlIdNotFound();
         }
     }
+
     /// <summary>
     /// the function gets id and return its 
     /// </summary>
@@ -215,23 +175,21 @@ internal class BlOrder : BlApi.Iorder
     /// <returns></returns>
     private (List<BO.OrderItem>, double) convertDToB(List<Dal.DO.OrderItem> DItems, int orderId)
     {
-        double OrderTotalPrice = 0;
         List<BO.OrderItem> items = new List<BO.OrderItem>();
-        foreach (Dal.DO.OrderItem item in DItems)
+        double OrderTotalPrice = 0;
+        DItems.Where(item => item.OrderId == orderId).Select(item =>
         {
-            if (item.OrderId == orderId)
-            {
-                BO.OrderItem oi = new();
-                oi.ID = item.ID;
-                oi.Name = dal.product.ReadSingle(x => x.ID == item.ProductId).Name;
-                oi.ProductID = item.ProductId;
-                oi.Amount = item.Amount;
-                oi.Price = item.Price;
-                oi.TotalPrice = oi.Amount * oi.Price;
-                items.Add(oi);
-                OrderTotalPrice += oi.TotalPrice;
-            }
-        }
+            BO.OrderItem oi = new();
+            oi.ID = item.ID;
+            oi.Name = dal.product.ReadSingle(x => x.ID == item.ProductId).Name;
+            oi.ProductID = item.ProductId;
+            oi.Amount = item.Amount;
+            oi.Price = item.Price;
+            oi.TotalPrice = oi.Amount * oi.Price;
+            items.Add(oi);
+            OrderTotalPrice += oi.TotalPrice;
+            return oi;
+        }).ToList();
         return (items, OrderTotalPrice);
     }
     /// <summary>
