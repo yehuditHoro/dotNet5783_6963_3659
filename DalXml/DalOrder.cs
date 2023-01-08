@@ -11,86 +11,86 @@ namespace Dal;
 
 internal class DalOrder : Iorder
 {
-
-    //private Order Casting(Object element)
-    //{
-    //    Product p = new();
-    //    p.ID = Convert.ToInt32(element?.Attribute("ID")?.Value);
-    //    p.Name = element?.Attribute("Name")?.Value;
-    //    p.Category = Enum.Parse<eCategory>(element?.Attribute("Category")?.Value);
-    //    p.Price = Convert.ToInt32(element?.Attribute("Price")?.Value);
-    //    p.InStock = Convert.ToInt32(element?.Attribute("InStock")?.Value);
-    //    return p;
-    //}
-
-    public int Add(Order item)
+    public int Add(Order order)
     {
-        // לבדוק אם צריך לקרוא את כל הרשימה מהדף ואז להוסיף פה לרשימה ולכתוב את הרשימה מחדש
-        StreamReader rw = new("Order.xml");
-        XmlSerializer ser = new(typeof(List<Order>));
-        List<Order> lst = (List<Order>)ser.Deserialize(rw);// what is Deserialize do?
-        rw.Close();
-        lst.Add(item);
-        StreamWriter sw = new("Order.xml");
-        XmlSerializer ser1 = new(typeof(Order));
-        ser1.Serialize(sw, item);
+        //config???????
+        XElement? config = XDocument.Load("..\\xml\\Config.xml").Root;
+        order.ID = Convert.ToInt32(config?.Elements("orderId")?.FirstOrDefault()?.Value);
+        config?.Element("orderId")?.SetValue(Convert.ToInt32(config?.Elements("orderId")?.FirstOrDefault()?.Value) + 1);
+        config?.Save("..\\xml\\Config.xml");
+        List<Order> lst = new();
+        if (order.ID != 100) {
+            StreamReader sr = new("..\\xml\\Order.xml");
+            XmlSerializer ser = new(typeof(List<Order>));
+            lst = (List<Order>)ser.Deserialize(sr);
+            sr.Close();
+        }
+        lst?.Insert(0, order);
+        StreamWriter sw = new("..\\xml\\Order.xml");
+        XmlSerializer s = new(typeof(List<Order>));
+        s.Serialize(sw, lst);
         sw.Close();
-        return item.ID;
+        return order.ID;
     }
+
     public Order Read(int id)
     {
-        StreamReader rw = new("Order.xml");
+        StreamReader rw = new("..\\xml\\Order.xml");
         XmlSerializer ser = new(typeof(List<Order>));
-        List<Order> lst = (List<Order>)ser.Deserialize(rw);// what is Deserialize do?
+        List<Order> lst = (List<Order>)ser.Deserialize(rw);
         rw.Close();
         return lst.Where(x => x.ID == id).FirstOrDefault();
     }
 
     public IEnumerable<Order> ReadAll(Func<Order, bool>? func = null)
     {
-        StreamReader rw = new("Order.xml");
+        //IEnumerable when there us func
+        StreamReader rw = new("..\\xml\\Order.xml");
         XmlSerializer ser = new(typeof(List<Order>));
         List<Order> lst = (List<Order>)ser.Deserialize(rw);// what is Deserialize do?
         rw.Close();
-        return func == null ? lst : lst.Where(func);
-
+        if (func == null)
+            return lst;
+        return lst.Where(func);
     }
 
     public Order ReadSingle(Func<Order, bool> func)
     {
-        StreamReader rw = new("Order.xml");
+        StreamReader rw = new("..\\xml\\Order.xml");
         XmlSerializer ser = new(typeof(List<Order>));
-        List<Order> lst = (List<Order>)ser.Deserialize(rw);// what is Deserialize do?
+        List<Order> lst = (List<Order>)ser.Deserialize(rw);
         rw.Close();
         return lst.Where(func).FirstOrDefault();// need to check if func ==null?
     }
 
-    public void Update(Order item)
+    public void Update(Order order)
     {
-        StreamReader rw = new("Order.xml");
+        StreamReader rw = new("..\\xml\\Order.xml");
         XmlSerializer ser = new(typeof(List<Order>));
-        List<Order> lst = (List<Order>)ser.Deserialize(rw);// what is Deserialize do?
+        List<Order> lst = new();
+        lst = (List<Order>)ser.Deserialize(rw);//?? throw new Exception();
         rw.Close();
-        int idx = lst.FindIndex(x => x.ID == item.ID);
+        int idx = lst.FindIndex(x => x.ID == order.ID);
         lst.RemoveAt(idx);
-        lst.Add(item);  
-        StreamWriter sw = new("Order.xml");
-        XmlSerializer ser1 = new(typeof(List<Order>));
-        ser1.Serialize(sw, lst);
+        lst.Insert(0, order);
+        StreamWriter sw = new("..\\xml\\Order.xml");
+        XmlSerializer s = new(typeof(List<Order>));
+        s.Serialize(sw, lst);
         sw.Close();
     }
 
     public void Delete(int id)
     {
-        StreamReader rw = new("Order.xml");
+        StreamReader rw = new("..\\xml\\Order.xml");
         XmlSerializer ser = new(typeof(List<Order>));
-        List<Order> lst = (List<Order>)ser.Deserialize(rw);// what is Deserialize do?
+        List<Order> lst = new();
+        lst = (List<Order>)ser.Deserialize(rw); //?? throw new Exception();
         rw.Close();
         int idx = lst.FindIndex(x => x.ID == id);
         lst.RemoveAt(idx);
-        StreamWriter sw = new("Order.xml");
-        XmlSerializer ser1 = new(typeof(List<Order>));
-        ser1.Serialize(sw, lst);
+        StreamWriter sw = new("..\\xml\\Order.xml");
+        XmlSerializer s = new(typeof(List<Order>));
+        s.Serialize(sw, lst);
         sw.Close();
     }
 }

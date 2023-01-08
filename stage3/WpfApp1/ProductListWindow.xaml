@@ -1,0 +1,29 @@
+﻿<Window x:Class="PL.ProductListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="ProductListWindow" Height="640" Width="800">
+    <Grid Name="MainGrid">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+            <Label Content="Category:"  Grid.Column="1" HorizontalAlignment= "Left"  VerticalAlignment="Center" FontSize="20" FontWeight="Bold" FontFamily="AdamGorry-Inline" Margin="10,0,0,0"/>
+            <ComboBox ItemsSource="{Binding category}" Name="ComboBoxSelector" Grid.Column="1" Margin="156,12,55,10" SelectionChanged="ShowCategories"/>
+            <Button Content="X" Name="deleteFilter" Grid.Column="1" HorizontalAlignment= "Left" Margin="350,12,0,10" Width="30" Click="DeleteFilter_Click"/>
+        </Grid>
+        <ListView x:Name="ProductsListview" Grid.Row="1"  d:ItemsSource="{d:SampleData ItemCount=5}" Grid.ColumnSpan="2" RenderTransformOrigin="0.412,-0.045" MouseDoubleClick="Update" FontFamily="Sherbrooke Bold" FontSize="16" FontWeight="Normal" FontStyle="Normal"/>
+        <Button Content="add item"  HorizontalAlignment="Center" Margin="0,50,0,50" FontSize="20" Grid.Row="2" VerticalAlignment="Top" Click="AddProduct" RenderTransformOrigin="3.424,-2.504" Height="40" Width="107" Background="#FFECE278" FontFamily="shirin "/>
+
+    </Grid>
+</Window>
