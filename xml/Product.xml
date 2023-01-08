@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <products>
-  <product ID="0" Name="dresses" Category="men" Price="443" InStock="0" />
+  <product ID="0" Name=" dresses" Category="men" Price="77" InStock="99" />
   <product ID="1" Name="shirts" Category="women" Price="140" InStock="359" />
   <product ID="2" Name="pants" Category="boys" Price="403" InStock="502" />
   <product ID="3" Name="shoes" Category="girls" Price="129" InStock="470" />
@@ -11,4 +11,7 @@
   <product ID="8" Name="vests" Category="girls" Price="362" InStock="670" />
   <product ID="9" Name="coats" Category="babies" Price="285" InStock="977" />
   <product ID="10" Name="rrrrr" Category="boys" Price="120" InStock="600" />
+  <product ID="11" Name="kkk" Category="men" Price="55" InStock="55" />
+  <product ID="12" Name="yehuditush" Category="women" Price="789" InStock="789" />
+  <product ID="13" Name="sarale " Category="men" Price="456" InStock="456" />
 </products>

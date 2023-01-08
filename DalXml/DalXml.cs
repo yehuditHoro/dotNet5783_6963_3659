@@ -10,8 +10,7 @@ sealed internal class DalXml : IDal
     {
         //AddListProducts();
         //CreateOrdersList();
-        //CreateOrderItemList();
-        //why the order id = 0?
+       //CreateOrderItemList();
     }
     public static IDal Instance { get; } = new DalXml();
     public Iproduct product { get; } = new Dal.DalProduct();
@@ -65,20 +64,17 @@ sealed internal class DalXml : IDal
 
     public void CreateOrderItemList()
     {
-        for (int i = 0; i < 40; i++)
-        {
-            int num = (int)rand.Next(1, 4);
-            int IndexOrder = (int)rand.Next(0, order.ReadAll().Count());
-            for (int j = 0; j < num; j++)
+            for (int j = 0; j < 40; j++)
             {
                 int IndexProduct = (int)rand.Next(0, product.ReadAll().Count());
+                int IndexOrder = (int)rand.Next(100, 99+order.ReadAll().Count());
                 Dal.DO.OrderItem newOrderItems = new();
-                newOrderItems.ProductId = product.Read(IndexProduct).ID;
-                newOrderItems.OrderId = order.Read(IndexOrder).ID;
+                newOrderItems.ProductId = product.ReadSingle(x => x.ID == IndexProduct).ID;
+                newOrderItems.OrderId = order.ReadSingle(x => x.ID == IndexOrder).ID;
                 newOrderItems.Amount = (int)rand.Next(1, 10);
-                newOrderItems.Price = (product.Read(IndexProduct).Price) * newOrderItems.Amount;
+                newOrderItems.Price = (product.ReadSingle(x => x.ID == IndexProduct).Price) * newOrderItems.Amount;
                 orderItem.Add(newOrderItems);
             }
         }
     }
-}
+

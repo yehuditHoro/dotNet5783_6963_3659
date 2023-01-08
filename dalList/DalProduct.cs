@@ -16,17 +16,6 @@ public class DalProduct : Iproduct
         return newProduct.ID;
     }
     /// <summary>
-    /// get the specific product with the specific id
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    /// <exception cref="EntityNotFoundException"></exception>
-    public Product Read(int id)
-    {
-        return DataSource.ProductsList.Find(p => p.ID == id);
-        throw new EntityNotFoundException("this id doesn't exist");
-    }
-    /// <summary>
     ///  returns all the products in the products list
     /// </summary>
     /// <returns></returns>

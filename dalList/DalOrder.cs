@@ -16,17 +16,7 @@ internal class DalOrder : Iorder
         DataSource.OrdersList.Add(newOrder);
         return newOrder.ID;
     }
-    /// <summary>
-    /// get the specific order with the specific id
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    /// <exception cref="EntityNotFoundException"></exception>
-    public Order Read(int id)
-    {
-        return DataSource.OrdersList.Find(O => O.ID == id);
-        throw new EntityNotFoundException("this id doesn't exist");
-    }
+
     /// <summary>
     /// returns all the orders in the order list
     /// </summary>

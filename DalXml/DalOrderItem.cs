@@ -13,7 +13,7 @@ internal class DalOrderItem : IorderItem
 {
     public int Add(OrderItem oi)
     {
-        //config???????
+        
         XElement? config = XDocument.Load("..\\xml\\Config.xml").Root;
         oi.ID = Convert.ToInt32(config?.Elements("orderItemId")?.FirstOrDefault()?.Value);
         config?.Element("orderItemId")?.SetValue(Convert.ToInt32(config?.Elements("orderItemId")?.FirstOrDefault()?.Value) + 1);
@@ -32,15 +32,6 @@ internal class DalOrderItem : IorderItem
         s.Serialize(sw, lst);
         sw.Close();
         return oi.ID;
-    }
-
-    public OrderItem Read(int id)
-    {
-        StreamReader rw = new("..\\xml\\OrderItem.xml");
-        XmlSerializer ser = new(typeof(List<OrderItem>));
-        List<OrderItem> lst = (List<OrderItem>)ser.Deserialize(rw);
-        rw.Close();
-        return lst.Where(x => x.ID == id).FirstOrDefault();
     }
 
     public IEnumerable<OrderItem> ReadAll(Func<OrderItem, bool>? func = null)

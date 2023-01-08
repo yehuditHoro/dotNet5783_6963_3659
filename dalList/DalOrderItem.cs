@@ -17,17 +17,8 @@ public class DalOrderItem : IorderItem
         DataSource.OrderItemsList.Add(newOrderItem);
         return newOrderItem.ID;
     }
-    /// <summary>
-    /// get the specific order item with the specific id
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    /// <exception cref="EntityNotFoundException"></exception>
-    public OrderItem Read(int id)
-    {
-        return DataSource.OrderItemsList.Find(OI => OI.ID == id);
-        throw new EntityNotFoundException("this id doesn't exist");
-    }
+   
+
     /// <summary>
     ///  returns all the order items in the order items list
     /// </summary>

@@ -78,23 +78,15 @@ public partial class ProductWindow : Window
             {
                 bl.product.UpdateProduct(p);
             }
-            MessageBox.Show("Done successfully");
+            ProductListWindow window = new ProductListWindow(bl);
+            window.Show();
+            this.Hide();
         }
         catch (Exception ex)
         { MessageBox.Show(ex.Message); }
 
     }
-    /// <summary>
-    /// return the user to thg products window
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void Back(object sender, RoutedEventArgs e)
-    {
-        ProductListWindow window = new ProductListWindow(bl);
-        window.Show();
-        this.Hide();
-    }
+    
     /// <summary>
     /// delete the product
     /// </summary>
@@ -105,7 +97,7 @@ public partial class ProductWindow : Window
         try
         {
             bl.product.RemoveProduct(p_id);
-            MessageBox.Show("Done successfully");
+
         }
         catch (Exception ex)
 

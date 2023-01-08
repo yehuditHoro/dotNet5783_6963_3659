@@ -1,12 +1,13 @@
 ﻿using DalApi;
 using Dal;
 using BlApi;
+using System.Security.Cryptography;
 
 namespace BlImplementation;
 
 internal class BlCart : BlApi.Icart
 {
-    IDal Dal = DalApi.Factory.Get();
+    IDal? Dal = DalApi.Factory.Get();
     /// <summary>
     /// the function add product to the cart
     /// </summary>
@@ -20,25 +21,22 @@ internal class BlCart : BlApi.Icart
         {
             if (c.Items != null)
             {
-                foreach (BO.OrderItem oi in c.Items)
+                BO.OrderItem? oi = c.Items.Find(x => x.ProductID == pId);
+                if (oi?.ProductID == pId)
                 {
-                    if (oi.ID == pId)
+                    if (Dal?.product.ReadSingle(x => x.ID == pId).InStock > 0)
                     {
-                        if (Dal.product.Read(pId).InStock > 0)
-                        {
-                            oi.Amount++;
-                            oi.TotalPrice += oi.Price;
-                            c.TotalPrice += oi.Price;
-                        }
-                        else
-                        {
-                            throw new BlOutOfStockException();
-                        }
+                        oi.Amount++;
+                        oi.TotalPrice += oi.Price;
+                        c.TotalPrice += oi.Price;
                     }
-                   
+                    else
+                    {
+                        throw new BlOutOfStockException();
+                    }
                 }
             }
-            Dal.DO.Product prod = Dal.product.Read(pId);
+            Dal.DO.Product prod = Dal.product.ReadSingle(x => x.ID == pId);
             if (prod.InStock > 0)
             {
                 BO.OrderItem newP = new BO.OrderItem();
@@ -48,7 +46,7 @@ internal class BlCart : BlApi.Icart
                 newP.ProductID = pId;
                 newP.Amount = 1;
                 newP.TotalPrice = prod.Price;
-                c.Items.Add(newP);
+                c.Items?.Add(newP);
                 c.TotalPrice += newP.Price;
             }
         }
@@ -70,36 +68,35 @@ internal class BlCart : BlApi.Icart
     {
         try
         {
-            foreach (BO.OrderItem oi in c.Items)
+            BO.OrderItem? oi = c.Items.Find(x => x.ID == id);
+            if (oi?.ID == id)
             {
-                if (oi.ID == id)
+                if (quantity == 0)
                 {
-                    if (quantity == 0)
+                    c.Items.Remove(oi);
+                    c.TotalPrice -= oi.TotalPrice;
+                }
+                if (quantity > oi.Amount)
+                {
+                    if (Dal?.product.ReadSingle(x => x.ID == id).InStock > 0)
                     {
-                        c.Items.Remove(oi);
-                        c.TotalPrice -= oi.TotalPrice;
-                    }
-                    if (quantity > oi.Amount)
-                    {
-                        if (Dal.product.Read(id).InStock > 0)
-                        {
-                            c.TotalPrice += oi.Price * (quantity - oi.Amount);
-                            oi.TotalPrice = quantity * oi.Price;
-                            oi.Amount = quantity;
-                        }
-                    }
-                    if (quantity < oi.Amount)
-                    {
-                        c.TotalPrice -= oi.Price * (oi.Amount - quantity);
+                        c.TotalPrice += oi.Price * (quantity - oi.Amount);
                         oi.TotalPrice = quantity * oi.Price;
                         oi.Amount = quantity;
                     }
                 }
-                else
+                if (quantity < oi.Amount)
                 {
-                    throw new BlIdNotFound();
+                    c.TotalPrice -= oi.Price * (oi.Amount - quantity);
+                    oi.TotalPrice = quantity * oi.Price;
+                    oi.Amount = quantity;
                 }
             }
+            else
+            {
+                throw new BlIdNotFound();
+            }
+
         }
         catch (Exception e)
         {
@@ -123,12 +120,13 @@ internal class BlCart : BlApi.Icart
                 throw new BlNullException();
             if (IsValidEmail(email) == false)
                 throw new BlInvalidInputException("the email is not correct");
+
             foreach (BO.OrderItem oi in c.Items)
             {
-                Dal.product.Read(oi.ID);
-                if (oi.Amount < 0 )
+                Dal?.product.ReadSingle(x => x.ID == oi.ID);
+                if (oi.Amount < 0)
                     throw new BlInvalidInputException("invalid negative input for the amount");
-                if (oi.Amount > Dal.product.Read(oi.ID).InStock)
+                if (oi.Amount > Dal?.product.ReadSingle(x => x.ID == oi.ID).InStock)
                     throw new BlOutOfStockException();
             }
             Dal.DO.Order newOrder = new();
@@ -153,9 +151,9 @@ internal class BlCart : BlApi.Icart
                 Dal.product.UpdateAmount(item.ID, item.Amount);
             }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
-            Console.WriteLine("cant make the order "+e.Message);
+            Console.WriteLine("cant make the order " + e.Message);
         }
 
     }

@@ -13,15 +13,17 @@ internal class DalProduct : Iproduct
 {
     private const string url = "..\\xml\\Product.xml";
 
-    private Product Casting(XElement element)
+    private IEnumerable<DO.Product> Casting(IEnumerable<XElement>? allProduct)
     {
-        Product p = new();
-        p.ID = Convert.ToInt32(element?.Attribute("ID")?.Value);
-        p.Name = element?.Attribute("Name")?.Value;
-        p.Category = Enum.Parse<eCategory>(element?.Attribute("Category")?.Value);
-        p.Price = Convert.ToInt32(element?.Attribute("Price")?.Value);
-        p.InStock = Convert.ToInt32(element?.Attribute("InStock")?.Value);
-        return p;
+        return from product in allProduct
+               select new DO.Product
+               {
+                   ID = Convert.ToInt32(product.Attribute("ID").Value),
+                   Name = product.Attribute("Name").Value,
+                   Category = Enum.Parse<eCategory>(product.Attribute("Category").Value),
+                   Price = Convert.ToInt32(product.Attribute("Price").Value),
+                   InStock = Convert.ToInt32(product.Attribute("InStock").Value)
+               };
     }
 
     public int Add(Product p)
@@ -36,7 +38,7 @@ internal class DalProduct : Iproduct
             new XAttribute("InStock", p.InStock));
         root?.Add(element);
         root?.Save(url);
-        config?.Element("productId")?.SetValue(Convert.ToInt32(config?.Elements("productId")?.FirstOrDefault()?.Value)+1);
+        config?.Element("productId")?.SetValue(Convert.ToInt32(config?.Elements("productId")?.FirstOrDefault()?.Value) + 1);
         config?.Save("..\\xml\\Config.xml");
         return p.ID;
     }
@@ -54,40 +56,20 @@ internal class DalProduct : Iproduct
         root?.Save(url);
     }
 
-    public Product Read(int id)
-    {
-        XElement? root = XDocument.Load(url).Root;
-        IEnumerable<XElement> xElements = root?.Elements("product") ?? throw new Exception();
-        List<Dal.DO.Product> ProductsList = new();
-        foreach (XElement element in xElements)
-        {
-            ProductsList.Add(Casting(element));
-        }
-        return ProductsList.Where(p => p.ID == id).FirstOrDefault();
-    }
-
     public IEnumerable<Product> ReadAll(Func<Product, bool>? func = null)
     {
         XElement? root = XDocument.Load(url).Root;
-        IEnumerable<XElement> xElements = root?.Elements("product") ?? throw new Exception();
-        List<Dal.DO.Product> ProductsList = new();
-        foreach (XElement element in xElements)
-        {
-            ProductsList.Add(Casting(element));
-        }
-        return func == null ? ProductsList : ProductsList.Where(func);
+        IEnumerable<XElement> ProductsList = root?.Elements("product") ?? throw new Exception();
+        List<DO.Product> allProduct = Casting(ProductsList).ToList();
+        return func == null ? allProduct : allProduct.Where(func);
     }
 
     public Product ReadSingle(Func<Product, bool> func)
     {
         XElement? root = XDocument.Load(url).Root;
-        IEnumerable<XElement> xElements = root?.Elements("product") ?? throw new Exception();
-        List<Dal.DO.Product> ProductsList = new();
-        foreach (XElement element in xElements)
-        {
-            ProductsList.Add(Casting(element));
-        }
-        return ProductsList.Where(func).First();
+        IEnumerable<XElement> ProductsList = root?.Elements("product") ?? throw new Exception();
+        List<DO.Product> allProduct = Casting(ProductsList).ToList();
+        return allProduct.Where(func).FirstOrDefault();
     }
 
     public void Update(Product p)
@@ -106,8 +88,7 @@ internal class DalProduct : Iproduct
     {
         XElement? root = XDocument.Load(url).Root;
         XElement? e = root?.Elements("product")?.
-                    Where(e => Convert.ToInt32(e.Attribute("ID")?.Value) == id).First(); 
-        //firstordefault???
+                    Where(e => Convert.ToInt32(e.Attribute("ID")?.Value) == id).FirstOrDefault();
         e?.Attribute("InStock")?.SetValue(Convert.ToInt32(e.Attribute("InStock")?.Value) - amount);
         root?.Save(url);
     }

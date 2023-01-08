@@ -9,7 +9,6 @@ namespace DalApi
     public interface Icrud<T>
     {
         public int Add(T item);
-        public T Read(int id);
         public T ReadSingle(Func<T, bool> func);
         public IEnumerable<T> ReadAll(Func<T, bool>? func = null);
         public void Update(T item);

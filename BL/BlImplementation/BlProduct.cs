@@ -1,11 +1,14 @@
 ﻿using BlApi;
 using DalApi;
+using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace BlImplementation;
 
 internal class BlProduct : BlApi.Iproduct
 {
     private IDal? dal = DalApi.Factory.Get();
+
     /// <summary>
     /// the function returns all the products from the datasource
     /// </summary>
@@ -24,16 +27,14 @@ internal class BlProduct : BlApi.Iproduct
             {
                 throw new BlFailedToGet();
             }
-            List<BO.ProductForList> boProducts = new List<BO.ProductForList>();
-            foreach (Dal.DO.Product p in getProducts)
-            {
-                BO.ProductForList bp = new BO.ProductForList();
-                bp.ID = p.ID;
-                bp.Name = p.Name;
-                bp.Price = p.Price;
-                bp.Category = (BO.Enums.eCategory)p.Category;
-                boProducts.Add(bp);
-            }
+            var boProducts = from Dal.DO.Product p in getProducts
+                             select new BO.ProductForList
+                             {
+                                 ID = p.ID,
+                                 Name = p.Name,
+                                 Price = p.Price,
+                                 Category = (BO.Enums.eCategory)p.Category
+                             };
             return boProducts;
         }
         catch (DalApi.EntityNotFoundException)
@@ -41,6 +42,7 @@ internal class BlProduct : BlApi.Iproduct
             throw new BlIdNotFound();
         }
     }
+
     /// <summary>
     /// the function returns all the products in the catalog 
     /// </summary>
@@ -48,7 +50,6 @@ internal class BlProduct : BlApi.Iproduct
     /// <exception cref="BlFailedToGet"></exception>
     /// <exception cref="BlIdNotFound"></exception>
     /// 
-
     public IEnumerable<BO.ProductItem?> GetCatalog()
     {
         try
@@ -58,18 +59,16 @@ internal class BlProduct : BlApi.Iproduct
             {
                 throw new BlFailedToGet();
             }
-            List<BO.ProductItem> Catalog = new List<BO.ProductItem>();
-            foreach (Dal.DO.Product p in getCatalog)
-            {
-                BO.ProductItem productItem = new BO.ProductItem();
-                productItem.ID = p.ID;
-                productItem.Name = p.Name;
-                productItem.Price = p.Price;
-                productItem.Category = (BO.Enums.eCategory)p.Category;
-                productItem.Amount = p.InStock;
-                productItem.InStock = (p.InStock != 0 ? true : false);
-                Catalog.Add(productItem);
-            }
+            var Catalog = from Dal.DO.Product p in getCatalog
+                          select new BO.ProductItem
+                          {
+                              ID = p.ID,
+                              Name = p.Name,
+                              Price = p.Price,
+                              Category = (BO.Enums.eCategory)p.Category,
+                              Amount = p.InStock,
+                              InStock = (p.InStock != 0 ? true : false),
+                          };
             return Catalog;
         }
         catch (DalApi.EntityNotFoundException)
@@ -77,6 +76,7 @@ internal class BlProduct : BlApi.Iproduct
             throw new BlIdNotFound();
         }
     }
+
     /// <summary>
     /// the function get id from the manager and returns the specific product for the costumer
     /// </summary>
@@ -90,7 +90,7 @@ internal class BlProduct : BlApi.Iproduct
         {
             if (id >= 0)
             {
-                Dal.DO.Product p = dal.product.Read(id);
+                Dal.DO.Product p = dal.product.ReadSingle(x => x.ID == id);
                 BO.Product prod = new BO.Product();
                 prod.ID = p.ID;
                 prod.Name = p.Name;
@@ -106,6 +106,7 @@ internal class BlProduct : BlApi.Iproduct
             throw new BlIdNotFound();
         }
     }
+
     /// <summary>
     /// the function get id from the customer and returns the specific product for the costumer
     /// </summary>
@@ -119,7 +120,7 @@ internal class BlProduct : BlApi.Iproduct
         {
             if (id > 0)
             {
-                Dal.DO.Product p = dal.product.Read(id);
+                Dal.DO.Product p = dal.product.ReadSingle(x => x.ID == id);
                 BO.Product prod = new BO.Product();
                 prod.ID = p.ID;
                 prod.Name = p.Name;
@@ -159,13 +160,14 @@ internal class BlProduct : BlApi.Iproduct
             prod.Price = p.Price;
             prod.Category = (Dal.DO.eCategory)p.Category;
             prod.InStock = p.InStock;
-            dal.product.Add(prod);
+            dal?.product.Add(prod);
         }
         catch (DalApi.EntityDuplicateException)
         {
             throw new BlEntityDuplicate();
         }
     }
+
     /// <summary>
     /// gets the id of the product and sent it to the delete function in the dalProduct to
     /// </summary>
@@ -176,11 +178,8 @@ internal class BlProduct : BlApi.Iproduct
         try
         {
             IEnumerable<Dal.DO.Product> AllProducts = dal.product.ReadAll();
-            foreach (Dal.DO.Product item in AllProducts)
-            {
-                if (item.ID == id)
-                    dal.product.Delete(item.ID);
-            }
+            Dal.DO.Product product = AllProducts.Where(p => p.ID == id).FirstOrDefault();
+            dal.product.Delete(product.ID);
         }
         catch (DalApi.EntityNotFoundException)
         {

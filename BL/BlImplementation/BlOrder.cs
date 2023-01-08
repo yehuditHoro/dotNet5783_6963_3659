@@ -1,17 +1,18 @@
 ﻿using BlApi;
 using DalApi;
 using Dal;
+using System.Net.NetworkInformation;
+
 namespace BlImplementation;
 
 internal class BlOrder : BlApi.Iorder
 {
-    private IDal Dal_;
+    private IDal dal;
     List<Dal.DO.OrderItem> allItems;
     public BlOrder()
     {
-        
-        Dal_ = DalApi.Factory.Get();
-        allItems = Dal_.orderItem.ReadAll().ToList(); 
+        dal = DalApi.Factory.Get();
+        allItems = dal.orderItem.ReadAll().ToList();
     }
     /// <summary>
     /// the function return all the orders from the datasource
@@ -23,32 +24,72 @@ internal class BlOrder : BlApi.Iorder
     {
         try
         {
-            IEnumerable<Dal.DO.Order> getOrders = Dal_.order.ReadAll();
+            IEnumerable<Dal.DO.Order> getOrders = dal.order.ReadAll();
             if (getOrders.Count() <= 0)
             {
                 throw new BlFailedToGet();
             }
             List<BO.OrderForList> boOrders = new();
-            foreach (Dal.DO.Order o in getOrders)
+            double sum = 0;
+            int itemsAmount = 0;
+            getOrders.Select(o =>
             {
-                BO.OrderForList order = new();
-                order.ID = o.ID;
-                order.CustomerName = o.CustomerName;
-                order.Status = CheckStatus(o);
-                double sum = 0;
-                int itemsAmount = 0;
-                foreach (Dal.DO.OrderItem item in allItems)
+                BO.OrderForList bO = new();// מתודת הרחבה
+
+                bO.ID = o.ID;
+                bO.CustomerName = o.CustomerName;
+                bO.Status = CheckStatus(o);
+
+                allItems.Where(oi => oi.OrderId == o.ID).Select(oi =>
                 {
-                    if (item.OrderId == o.ID)
-                    {
-                        sum += (double)(item.Amount * item.Price);
-                        itemsAmount++;
-                    }
+                    sum = sum + (double)(oi.Amount * oi.Price);
+                    itemsAmount = itemsAmount + 1;
+                    return oi;
+                }).ToList();
+
+                bO.TotalPrice = sum;
+                bO.AmountOfItems = itemsAmount;
+                boOrders.Add(bO);
+                return bO;
+            }).ToList();
+            //getOrders.ToList().ForEach(o => boOrders.Add(new BO.OrderForList()// מתודת הרחבה
+            //{
+            //    ID = o.ID,
+            //    CustomerName = o.CustomerName,
+            //    Status = CheckStatus(o),
+
+                //    allItems.Where(oi => oi.OrderId == o.ID).Select(oi =>
+                //    {
+                //        sum = sum + (double)(oi.Amount * oi.Price);
+                //        itemsAmount = itemsAmount + 1;
+                //        return oi;
+                //    }).ToList()
+                //,
+                //    TotalPrice = sum,
+                //    AmountOfItems = itemsAmount
+                //})) ;
+
+            foreach (Dal.DO.OrderItem item in allItems)
+            {
+                if (item.OrderId == o.ID)
+                {
+                    sum += (double)(item.Amount * item.Price);
+                    itemsAmount++;
                 }
-                order.TotalPrice = sum;
-                order.AmountOfItems = itemsAmount;
-                boOrders.Add(order);
             }
+
+
+
+            //from item in allItems
+            //where item.OrderId == o.ID
+            //let sum1 = (double)(item.Amount * item.Price)
+            //let a = itemsAmout + 1;
+
+
+            //order.TotalPrice = sum;
+            //order.AmountOfItems = itemsAmount;
+            //boOrders.Add(order);
+
             return boOrders;
         }
         catch (DalApi.EntityNotFoundException)
@@ -69,7 +110,7 @@ internal class BlOrder : BlApi.Iorder
         {
             if (id > 0)
             {
-                Dal.DO.Order currOrder = Dal_.order.Read(id);
+                Dal.DO.Order currOrder = dal.order.ReadSingle(x => x.ID == id);
                 BO.Order newO = new();
                 newO.ID = currOrder.ID;
                 newO.CustomerName = currOrder.CustomerName;
@@ -100,11 +141,11 @@ internal class BlOrder : BlApi.Iorder
     {
         try
         {
-            Dal.DO.Order currOrder = Dal_.order.Read(id);
+            Dal.DO.Order currOrder = dal.order.ReadSingle(x => x.ID == id);
             if (currOrder.ShipDate < DateTime.Now)
                 throw new BlFailedToUpdate();
             currOrder.ShipDate = DateTime.Now;
-            Dal_.order.Update(currOrder);
+            dal.order.Update(currOrder);
             BO.Order order = new BO.Order();
             order.ID = currOrder.ID;
             order.OrderDate = currOrder.OrderDate;
@@ -133,11 +174,11 @@ internal class BlOrder : BlApi.Iorder
     {
         try
         {
-            Dal.DO.Order currOrder = Dal_.order.Read(id);
+            Dal.DO.Order currOrder = dal.order.ReadSingle(x => x.ID == id);
             if (currOrder.DeliveryDate > DateTime.Now && currOrder.ShipDate < DateTime.Now)
             {
                 currOrder.DeliveryDate = DateTime.Now;
-                Dal_.order.Update(currOrder);
+                dal.order.Update(currOrder);
                 BO.Order order = new BO.Order();
                 order.ID = currOrder.ID;
                 order.OrderDate = currOrder.OrderDate;
@@ -182,7 +223,7 @@ internal class BlOrder : BlApi.Iorder
             {
                 BO.OrderItem oi = new();
                 oi.ID = item.ID;
-                oi.Name = Dal_.product.Read(item.ProductId).Name;
+                oi.Name = dal.product.ReadSingle(x => x.ID == item.ProductId).Name;
                 oi.ProductID = item.ProductId;
                 oi.Amount = item.Amount;
                 oi.Price = item.Price;
