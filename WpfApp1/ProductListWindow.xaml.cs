@@ -60,9 +60,9 @@ public partial class ProductListWindow : Window
     /// <param name="e"></param>
     private void AddProduct(object sender, RoutedEventArgs e)
     {
-        ProductWindow window = new ProductWindow(bl);
+        ProductWindow window = new ProductWindow( bl, this);
         window.Show();
-        this.Hide();
+        this.Close();
     }
     /// <summary>
     /// delete the filter and show all the products
@@ -84,7 +84,7 @@ public partial class ProductListWindow : Window
     /// <param name="e"></param>
     private void Update(object sender, MouseButtonEventArgs e)
     {
-        new ProductWindow(bl, ((BO.ProductForList)ProductsListview.SelectedItem).ID).Show();
+        new ProductWindow(bl,this, ((BO.ProductForList)ProductsListview.SelectedItem).ID).Show();
         Close();
     }
 

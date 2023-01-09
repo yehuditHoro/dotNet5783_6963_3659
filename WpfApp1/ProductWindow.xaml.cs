@@ -24,15 +24,16 @@ public partial class ProductWindow : Window
 {
     private IBl bl;
     private int p_id;
+    private Window window;
     BO.Product product = new();
-    public ProductWindow(IBl BL, int? pId = null)
+    public ProductWindow(IBl BL, Window w,int? pId = null)
     {
+        window = w;
         try
         {
             InitializeComponent();
             bl = BL;
             category.ItemsSource = BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
-            category.Text = ((BO.Enums.eCategory)0).ToString();
             if (pId == null)
             {
                 p_id = -1;
@@ -70,9 +71,11 @@ public partial class ProductWindow : Window
             {
                 bl.product.UpdateProduct(product);
             }
-            ProductListWindow window = new ProductListWindow(bl);
-            window.Show();
-            this.Hide();
+            ProductListWindow wi = new ProductListWindow(bl);
+            wi.Show();
+            this.Close();
+            //window.Show();
+            //this.Hide();
         }
         catch (Exception ex)
         { MessageBox.Show(ex.Message); }
@@ -89,7 +92,6 @@ public partial class ProductWindow : Window
         try
         {
             bl.product.RemoveProduct(p_id);
-
         }
         catch (Exception ex)
 

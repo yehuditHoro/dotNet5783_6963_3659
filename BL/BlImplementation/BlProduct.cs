@@ -114,20 +114,27 @@ internal class BlProduct : BlApi.Iproduct
     /// <returns></returns>
     /// <exception cref="BlInvalidInputException"></exception>
     /// <exception cref="BlIdNotFound"></exception>
-    public BO.Product GetProductItemsForCustomer(int id)
+    public BO.ProductItem GetProductItemsForCustomer(int id, BO.Cart c)
     {
         try
         {
             if (id > 0)
             {
                 Dal.DO.Product p = dal.product.ReadSingle(x => x.ID == id);
-                BO.Product prod = new BO.Product();
-                prod.ID = p.ID;
-                prod.Name = p.Name;
-                prod.Price = p.Price;
-                prod.Category = (BO.Enums.eCategory)p.Category;
-                prod.InStock = p.InStock;
-                return prod;
+                if (c.Items.Count() <= 0)
+                    throw new BlNullException();
+                BO.ProductItem pi = (from oi in c.Items
+                                     where oi.ProductID == id
+                                     select new BO.ProductItem
+                                     {
+                                         ID = oi.ID,
+                                         Name = oi.Name,
+                                         Price = oi.Price,
+                                         Category = (BO.Enums.eCategory)p.Category,
+                                         Amount = oi.Amount,
+                                         InStock = p.InStock > 0 ? true : false
+                                     }).First() ?? throw new BlNullException();
+                return pi;
             }
             else throw new BlInvalidInputException("invalid negative input");
         }
@@ -154,6 +161,8 @@ internal class BlProduct : BlApi.Iproduct
                 throw new BlInvalidInputException("invalid negative input");
             if (p.InStock < 0)
                 throw new BlOutOfStockException();
+            if (p.ID < 0)
+                throw new BlInvalidInputException("invalid negative id");
             Dal.DO.Product prod = new Dal.DO.Product();
             prod.ID = p.ID;
             prod.Name = p.Name;
@@ -177,18 +186,22 @@ internal class BlProduct : BlApi.Iproduct
     {
         try
         {
-            Dal.DO.Product product = dal.product.ReadSingle(p => p.ID == id);
             IEnumerable<Dal.DO.OrderItem> AllOrderItems = dal.orderItem.ReadAll();
-            AllOrderItems = AllOrderItems.Where(item => item.ProductId == id);
+            AllOrderItems = AllOrderItems.Where(item => item.ProductId == id) ?? throw new BlNullException();
             if (AllOrderItems.Count() > 0)
-                throw new Exception("the product is already ordered");
-            dal.product.Delete(product.ID);
+                foreach (Dal.DO.OrderItem item in AllOrderItems)
+                {
+                    if (dal.order.ReadSingle(o => o.ID == item.OrderId).DeliveryDate > DateTime.Now)
+                        throw new Exception("the product is already ordered");
+                }
+            dal.product.Delete(id);
         }
         catch (DalApi.EntityNotFoundException)
         {
             throw new BlIdNotFound();
         }
     }
+
     /// <summary>
     ///  the function gets the id of the product and update it
     /// </summary>

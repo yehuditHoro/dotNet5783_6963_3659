@@ -113,7 +113,7 @@ void ProductOption()
             Console.WriteLine("enter the id of the product that you want to get");
             int Id = Convert.ToInt32(Console.ReadLine());
             if (Id < 0) throw new BlInvalidInputException("invalid negative input");
-            p = ibl.product.GetProductItemsForCustomer(Id);
+            p = ibl.product.GetProductItemsForCustomer(Id, gCart);
             Console.WriteLine(p);
             break;
         case BO.Enums.eProductOptions.Add:
