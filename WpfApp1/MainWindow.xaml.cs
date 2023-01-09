@@ -35,7 +35,13 @@ public partial class MainWindow : Window
     {
         ProductListWindow ListWindow = new ProductListWindow(bl);
         ListWindow.Show();
-        this.Hide();
-        
+        this.Close();      
+    }
+
+    private void GetOrders(object sender, RoutedEventArgs e)
+    {
+        OrderListWindow OrderWindow = new(bl);
+        OrderWindow.Show();
+        this.Close();
     }
 }

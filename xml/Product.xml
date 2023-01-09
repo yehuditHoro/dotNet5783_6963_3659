@@ -19,6 +19,4 @@
   <product ID="16" Name="winkkkke dresses" Category="boys" Price="88" InStock="100" />
   <product ID="17" Name="jjjj" Category="boys" Price="90" InStock="800" />
   <product ID="18" Name="aaa" Category="girls" Price="77" InStock="500" />
-  <product ID="19" Name="ssss" Category="boys" Price="40" InStock="200" />
-  <product ID="20" Name="xs" Category="women" Price="47" InStock="250" />
 </products>

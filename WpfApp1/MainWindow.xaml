@@ -15,5 +15,6 @@
             <ColumnDefinition Width="314*"/>
         </Grid.ColumnDefinitions>
         <Button x:Name="Btn_Click" Content=" get all products " HorizontalAlignment="Left" Margin="113,60,0,0" VerticalAlignment="Top" Click="GetProducts" Grid.ColumnSpan="3" Background="#FF83DE6B" BorderBrush="#FF5281DE" Foreground="Black" FontSize="14" Width="117" FontFamily="Share-ItalicOSF"/>
+        <Button x:Name="Btn2_Click" Content=" get all orders " HorizontalAlignment="Left" Margin="113,160,0,0" VerticalAlignment="Top" Click="GetOrders" Grid.ColumnSpan="3" Background="#FF83DE6B" BorderBrush="#FF5281DE" Foreground="Black" FontSize="14" Width="117" FontFamily="Share-ItalicOSF"/>
     </Grid>
 </Window>

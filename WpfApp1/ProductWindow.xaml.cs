@@ -24,11 +24,11 @@ public partial class ProductWindow : Window
 {
     private IBl bl;
     private int p_id;
-    private Window window;
+    //private Window window;
     BO.Product product = new();
     public ProductWindow(IBl BL, Window w,int? pId = null)
     {
-        window = w;
+        //window = w;
         try
         {
             InitializeComponent();
@@ -92,6 +92,9 @@ public partial class ProductWindow : Window
         try
         {
             bl.product.RemoveProduct(p_id);
+            ProductListWindow wi = new ProductListWindow(bl);
+            wi.Show();
+            this.Close();
         }
         catch (Exception ex)
 

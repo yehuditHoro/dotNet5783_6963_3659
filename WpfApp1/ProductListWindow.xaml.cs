@@ -37,6 +37,7 @@ public partial class ProductListWindow : Window
             MessageBox.Show(ex.Message);
         }
     }
+
     /// <summary>
     /// show all the categories
     /// </summary>
@@ -53,6 +54,7 @@ public partial class ProductListWindow : Window
             MessageBox.Show(ex.Message);
         }
     }
+
     /// <summary>
     /// move the user to the add product window(product window)
     /// </summary>
@@ -64,6 +66,7 @@ public partial class ProductListWindow : Window
         window.Show();
         this.Close();
     }
+
     /// <summary>
     /// delete the filter and show all the products
     /// </summary>
@@ -77,6 +80,7 @@ public partial class ProductListWindow : Window
         }catch(Exception ex)
         { MessageBox.Show(ex.Message); }
     }
+
     /// <summary>
     /// move the user to the update product window(product window)
     /// </summary>
