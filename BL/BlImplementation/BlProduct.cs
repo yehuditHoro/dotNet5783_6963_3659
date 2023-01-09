@@ -187,7 +187,7 @@ internal class BlProduct : BlApi.Iproduct
         try
         {
             IEnumerable<Dal.DO.OrderItem> AllOrderItems = dal.orderItem.ReadAll();
-            AllOrderItems = AllOrderItems.Where(item => item.ProductId == id) ?? throw new BlNullException();
+            AllOrderItems = AllOrderItems.Where(item => item.ProductId == id);
             if (AllOrderItems.Count() > 0)
                 foreach (Dal.DO.OrderItem item in AllOrderItems)
                 {
