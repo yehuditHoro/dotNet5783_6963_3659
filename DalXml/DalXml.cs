@@ -10,7 +10,7 @@ sealed internal class DalXml : IDal
     {
         //AddListProducts();
         //CreateOrdersList();
-       //CreateOrderItemList();
+        //CreateOrderItemList();
     }
     public static IDal Instance { get; } = new DalXml();
     public Iproduct product { get; } = new Dal.DalProduct();
@@ -64,10 +64,13 @@ sealed internal class DalXml : IDal
 
     public void CreateOrderItemList()
     {
-            for (int j = 0; j < 40; j++)
+        for (int i = 0; i < 40; i++)
+        {
+            int num = (int)rand.Next(1, 4);
+            for (int j = 0; j < num; j++)
             {
                 int IndexProduct = (int)rand.Next(0, product.ReadAll().Count());
-                int IndexOrder = (int)rand.Next(100, 99+order.ReadAll().Count());
+                int IndexOrder = (int)rand.Next(100, 99 + order.ReadAll().Count());
                 Dal.DO.OrderItem newOrderItems = new();
                 newOrderItems.ProductId = product.ReadSingle(x => x.ID == IndexProduct).ID;
                 newOrderItems.OrderId = order.ReadSingle(x => x.ID == IndexOrder).ID;
@@ -77,4 +80,5 @@ sealed internal class DalXml : IDal
             }
         }
     }
+}
 

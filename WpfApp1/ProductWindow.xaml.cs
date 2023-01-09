@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +24,7 @@ public partial class ProductWindow : Window
 {
     private IBl bl;
     private int p_id;
+    BO.Product product = new();
     public ProductWindow(IBl BL, int? pId = null)
     {
         try
@@ -41,18 +43,16 @@ public partial class ProductWindow : Window
             {
                 addOrUpdate.Content = "update";
                 p_id = (int)pId;
-                BO.Product product = bl.product.GetProductItemsForManager(p_id);
-                productName.Text = product.Name;
-                productPrice.Text = product.Price.ToString();
-                category.SelectedItem = product.Category;
-                productAmount.Text = product.InStock.ToString();
+                product = bl.product.GetProductItemsForManager(p_id);
             }
+            DataContext = product;
         }
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message);
         }
     }
+
     /// <summary>
     /// add or update the product due to the request
     /// </summary>
@@ -62,21 +62,13 @@ public partial class ProductWindow : Window
     {
         try
         {
-            BO.Product p = new BO.Product()
-            {
-                ID = p_id,
-                Name = productName.Text,
-                Category = (BO.Enums.eCategory)category.SelectedItem,
-                InStock = int.Parse(productAmount.Text),
-                Price = int.Parse(productPrice.Text)
-            };
             if (p_id == -1)
             {
-                bl.product.AddProduct(p);
+                bl.product.AddProduct(product);
             }
             else
             {
-                bl.product.UpdateProduct(p);
+                bl.product.UpdateProduct(product);
             }
             ProductListWindow window = new ProductListWindow(bl);
             window.Show();

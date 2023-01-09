@@ -21,9 +21,6 @@ internal class BlCart : BlApi.Icart
         {
             if (c.Items != null)
             {
-                var oi = from item in c.Items
-                         where item.ProductID == pId
-                         select item;
                 BO.OrderItem? oi = c.Items.Find(x => x.ProductID == pId);
                 if (oi?.ProductID == pId)
                 {
@@ -170,7 +167,6 @@ internal class BlCart : BlApi.Icart
     private bool IsValidEmail(string email)
     {
         var trimmedEmail = email.Trim();
-
         if (trimmedEmail.EndsWith("."))
         {
             return false; // suggested by @TK-421

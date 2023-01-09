@@ -72,19 +72,22 @@ public class DataSource
     /// </summary>
     static public void CreateOrderItemList()
     {
-
-        for (int j = 0; j < 40; j++)
+        for (int i = 0; i < 40; i++)
         {
-            int IndexProduct = (int)rand.Next(0, ProductsList.Count());
-            int IndexOrder = (int)rand.Next(0, OrdersList.Count());
+            int num = (int)rand.Next(1, 4);
+            for (int j = 0; j < num; j++)
+            {
+                int IndexProduct = (int)rand.Next(0, ProductsList.Count());
+                int IndexOrder = (int)rand.Next(0, OrdersList.Count());
 
-            OrderItem newOrderItems = new OrderItem();
-            newOrderItems.ID = config.OrderItemId;
-            newOrderItems.ProductId = ProductsList[IndexProduct].ID;
-            newOrderItems.OrderId = OrdersList[IndexOrder].ID;
-            newOrderItems.Amount = (int)rand.Next(1, 500);
-            newOrderItems.Price = (ProductsList[IndexProduct].Price) * newOrderItems.Amount;
-            OrderItemsList.Add(newOrderItems);
+                OrderItem newOrderItems = new OrderItem();
+                newOrderItems.ID = config.OrderItemId;
+                newOrderItems.ProductId = ProductsList[IndexProduct].ID;
+                newOrderItems.OrderId = OrdersList[IndexOrder].ID;
+                newOrderItems.Amount = (int)rand.Next(1, 500);
+                newOrderItems.Price = (ProductsList[IndexProduct].Price) * newOrderItems.Amount;
+                OrderItemsList.Add(newOrderItems);
+            }
         }
     }
     /// <summary>
