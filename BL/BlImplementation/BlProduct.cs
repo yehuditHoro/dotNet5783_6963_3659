@@ -50,11 +50,15 @@ internal class BlProduct : BlApi.Iproduct
     /// <exception cref="BlFailedToGet"></exception>
     /// <exception cref="BlIdNotFound"></exception>
     /// 
-    public IEnumerable<BO.ProductItem?> GetCatalog()
+    public IEnumerable<BO.ProductItem?> GetCatalog(BO.Enums.eCategory? category)
     {
         try
         {
-            IEnumerable<Dal.DO.Product> getCatalog = dal.product.ReadAll();
+            IEnumerable<Dal.DO.Product> getCatalog;
+            if (category == null)
+                getCatalog = dal.product.ReadAll();
+            else
+                getCatalog= dal.product.ReadAll(x => (BO.Enums.eCategory)x.Category == category);
             if (getCatalog.Count() <= 0)
             {
                 throw new BlFailedToGet();

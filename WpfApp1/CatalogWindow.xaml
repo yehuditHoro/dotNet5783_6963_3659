@@ -1,0 +1,30 @@
+﻿<Window x:Class="PL.CatalogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="CatalogWindow" Height="450" Width="800">
+    <Grid>
+        <Grid Name="MainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="auto" MinHeight="116.04"/>
+            </Grid.RowDefinitions>
+            <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions >
+                <Label Content="Category:"  Grid.Column="1" HorizontalAlignment= "Left"  VerticalAlignment="Center" FontSize="20" FontWeight="Bold" FontFamily="AdamGorry-Inline" Margin="10,0,0,0"/>
+                <ComboBox Name="CategorySelector" Grid.Column="1" Margin="156,12,55,10" SelectionChanged="Categories"/>
+                <Button Content="X" Name="delete" Grid.Column="1" HorizontalAlignment= "Left" Margin="350,12,0,10" Width="30" Click="DeleteFilter"/>
+            </Grid>
+            <ListView x:Name="CatalogListview"  d:ItemsSource="{d:SampleData ItemCount=5}" RenderTransformOrigin="0.412,-0.045" MouseDoubleClick="AddProductToCart" FontFamily="Sherbrooke Bold" FontSize="16" FontWeight="Normal" FontStyle="Normal" Grid.Row="1"/>
+            <Button Content="show cart"  HorizontalAlignment="Center" FontSize="20" Grid.Row="2" VerticalAlignment="Center" Click="GetCart" RenderTransformOrigin="3.424,-2.504" Height="40" Width="118" Background="#FFECE278" FontFamily="shirin "/>
+
+        </Grid>
+    </Grid>
+</Window>

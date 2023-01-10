@@ -41,7 +41,9 @@ namespace PL
 
         private void CustomerScreen(object sender, RoutedEventArgs e)
         {
-
+            CatalogWindow catalogWindow = new(bl);
+            catalogWindow.Show();
+            this.Close();
         }
     }
 }

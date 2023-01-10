@@ -26,20 +26,28 @@ namespace PL
         BO.Order order = new();
         public OrderWindow(IBl BL, int? oId = null)
         {
-            InitializeComponent();
-            bl = BL;
-            status.ItemsSource = BO.Enums.eOrderStatus.GetValues(typeof(BO.Enums.eOrderStatus));
-            order = bl.order.GetOrder((int)oId);
-            orderForList.ID = order.ID;
-            orderForList.CustomerName = order.CustomerName;
-            orderForList.Status = order.Status;
-            orderForList.AmountOfItems = order.Items.Count();
-            orderForList.TotalPrice = order.TotalPrice;
-            DataContext = orderForList;
+            try
+            {
+                InitializeComponent();
+                bl = BL;
+                status.ItemsSource = BO.Enums.eOrderStatus.GetValues(typeof(BO.Enums.eOrderStatus));
+                order = bl.order.GetOrder((int)oId);
+                orderForList.ID = order.ID;
+                orderForList.CustomerName = order.CustomerName;
+                orderForList.Status = order.Status;
+                orderForList.AmountOfItems = order.Items.Count();
+                orderForList.TotalPrice = order.TotalPrice;
+                DataContext = orderForList;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void changeStatus(object sender, SelectionChangedEventArgs e)
-        {          
+        {
+            try { 
             if (isInitilize)
             {
                 DataContext = orderForList;
@@ -53,6 +61,11 @@ namespace PL
                 this.Close();
             }
             else isInitilize = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
