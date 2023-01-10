@@ -21,10 +21,11 @@ namespace PL;
 /// </summary>
 public partial class AdminWindow : Window
 {
-    private IBl bl = BlApi.Factory.Get();
-    public AdminWindow()
+    private IBl bl;
+    public AdminWindow(IBl BL)
     {
         InitializeComponent();
+        bl = BL;
     }
     /// <summary>
     /// move the user to the product window in order to see all the products

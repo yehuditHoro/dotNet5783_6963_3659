@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlApi;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,28 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        private IBl bl = BlApi.Factory.Get();
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void AdminScreen(object sender, RoutedEventArgs e)
+        {
+            AdminWindow adminWindow = new(bl);
+            adminWindow.Show();
+            this.Close();
+        }
+
+        private void Tracking(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CustomerScreen(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
