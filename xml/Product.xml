@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <products>
   <product ID="0" Name="yyyyy" Category="boys" Price="55" InStock="500" />
-  <product ID="1" Name="fffff" Category="women" Price="70" InStock="400" />
+  <product ID="1" Name="ghfjh" Category="boys" Price="800" InStock="400" />
   <product ID="2" Name="pants" Category="women" Price="60" InStock="502" />
   <product ID="3" Name="shoes" Category="girls" Price="129" InStock="470" />
   <product ID="4" Name="skirts" Category="babies" Price="417" InStock="335" />
@@ -18,5 +18,5 @@
   <product ID="15" Name="winter dresses" Category="men" Price="88" InStock="88" />
   <product ID="16" Name="winkkkke dresses" Category="boys" Price="88" InStock="100" />
   <product ID="17" Name="jjjj" Category="boys" Price="90" InStock="800" />
-  <product ID="18" Name="aaa" Category="girls" Price="77" InStock="500" />
+  <product ID="21" Name="batush" Category="women" Price="545" InStock="45" />
 </products>

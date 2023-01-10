@@ -102,7 +102,7 @@ internal class BlOrder : BlApi.Iorder
         try
         {
             Dal.DO.Order currOrder = dal.order.ReadSingle(x => x.ID == id);
-            if (currOrder.ShipDate < DateTime.Now)
+            if (currOrder.ShipDate < DateTime.Now && currOrder.ShipDate!=DateTime.MinValue)
                 throw new BlFailedToUpdate();
             currOrder.ShipDate = DateTime.Now;
             dal.order.Update(currOrder);
@@ -123,6 +123,48 @@ internal class BlOrder : BlApi.Iorder
             throw new BlIdNotFound();
         }
     }
+//====================================================================================
+    //public BO.Order UpdateOrderSent(int orderId)
+    //{
+    //    BO.Order order = new();
+    //    try
+    //    {
+    //        DO.Order DoOrder = dalList.Order.ReadSingle(o => o.ID == orderId);
+    //        if (DoOrder.ID == 0)
+    //            throw new BlEntityNotFoundException();
+    //        if (DoOrder.ShipDate != null)
+    //            throw new BlNoNeedToUpdateException();
+    //        DoOrder.ShipDate = DateTime.Now;
+    //        dalList.Order.Update(DoOrder);
+    //        order.ID = DoOrder.ID;
+    //        order.CustomerName = DoOrder.CustomerName;
+    //        order.CustomerEmail = DoOrder.CustomerEmail;
+    //        order.CustomerAddress = DoOrder.CustomerAddress;
+    //        order.Status = (BO.eOrderStatus)1;
+    //        order.OrderDate = DoOrder.OrderDate;
+    //        order.ShipDate = DateTime.Now;
+    //        order.DeliveryDate = null;
+    //        var DoOrderItems = dalList.OrderItem.Read(oi => oi.OrderId == orderId);
+    //        order.Items = (from oi in DoOrderItems
+    //                       select new BO.OrderItem
+    //                       {
+    //                           ID = oi.ID,
+    //                           ProductID = oi.ProductId,
+    //                           ProductName = dalList.Product.ReadSingle(p => p.ID == oi.ProductId).Name,
+    //                           Amount = oi.Amount,
+    //                           Price = oi.Price,
+    //                           TotalPrice = oi.Amount * oi.Price
+    //                       }).ToList();
+    //        order.TotalPrice = order.Items.Sum(oi => oi.TotalPrice);
+    //    }
+    //    catch (DalApi.EntityNotFoundException ex)
+    //    {
+    //        throw new BlEntityNotFoundException(ex);
+    //    }
+    //    return order;
+    //}
+//==================================================================================
+
     /// <summary>
     /// 
     /// </summary>
@@ -135,7 +177,7 @@ internal class BlOrder : BlApi.Iorder
         try
         {
             Dal.DO.Order currOrder = dal.order.ReadSingle(x => x.ID == id);
-            if (currOrder.DeliveryDate > DateTime.Now && currOrder.ShipDate < DateTime.Now)
+            if ((currOrder.DeliveryDate > DateTime.Now && currOrder.ShipDate < DateTime.Now) || currOrder.DeliveryDate==DateTime.MinValue)
             {
                 currOrder.DeliveryDate = DateTime.Now;
                 dal.order.Update(currOrder);

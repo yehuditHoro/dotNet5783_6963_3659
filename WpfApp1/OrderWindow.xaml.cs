@@ -22,13 +22,13 @@ namespace PL
     {
         private IBl bl;
         private bool isInitilize = false;
+        BO.OrderForList orderForList = new();
+        BO.Order order = new();
         public OrderWindow(IBl BL, int? oId = null)
         {
             InitializeComponent();
             bl = BL;
             status.ItemsSource = BO.Enums.eOrderStatus.GetValues(typeof(BO.Enums.eOrderStatus));
-            BO.OrderForList orderForList = new();
-            BO.Order order = new();
             order = bl.order.GetOrder((int)oId);
             orderForList.ID = order.ID;
             orderForList.CustomerName = order.CustomerName;
@@ -39,8 +39,20 @@ namespace PL
         }
 
         private void changeStatus(object sender, SelectionChangedEventArgs e)
-        {
-           // if()
+        {          
+            if (isInitilize)
+            {
+                DataContext = orderForList;
+                order.Status = (BO.Enums.eOrderStatus)status.SelectedItem;
+                if (order.Status == (BO.Enums.eOrderStatus)1)
+                    order = bl.order.ShipedOrder(orderForList.ID);
+                if (order.Status == (BO.Enums.eOrderStatus)2)
+                    order = bl.order.DeliveredOrder(orderForList.ID);
+                OrderListWindow window = new(bl);
+                window.Show();
+                this.Close();
+            }
+            else isInitilize = true;
         }
     }
 }

@@ -10,38 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MainWindow;
-using BlApi;
-namespace PL;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
-public partial class MainWindow : Window
+namespace PL
 {
-    private IBl bl = BlApi.Factory.Get();
-    public MainWindow()
-    {
-        InitializeComponent();
-    }
     /// <summary>
-    /// move the user to the product window in order to see all the products
+    /// Interaction logic for Window1.xaml
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void GetProducts(object sender, RoutedEventArgs e)
+    public partial class MainWindow : Window
     {
-        ProductListWindow ListWindow = new ProductListWindow(bl);
-        ListWindow.Show();
-        this.Close();      
-    }
-
-    private void GetOrders(object sender, RoutedEventArgs e)
-    {
-        OrderListWindow OrderWindow = new(bl);
-        OrderWindow.Show();
-        this.Close();
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
     }
 }
