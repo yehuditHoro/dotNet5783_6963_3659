@@ -11,9 +11,14 @@ namespace Dal;
 
 internal class DalOrderItem : IorderItem
 {
+    /// <summary>
+    /// the function add a order item to the list in OrderItem.xml file
+    /// </summary>
+    /// <param name="oi"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public int Add(OrderItem oi)
-    {
-        
+    {      
         XElement? config = XDocument.Load("..\\xml\\Config.xml").Root;
         oi.ID = Convert.ToInt32(config?.Elements("orderItemId")?.FirstOrDefault()?.Value);
         config?.Element("orderItemId")?.SetValue(Convert.ToInt32(config?.Elements("orderItemId")?.FirstOrDefault()?.Value) + 1);
@@ -23,7 +28,7 @@ internal class DalOrderItem : IorderItem
         {
             StreamReader sr = new("..\\xml\\OrderItem.xml");
             XmlSerializer ser = new(typeof(List<OrderItem>));
-            lst = (List<OrderItem>)ser.Deserialize(sr);
+            lst = (List<OrderItem>)ser.Deserialize(sr) ?? throw new Exception();
             sr.Close();
         }
         lst?.Insert(0, oi);
@@ -34,33 +39,51 @@ internal class DalOrderItem : IorderItem
         return oi.ID;
     }
 
+    /// <summary>
+    /// if the function doesn't get any argument the function returns all the order items,
+    /// otherwise the function returns order item according to the lambada
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public IEnumerable<OrderItem> ReadAll(Func<OrderItem, bool>? func = null)
     {
-        //IEnumerable when there us func
         StreamReader rw = new("..\\xml\\OrderItem.xml");
         XmlSerializer ser = new(typeof(List<OrderItem>));
-        List<OrderItem> lst = (List<OrderItem>)ser.Deserialize(rw);// what is Deserialize do?
+        List<OrderItem>? lst = (List<OrderItem>)ser.Deserialize(rw) ?? throw new Exception();
         rw.Close();
         if (func == null)
             return lst;
         return lst.Where(func);
     }
 
+    /// <summary>
+    /// The function returns the first order item from the OrderItem.xml file
+    /// that meets the condition lambada 
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public OrderItem ReadSingle(Func<OrderItem, bool> func)
     {
         StreamReader rw = new("..\\xml\\OrderItem.xml");
         XmlSerializer ser = new(typeof(List<OrderItem>));
-        List<OrderItem> lst = (List<OrderItem>)ser.Deserialize(rw);
+        List<OrderItem>? lst = (List<OrderItem>)ser.Deserialize(rw) ?? throw new Exception(); ;
         rw.Close();
-        return lst.Where(func).FirstOrDefault();// need to check if func ==null?
+        return lst.Where(func).FirstOrDefault();
     }
 
+    /// <summary>
+    /// the function gets the order with changes and update this order item
+    /// according to the order item id in the OrderItem.xml file
+    /// </summary>
+    /// <param name="oi"></param>
+    /// <exception cref="Exception"></exception>
     public void Update(OrderItem oi)
     {
         StreamReader rw = new("..\\xml\\OrderItem.xml");
         XmlSerializer ser = new(typeof(List<OrderItem>));
-        List<OrderItem> lst = new();
-        lst = (List<OrderItem>)ser.Deserialize(rw);//?? throw new Exception();
+        List<OrderItem>? lst = (List<OrderItem>)ser.Deserialize(rw) ?? throw new Exception();
         rw.Close();
         int idx = lst.FindIndex(x => x.ID == oi.ID);
         lst.RemoveAt(idx);
@@ -71,12 +94,18 @@ internal class DalOrderItem : IorderItem
         sw.Close();
     }
 
+    /// <summary>
+    /// the function gets the id of the order item that we want to remove and according to
+    /// the order item id the function delete this order item in the OrderItem.xml file
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="Exception"></exception>
     public void Delete(int id)
     {
         StreamReader rw = new("..\\xml\\OrderItem.xml");
         XmlSerializer ser = new(typeof(List<OrderItem>));
         List<OrderItem> lst = new();
-        lst = (List<OrderItem>)ser.Deserialize(rw); //?? throw new Exception();
+        lst = (List<OrderItem>)ser.Deserialize(rw) ?? throw new Exception();
         rw.Close();
         int idx = lst.FindIndex(x => x.ID == id);
         lst.RemoveAt(idx);

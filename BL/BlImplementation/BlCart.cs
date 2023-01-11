@@ -140,7 +140,6 @@ internal class BlCart : BlApi.Icart
             newOrder.DeliveryDate = DateTime.MinValue;
             int id = Dal.order.Add(newOrder);
             List<Dal.DO.OrderItem> allItems = Dal.orderItem.ReadAll().ToList();
-
             foreach (BO.OrderItem item in c.Items)
             {
                 Dal.DO.OrderItem cartItem = new();

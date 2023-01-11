@@ -14,6 +14,7 @@ internal class BlOrder : BlApi.Iorder
         dal = DalApi.Factory.Get();
         allItems = dal.orderItem.ReadAll().ToList();
     }
+
     /// <summary>
     /// the function return all the orders from the datasource
     /// </summary>
