@@ -122,7 +122,7 @@ internal class BlProduct : BlApi.Iproduct
     {
         try
         {
-            if (id > 0)
+            if (id >= 0)
             {
                 Dal.DO.Product p = dal.product.ReadSingle(x => x.ID == id);
                 if (c.Items.Count() <= 0)
@@ -147,6 +147,37 @@ internal class BlProduct : BlApi.Iproduct
             throw new BlIdNotFound();
         }
     }
+
+    //========================================================================
+    //public BO.Product GetProductCustomer(int id)
+    //{
+    //    try
+    //    {
+    //        BO.Product p = new BO.Product();
+    //        if (id > 0)
+    //        {
+    //            Dal.DO.Product product = Dal.Product.Get(p => p.ID == id);
+    //            p.ID = product.ID;
+    //            p.Name = product.Name;
+    //            p.Price = product.Price;
+    //            p.Category = (BO.Category)product.Category;
+    //            p.inStock = product.InStock;
+    //            return p;
+    //        }
+    //        throw new BO.BlEntityNotFoundException("");
+    //    }
+    //    catch (DalApi.ExceptionObjectNotFound)
+    //    {
+    //        throw new BO.BlEntityNotFoundException("");
+    //    }
+    //    catch (Exception)
+    //    {
+    //        throw new BO.BlDefaultException("unexpected error");
+    //    }
+    //}
+    //==========================================================================
+
+
     /// <summary>
     /// gets the new product and add send it to the add function in the dalProduct
     /// </summary>

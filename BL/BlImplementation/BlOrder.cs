@@ -153,7 +153,7 @@ internal class BlOrder : BlApi.Iorder
                 (order.Items, order.TotalPrice) = convertDToB(allItems, currOrder.ID);
                 return order;
             }
-            throw new BlFailedToUpdate();   //where is the catch?
+            throw new BlFailedToUpdate();
         }
         catch (DalApi.EntityNotFoundException)
         {

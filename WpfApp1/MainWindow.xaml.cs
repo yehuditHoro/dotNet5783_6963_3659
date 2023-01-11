@@ -21,7 +21,7 @@ namespace PL
     public partial class MainWindow : Window
     {
         private IBl bl = BlApi.Factory.Get();
-
+        public BO.Cart cart = new();
         public MainWindow()
         {
             InitializeComponent();
@@ -41,7 +41,7 @@ namespace PL
 
         private void CustomerScreen(object sender, RoutedEventArgs e)
         {
-            CatalogWindow catalogWindow = new(bl);
+            CatalogWindow catalogWindow = new(bl, cart);
             catalogWindow.Show();
             this.Close();
         }

@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
+using BO;
 using PL;
 
 namespace MainWindow;
@@ -23,28 +24,42 @@ namespace MainWindow;
 public partial class ProductWindow : Window
 {
     private IBl bl;
-    private int p_id;
+    private BO.Cart? c;
     BO.Product product = new();
-    public ProductWindow(IBl BL, int? pId = null)
+    public ProductWindow(IBl BL, string userType ,BO.Cart? cart=null ,int? pId = null)
     {
         try
         {
             InitializeComponent();
             bl = BL;
+            c = cart;
             category.ItemsSource = BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
-            if (pId == null)
+            if (userType == "manager")
             {
-                p_id = -1;
-                addOrUpdate.Content = "add";
-                btnDelete.Visibility = Visibility.Hidden;
+                if (pId == null)
+                {
+                    addOrUpdate.Content = "add";
+                    btnDelete.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    addOrUpdate.Content = "update";
+                    product = bl.product.GetProductItemsForManager((int)pId);
+                }
+                DataContext = product;
             }
             else
             {
-                addOrUpdate.Content = "update";
-                p_id = (int)pId;
-                product = bl.product.GetProductItemsForManager(p_id);
+                addOrUpdate.Content = "add to cart";
+                btnDelete.Visibility = Visibility.Hidden;
+                product = bl.product.GetProductItemsForManager((int)pId);  //cart??????????
+                //BO.ProductItem productItem = new();
+                //product.Name = productItem.Name;
+                //product.Category = productItem.Category;
+                //product.Price = productItem.Price;
+                //product.InStock = productItem.Amount;
+                DataContext = product;
             }
-            DataContext = product;
         }
         catch (Exception ex)
         {
@@ -61,17 +76,27 @@ public partial class ProductWindow : Window
     {
         try
         {
-            if (p_id == -1)
+            if (addOrUpdate.Content == "add")
             {
                 bl.product.AddProduct(product);
+                ProductListWindow wi = new ProductListWindow(bl);
+                wi.Show();
+                this.Close();
+            }
+            else if (addOrUpdate.Content == "add to cart")
+            {
+                bl.cart.addToCart(c, product.ID);
+                CatalogWindow catalog = new(bl, c);
+                catalog.Show();
+                this.Close();
             }
             else
             {
                 bl.product.UpdateProduct(product);
-            }
-            ProductListWindow wi = new ProductListWindow(bl);
-            wi.Show();
-            this.Close();
+                ProductListWindow wi = new ProductListWindow(bl);
+                wi.Show();
+                this.Close();
+            }          
         }
         catch (Exception ex)
         { MessageBox.Show(ex.Message); }
@@ -87,7 +112,7 @@ public partial class ProductWindow : Window
     {
         try
         {
-            bl.product.RemoveProduct(p_id);
+            bl.product.RemoveProduct(product.ID);
             ProductListWindow wi = new ProductListWindow(bl);
             wi.Show();
             this.Close();
