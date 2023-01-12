@@ -69,15 +69,15 @@ internal class BlCart : BlApi.Icart
     {
         try
         {
-            BO.OrderItem? oi = c.Items.Find(x => x.ID == id);
+            BO.OrderItem? oi = c.Items.Find(x => x.ProductID == id);
             if (oi?.ID == id)
             {
                 if (quantity == 0)
                 {
                     c.Items.Remove(oi);
-                    c.TotalPrice -= oi.TotalPrice;  
+                    c.TotalPrice -= oi.TotalPrice;
                 }
-               else if (quantity > oi.Amount)
+                else if (quantity > oi.Amount)
                 {
                     if (Dal?.product.ReadSingle(x => x.ID == id).InStock > 0)
                     {
@@ -86,7 +86,7 @@ internal class BlCart : BlApi.Icart
                         oi.Amount = quantity;
                     }
                 }
-               else if (quantity < oi.Amount)
+                else if (quantity < oi.Amount)
                 {
                     c.TotalPrice -= oi.Price * (oi.Amount - quantity);
                     oi.TotalPrice = quantity * oi.Price;

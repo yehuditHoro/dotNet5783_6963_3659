@@ -27,7 +27,7 @@ namespace PL
         {
             InitializeComponent();
             bl = BL;
-            c= cart;
+            c = cart;
             DataContext = cart;
            // cart.Items.
             //CartListview.ItemsSource = cart.Items;
@@ -41,7 +41,7 @@ namespace PL
         private void Remove(object sender, RoutedEventArgs e)
         {
             OrderItem changed = (OrderItem)((Button)sender).DataContext;
-            bl.cart.UpdateQuantity(c, changed.ID,0);
+            bl.cart.UpdateQuantity(c, changed.ProductID,0);
             CartWindow cartWindow = new CartWindow(bl, c);
             cartWindow.Show();
             this.Close();
@@ -51,7 +51,7 @@ namespace PL
         private void Increase(object sender, RoutedEventArgs e)
         {
             OrderItem changed = (OrderItem)((Button)sender).DataContext;
-            bl.cart.UpdateQuantity(c,changed.ID,changed.Amount+1);
+            bl.cart.UpdateQuantity(c,changed.ProductID,changed.Amount+1);
             CartWindow cartWindow = new CartWindow(bl,c);
             cartWindow.Show();
             this.Close();
@@ -59,7 +59,7 @@ namespace PL
         private void Decrease(object sender, RoutedEventArgs e)
         {
             OrderItem changed = (OrderItem)((Button)sender).DataContext;
-            bl.cart.UpdateQuantity(c, changed.ID, changed.Amount -1);
+            bl.cart.UpdateQuantity(c, changed.ProductID, changed.Amount -1);
             CartWindow cartWindow = new CartWindow(bl, c);
             cartWindow.Show();
             this.Close();
