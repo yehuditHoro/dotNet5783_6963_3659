@@ -32,7 +32,7 @@ public partial class CatalogWindow : Window
             bl = BL;
             c = cart;
             CategorySelector.ItemsSource = BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
-            IEnumerable < ProductItem ?> productItems= bl.product.GetCatalog();
+            IEnumerable <ProductItem?> productItems= bl.product.GetCatalog();
             DataContext = productItems;
         }
         catch (Exception ex)

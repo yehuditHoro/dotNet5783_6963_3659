@@ -41,6 +41,10 @@ internal class BlProduct : BlApi.Iproduct
         {
             throw new BlIdNotFound();
         }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
     }
 
     /// <summary>
@@ -79,6 +83,10 @@ internal class BlProduct : BlApi.Iproduct
         {
             throw new BlIdNotFound();
         }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
     }
 
     /// <summary>
@@ -108,6 +116,10 @@ internal class BlProduct : BlApi.Iproduct
         catch (DalApi.EntityNotFoundException)
         {
             throw new BlIdNotFound();
+        }
+        catch (Exception e)
+        {
+            throw new Exception("can't get this product " + e.Message);
         }
     }
 
@@ -146,6 +158,10 @@ internal class BlProduct : BlApi.Iproduct
         {
             throw new BlIdNotFound();
         }
+        catch (Exception e)
+        {
+            throw new Exception("can't get this product " + e.Message);
+        }
     }
 
     /// <summary>
@@ -180,6 +196,10 @@ internal class BlProduct : BlApi.Iproduct
         {
             throw new BlEntityDuplicate();
         }
+        catch (Exception e)
+        {
+            throw new Exception("can't add this product " + e.Message);
+        }
     }
 
     /// <summary>
@@ -204,6 +224,10 @@ internal class BlProduct : BlApi.Iproduct
         catch (DalApi.EntityNotFoundException)
         {
             throw new BlIdNotFound();
+        }
+        catch (Exception e)
+        {
+            throw new Exception("can't delete this product " + e.Message);
         }
     }
 
@@ -236,6 +260,10 @@ internal class BlProduct : BlApi.Iproduct
         catch (DalApi.EntityNotFoundException)
         {
             throw new BlIdNotFound();
+        }
+        catch (Exception e)
+        {
+            throw new Exception("can't update this product " + e.Message);
         }
     }
 }

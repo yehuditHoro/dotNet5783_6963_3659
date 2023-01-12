@@ -56,6 +56,10 @@ internal class BlOrder : BlApi.Iorder
         {
             throw new BlIdNotFound();
         }
+        catch (Exception e)
+        {
+            throw new Exception( e.Message);
+        }
     }
 
     /// <summary>
@@ -90,6 +94,10 @@ internal class BlOrder : BlApi.Iorder
         {
             throw new BlIdNotFound();
         }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
     }
 
     /// <summary>
@@ -123,6 +131,10 @@ internal class BlOrder : BlApi.Iorder
         catch (DalApi.EntityNotFoundException)
         {
             throw new BlIdNotFound();
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
         }
     }
 
@@ -159,6 +171,10 @@ internal class BlOrder : BlApi.Iorder
         catch (DalApi.EntityNotFoundException)
         {
             throw new BlIdNotFound();
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
         }
     }
 

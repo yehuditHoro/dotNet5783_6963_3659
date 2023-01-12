@@ -29,8 +29,7 @@ public class BlInvalidInputException : Exception
 {
     public BlInvalidInputException(string message) :
                                  base(message)
-    { }
-   
+    { }  
 }
 /// <summary>
 /// when the user's input is more than the amount in stock in the datasource

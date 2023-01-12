@@ -19,24 +19,23 @@ internal class BlCart : BlApi.Icart
     {
         try
         {
-            if (c.Items.Count != 0)
+            Dal.DO.Product prod = Dal.product.ReadSingle(x => x.ID == pId);
+            if (c.Items.Count() != 0)
             {
                 BO.OrderItem? oi = c.Items.Find(x => x.ProductID == pId);
                 if (oi?.ProductID == pId)
                 {
-                    if (Dal?.product.ReadSingle(x => x.ID == pId).InStock > 0)
+                    if (prod.InStock > 0)
                     {
                         oi.Amount++;
                         oi.TotalPrice += oi.Price;
                         c.TotalPrice += oi.Price;
+                        Dal.product.UpdateAmount(pId, 1);
+                        return c;
                     }
-                    else
-                    {
-                        throw new BlOutOfStockException();
-                    }
+                    else throw new BlOutOfStockException();
                 }
             }
-            Dal.DO.Product prod = Dal.product.ReadSingle(x => x.ID == pId);
             if (prod.InStock > 0)
             {
                 BO.OrderItem newP = new BO.OrderItem();
@@ -47,12 +46,14 @@ internal class BlCart : BlApi.Icart
                 newP.Amount = 1;
                 newP.TotalPrice = prod.Price;
                 c.Items?.Add(newP);
-                c.TotalPrice += newP.Price;
+                c.TotalPrice += newP.Price;               
+                Dal.product.UpdateAmount(pId, 1);
             }
+            else throw new BlOutOfStockException();
         }
         catch (Exception e)
         {
-            Console.WriteLine("can't add this product " + e.Message);
+            throw new Exception("can't add this product " + e.Message);
         }
         return c;
     }
@@ -97,11 +98,10 @@ internal class BlCart : BlApi.Icart
             {
                 throw new BlIdNotFound();
             }
-
         }
         catch (Exception e)
         {
-            Console.WriteLine("can't update the quantity " + e.Message);
+            throw new Exception("can't update the quantity " + e.Message);
         }
         return c;
     }
@@ -154,10 +154,11 @@ internal class BlCart : BlApi.Icart
         }
         catch (Exception e)
         {
-            Console.WriteLine("cant make the order " + e.Message);
+            throw new Exception("cant make the order " + e.Message);
         }
 
     }
+
     /// <summary>
     /// the function do a validation on the email address
     /// </summary>
