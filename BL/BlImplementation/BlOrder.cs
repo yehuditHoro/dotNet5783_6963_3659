@@ -139,7 +139,7 @@ internal class BlOrder : BlApi.Iorder
     }
 
     /// <summary>
-    /// 
+    /// the function gets id of an order and change the delivery date
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -178,13 +178,32 @@ internal class BlOrder : BlApi.Iorder
         }
     }
 
-    //public BO.OrderTracking OrderTrack(int id)
-    //{
-    //    Dal.DO.Order currOrder = Dal.order.Read(id);
-    //    BO.OrderTracking TOrder = new BO.OrderTracking();
-    //    TOrder.ID = currOrder.ID;   
-    //    TOrder.Status=
-    //}
+    public BO.OrderTracking OrderTrack(int id)
+    {
+        try
+        {
+            Dal.DO.Order currOrder = dal.order.ReadSingle(x=>x.ID==id);
+            BO.OrderTracking TOrder = new BO.OrderTracking();
+            TOrder.ID = currOrder.ID;
+            TOrder.packageStatus?.Add(new Tuple<DateTime, BO.Enums.eOrderStatus>(currOrder.OrderDate, (BO.Enums.eOrderStatus)0));
+                TOrder.Status = (BO.Enums.eOrderStatus)0;
+            if (currOrder.ShipDate < DateTime.Now && currOrder.ShipDate != DateTime.MinValue)
+            {
+                TOrder.packageStatus?.Add(new Tuple<DateTime, BO.Enums.eOrderStatus>(currOrder.ShipDate, (BO.Enums.eOrderStatus)1));
+                TOrder.Status = (BO.Enums.eOrderStatus)1;
+            }
+            if (currOrder.DeliveryDate < DateTime.Now && currOrder.DeliveryDate != DateTime.MinValue)
+            {
+                TOrder.packageStatus?.Add(new Tuple<DateTime, BO.Enums.eOrderStatus>(currOrder.DeliveryDate, (BO.Enums.eOrderStatus)2));
+                TOrder.Status = (BO.Enums.eOrderStatus)2;
+            }
+            return TOrder;
+        }
+        catch (DalApi.EntityNotFoundException)
+        {
+            throw new BlIdNotFound();
+        }
+    }
 
     /// <summary>
     /// the function convert item of type Dal.do to item of type BO

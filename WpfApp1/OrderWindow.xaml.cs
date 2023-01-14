@@ -24,7 +24,7 @@ namespace PL
         private bool isInitilize = false;
         BO.OrderForList orderForList = new();
         BO.Order order = new();
-        public OrderWindow(IBl BL, int? oId = null)
+        public OrderWindow(IBl BL,string user, int? oId = null)
         {
             try
             {
@@ -38,6 +38,10 @@ namespace PL
                 orderForList.AmountOfItems = order.Items.Count();
                 orderForList.TotalPrice = order.TotalPrice;
                 DataContext = orderForList;
+                if (user == "customer")
+                {
+                    //(ComboBox as Label) איך עושים שלמנהל זה יהיה אשפרות לשנות וללקוח לא?
+                }
             }
             catch (Exception ex)
             {

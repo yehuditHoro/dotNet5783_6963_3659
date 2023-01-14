@@ -1,0 +1,29 @@
+﻿<Window x:Class="PL.OrderTrackingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="OrderTrackingWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Label Content="order id:"  HorizontalAlignment="Left" Margin="100,58,0,0" VerticalAlignment="Top" Height="31" Width="120"/>
+        <Label Content="{Binding ID}" HorizontalAlignment="Left" Margin="206,58,0,0" VerticalAlignment="Top"/>
+        <Label Content="order status:" HorizontalAlignment="Left" Margin="100,90,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Status}" HorizontalAlignment="Left" Margin="206,90,0,0" VerticalAlignment="Top"/>
+        <ListView Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding packageStatus.item1}" Header="Status"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding packageStatus.item2}" Header="Date"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Show order details" HorizontalAlignment="Left" Margin="206,0,0,0" Grid.Row="2" VerticalAlignment="Center" Width="146" Height="26" Click="OrderDetails"/>
+    </Grid>
+</Window>

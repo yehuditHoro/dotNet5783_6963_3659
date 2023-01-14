@@ -29,40 +29,66 @@ namespace PL
             bl = BL;
             c = cart;
             DataContext = cart;
-           // cart.Items.
+            //cart.Items.
             //CartListview.ItemsSource = cart.Items;
         }
 
         private void MakeAnOrder(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                bl.cart.MakeAnOrder(c, (Name.Text), (Email.Text), (Address.Text));
 
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void Remove(object sender, RoutedEventArgs e)
         {
+            try {
             OrderItem changed = (OrderItem)((Button)sender).DataContext;
             bl.cart.UpdateQuantity(c, changed.ProductID,0);
             CartWindow cartWindow = new CartWindow(bl, c);
             cartWindow.Show();
-            this.Close();
+            this.Close(); 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
 
         private void Increase(object sender, RoutedEventArgs e)
         {
+            try { 
             OrderItem changed = (OrderItem)((Button)sender).DataContext;
             bl.cart.UpdateQuantity(c,changed.ProductID,changed.Amount+1);
             CartWindow cartWindow = new CartWindow(bl,c);
             cartWindow.Show();
             this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         private void Decrease(object sender, RoutedEventArgs e)
         {
+            try { 
             OrderItem changed = (OrderItem)((Button)sender).DataContext;
             bl.cart.UpdateQuantity(c, changed.ProductID, changed.Amount -1);
             CartWindow cartWindow = new CartWindow(bl, c);
             cartWindow.Show();
             this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
     }

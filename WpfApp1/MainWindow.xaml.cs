@@ -36,7 +36,9 @@ namespace PL
 
         private void Tracking(object sender, RoutedEventArgs e)
         {
-
+            OrderTrackingWindow tracking = new(bl, Convert.ToInt32( orderId.Text));
+            tracking.Show();
+            this.Close();
         }
 
         private void CustomerScreen(object sender, RoutedEventArgs e)
