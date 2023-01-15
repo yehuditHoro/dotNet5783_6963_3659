@@ -52,12 +52,12 @@ sealed internal class DalXml : IDal
     //        if (i % 10 < 8)  // 80% have ship date
     //            newOrder.OrderDate = DateTime.Now;
     //        else
-    //            newOrder.OrderDate = DateTime.MinValue;
+    //            newOrder.OrderDate = null;
     //        newOrder.ShipDate = newOrder.OrderDate + shipDate;
     //        if (i % 10 < 6) // 60% from them have delivery date
     //            newOrder.DeliveryDate = newOrder.ShipDate + deliveryDate;
     //        else
-    //            newOrder.DeliveryDate = DateTime.MinValue;
+    //            newOrder.DeliveryDate = null;
     //        order.Add(newOrder);
     //    }
     //}

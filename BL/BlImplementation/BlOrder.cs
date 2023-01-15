@@ -189,22 +189,21 @@ internal class BlOrder : BlApi.Iorder
         try
         {
             Dal.DO.Order currOrder = dal.order.ReadSingle(x=>x.ID==id);
-            BO.OrderTracking TOrder = new BO.OrderTracking();
-            TOrder.ID = currOrder.ID;
-            TOrder.packageStatus?.Add(new Tuple<DateTime, BO.Enums.eOrderStatus>(currOrder.OrderDate, (BO.Enums.eOrderStatus)0));
-               // TOrder.Status = (BO.Enums.eOrderStatus)0;
-            if (currOrder.ShipDate < DateTime.Now && currOrder.ShipDate != DateTime.MinValue)
+            BO.OrderTracking orderTracking = new BO.OrderTracking();
+            orderTracking.ID = currOrder.ID;
+            orderTracking.packageStatus?.Add(new Tuple<DateTime?, BO.Enums.eOrderStatus>(currOrder.OrderDate, (BO.Enums.eOrderStatus)0));
+            orderTracking.Status = (BO.Enums.eOrderStatus)0;
+            if (currOrder.ShipDate <= DateTime.Now)
             {
-                TOrder.packageStatus?.Add(new Tuple<DateTime, BO.Enums.eOrderStatus>(currOrder.ShipDate, (BO.Enums.eOrderStatus)1));
-                //TOrder.Status = (BO.Enums.eOrderStatus)1;
+                orderTracking.packageStatus?.Add(new Tuple<DateTime?, BO.Enums.eOrderStatus>(currOrder.ShipDate, (BO.Enums.eOrderStatus)1));
+                orderTracking.Status = (BO.Enums.eOrderStatus)1;
             }
-            if (currOrder.DeliveryDate < DateTime.Now && currOrder.DeliveryDate != DateTime.MinValue)
+            if (currOrder.DeliveryDate <= DateTime.Now)
             {
-                TOrder.packageStatus?.Add(new Tuple<DateTime, BO.Enums.eOrderStatus>(currOrder.DeliveryDate, (BO.Enums.eOrderStatus)2));
-                //TOrder.Status = (BO.Enums.eOrderStatus)2;
+                orderTracking.packageStatus?.Add(new Tuple<DateTime?, BO.Enums.eOrderStatus>(currOrder.DeliveryDate, (BO.Enums.eOrderStatus)2));
+                orderTracking.Status = (BO.Enums.eOrderStatus)2;
             }
-            TOrder.Status = CheckStatus(currOrder);
-            return TOrder;
+            return orderTracking;
         }
         catch (DalApi.EntityNotFoundException)
         {
@@ -245,9 +244,14 @@ internal class BlOrder : BlApi.Iorder
     /// <returns></returns>
     private BO.Enums.eOrderStatus CheckStatus(Dal.DO.Order o)
     {
-        BO.Enums.eOrderStatus orderStatus = o.ShipDate > DateTime.Now ? BO.Enums.eOrderStatus.confirmed
-                : (o.DeliveryDate > DateTime.Now ? BO.Enums.eOrderStatus.shiped
-                : BO.Enums.eOrderStatus.delivered);
+        BO.Enums.eOrderStatus orderStatus = BO.Enums.eOrderStatus.confirmed;
+        if (o.ShipDate <= DateTime.Now)
+            orderStatus = BO.Enums.eOrderStatus.shiped;
+        if (o.DeliveryDate <= DateTime.Now)
+            orderStatus = BO.Enums.eOrderStatus.delivered;
+        //BO.Enums.eOrderStatus orderStatus = o.ShipDate > DateTime.Now ? BO.Enums.eOrderStatus.confirmed
+        //    : (o.DeliveryDate > DateTime.Now ? BO.Enums.eOrderStatus.shiped
+        //    : BO.Enums.eOrderStatus.delivered);
         return orderStatus;
     }
 }
