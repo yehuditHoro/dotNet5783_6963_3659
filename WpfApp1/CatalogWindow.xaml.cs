@@ -30,7 +30,7 @@ public partial class CatalogWindow : Window
             InitializeComponent();
             bl = BL;
             c = cart;
-            CategorySelector.ItemsSource = BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
+            CategorySelector.ItemsSource = BO.eCategory.GetValues(typeof(BO.eCategory));
             IEnumerable <ProductItem?> productItems= bl.product.GetCatalog();
             DataContext = productItems;
         }
@@ -57,7 +57,7 @@ public partial class CatalogWindow : Window
     {
         try
         {
-            CatalogListview.ItemsSource = bl.product.GetCatalog((BO.Enums.eCategory)CategorySelector.SelectedItem);
+            CatalogListview.ItemsSource = bl.product.GetCatalog((BO.eCategory)CategorySelector.SelectedItem);
         }
         catch (Exception ex)
         {

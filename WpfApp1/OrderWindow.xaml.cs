@@ -30,7 +30,7 @@ public partial class OrderWindow : Window
         {
             InitializeComponent();
             bl = BL;
-            status.ItemsSource = BO.Enums.eOrderStatus.GetValues(typeof(BO.Enums.eOrderStatus));
+            status.ItemsSource = BO.eOrderStatus.GetValues(typeof(BO.eOrderStatus));
             order = bl.order.GetOrder((int)oId);
             orderForList.ID = order.ID;
             orderForList.CustomerName = order.CustomerName;
@@ -55,10 +55,10 @@ public partial class OrderWindow : Window
             if (isInitilize)
             {
                 DataContext = orderForList;
-                order.Status = (BO.Enums.eOrderStatus)status.SelectedItem;
-                if (order.Status == (BO.Enums.eOrderStatus)1)
+                order.Status = (BO.eOrderStatus)status.SelectedItem;
+                if (order.Status == (BO.eOrderStatus)1)
                     order = bl.order.ShipedOrder(orderForList.ID);
-                if (order.Status == (BO.Enums.eOrderStatus)2)
+                if (order.Status == (BO.eOrderStatus)2)
                     order = bl.order.DeliveredOrder(orderForList.ID);
                 OrderListWindow window = new(bl);
                 window.Show();

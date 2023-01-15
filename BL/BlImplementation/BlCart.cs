@@ -30,7 +30,6 @@ internal class BlCart : BlApi.Icart
                         oi.Amount++;
                         oi.TotalPrice += oi.Price;
                         c.TotalPrice += oi.Price;
-                        Dal.product.UpdateAmount(pId, 1);
                         return c;
                     }
                     else throw new BlOutOfStockException();
@@ -46,8 +45,7 @@ internal class BlCart : BlApi.Icart
                 newP.Amount = 1;
                 newP.TotalPrice = prod.Price;
                 c.Items?.Add(newP);
-                c.TotalPrice += newP.Price;               
-                Dal.product.UpdateAmount(pId, 1);
+                c.TotalPrice += newP.Price;
             }
             else throw new BlOutOfStockException();
         }
@@ -105,6 +103,7 @@ internal class BlCart : BlApi.Icart
         }
         return c;
     }
+
     /// <summary>
     /// the function add the order with all the items of the cart and add it to the order list
     /// </summary>
@@ -121,33 +120,30 @@ internal class BlCart : BlApi.Icart
                 throw new BlNullException();
             if (IsValidEmail(email) == false)
                 throw new BlInvalidInputException("the email is not correct");
-
             foreach (BO.OrderItem oi in c.Items)
             {
-                Dal?.product.ReadSingle(x => x.ID == oi.ID);
+                //Dal?.product.ReadSingle(x => x.ID == oi.ID);
                 if (oi.Amount < 0)
                     throw new BlInvalidInputException("invalid negative input for the amount");
-                if (oi.Amount > Dal?.product.ReadSingle(x => x.ID == oi.ID).InStock)
+                if (oi.Amount > Dal?.product.ReadSingle(x => x.ID == oi.ProductID).InStock)
                     throw new BlOutOfStockException();
             }
             Dal.DO.Order newOrder = new();
-            newOrder.ID = 0;
             newOrder.CustomerName = name;
             newOrder.CustomerEmail = email;
             newOrder.CustomerAddress = address;
             newOrder.OrderDate = DateTime.Now;
-            newOrder.ShipDate = DateTime.MinValue;
-            newOrder.DeliveryDate = DateTime.MinValue;
+            newOrder.ShipDate = null;
+            newOrder.DeliveryDate = null;
             int id = Dal.order.Add(newOrder);
-            List<Dal.DO.OrderItem> allItems = Dal.orderItem.ReadAll().ToList();
             foreach (BO.OrderItem item in c.Items)
             {
                 Dal.DO.OrderItem cartItem = new();
                 cartItem.ID = 0;
                 cartItem.Amount = item.Amount;
                 cartItem.Price = item.Price;
-                cartItem.OrderId = newOrder.ID;
-                cartItem.ProductId = item.ID;
+                cartItem.OrderId = id;
+                cartItem.ProductId = item.ProductID;
                 Dal.orderItem.Add(cartItem);
                 Dal.product.UpdateAmount(item.ID, item.Amount);
             }
@@ -180,7 +176,6 @@ internal class BlCart : BlApi.Icart
             return false;
         }
     }
-
 }
 
 

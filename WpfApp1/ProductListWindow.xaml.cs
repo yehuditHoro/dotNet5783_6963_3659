@@ -29,7 +29,7 @@ public partial class ProductListWindow : Window
             InitializeComponent();
             bl = BL;
             ProductsListview.ItemsSource = bl.product.GetProducts();
-            ComboBoxSelector.ItemsSource = BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
+            ComboBoxSelector.ItemsSource = BO.eCategory.GetValues(typeof(BO.eCategory));
         }
         catch (Exception ex)
         {
@@ -46,7 +46,7 @@ public partial class ProductListWindow : Window
     {
         try
         {
-            ProductsListview.ItemsSource = bl.product.GetProducts((Enums.eCategory)ComboBoxSelector.SelectedItem);
+            ProductsListview.ItemsSource = bl.product.GetProducts((BO.eCategory)ComboBoxSelector.SelectedItem);
         }
         catch (Exception ex)
         {

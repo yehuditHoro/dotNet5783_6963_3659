@@ -16,11 +16,11 @@
         <Label Content="{Binding ID}" HorizontalAlignment="Left" Margin="206,58,0,0" VerticalAlignment="Top"/>
         <Label Content="order status:" HorizontalAlignment="Left" Margin="100,90,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding Status}" HorizontalAlignment="Left" Margin="206,90,0,0" VerticalAlignment="Top"/>
-        <ListView Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding Path=packageStatus}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding packageStatus.item1}" Header="Status"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding packageStatus.item2}" Header="Date"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Item1}" Header="Status"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Item2}" Header="Date"/>
                 </GridView>
             </ListView.View>
         </ListView>

@@ -22,7 +22,6 @@
         <ListView Name="CartListview" ItemsSource="{Binding Items}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding ID}" Header="Id"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>
                     <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ProductID"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Price}" Header="Price"/>

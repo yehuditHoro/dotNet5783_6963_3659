@@ -31,7 +31,7 @@ public partial class ProductWindow : Window
             InitializeComponent();
             bl = BL;
             c = cart;
-            category.ItemsSource = BO.Enums.eCategory.GetValues(typeof(BO.Enums.eCategory));
+            category.ItemsSource = BO.eCategory.GetValues(typeof(BO.eCategory));
             if (userType == "manager")
             {
                 if (pId == null)

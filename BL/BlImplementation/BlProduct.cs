@@ -15,14 +15,14 @@ internal class BlProduct : BlApi.Iproduct
     /// <returns></returns>
     /// <exception cref="BlFailedToGet"></exception>
     /// <exception cref="BlIdNotFound"></exception>
-    public IEnumerable<BO.ProductForList?> GetProducts(BO.Enums.eCategory? category)
+    public IEnumerable<BO.ProductForList?> GetProducts(BO.eCategory? category)
     {
         try
         {
             IEnumerable<Dal.DO.Product> getProducts;
             if (category == null)
                 getProducts = dal.product.ReadAll();
-            else { getProducts = dal.product.ReadAll(x => (BO.Enums.eCategory)x.Category == category); }
+            else { getProducts = dal.product.ReadAll(x => (BO.eCategory)x.Category == category); }
             if (getProducts.Count() <= 0)
             {
                 throw new BlFailedToGet();
@@ -33,7 +33,7 @@ internal class BlProduct : BlApi.Iproduct
                                  ID = p.ID,
                                  Name = p.Name,
                                  Price = p.Price,
-                                 Category = (BO.Enums.eCategory)p.Category
+                                 Category = (BO.eCategory)p.Category
                              };
             return boProducts;
         }
@@ -54,7 +54,7 @@ internal class BlProduct : BlApi.Iproduct
     /// <exception cref="BlFailedToGet"></exception>
     /// <exception cref="BlIdNotFound"></exception>
     /// 
-    public IEnumerable<BO.ProductItem?> GetCatalog(BO.Enums.eCategory? category)
+    public IEnumerable<BO.ProductItem?> GetCatalog(BO.eCategory? category)
     {
         try
         {
@@ -62,7 +62,7 @@ internal class BlProduct : BlApi.Iproduct
             if (category == null)
                 getCatalog = dal.product.ReadAll();
             else
-                getCatalog= dal.product.ReadAll(x => (BO.Enums.eCategory)x.Category == category);
+                getCatalog= dal.product.ReadAll(x => (BO.eCategory)x.Category == category);
             if (getCatalog.Count() <= 0)
             {
                 throw new BlFailedToGet();
@@ -73,7 +73,7 @@ internal class BlProduct : BlApi.Iproduct
                               ID = p.ID,
                               Name = p.Name,
                               Price = p.Price,
-                              Category = (BO.Enums.eCategory)p.Category,
+                              Category = (BO.eCategory)p.Category,
                               Amount = p.InStock,
                               InStock = (p.InStock != 0 ? true : false),
                           };
@@ -107,7 +107,7 @@ internal class BlProduct : BlApi.Iproduct
                 prod.ID = p.ID;
                 prod.Name = p.Name;
                 prod.Price = p.Price;
-                prod.Category = (BO.Enums.eCategory)p.Category;
+                prod.Category = (BO.eCategory)p.Category;
                 prod.InStock = p.InStock;
                 return prod;
             }
@@ -146,7 +146,7 @@ internal class BlProduct : BlApi.Iproduct
                                          ID = oi.ID,
                                          Name = oi.Name,
                                          Price = oi.Price,
-                                         Category = (BO.Enums.eCategory)p.Category,
+                                         Category = (BO.eCategory)p.Category,
                                          Amount = oi.Amount,
                                          InStock = p.InStock > 0 ? true : false
                                      }).First() ?? throw new BlNullException();

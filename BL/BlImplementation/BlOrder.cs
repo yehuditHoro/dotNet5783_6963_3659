@@ -121,7 +121,7 @@ internal class BlOrder : BlApi.Iorder
             order.OrderDate = currOrder.OrderDate;
             order.ShipDate = DateTime.Now;
             order.DeliveryDate = currOrder.DeliveryDate;
-            order.Status = BO.Enums.eOrderStatus.shiped;
+            order.Status = BO.eOrderStatus.shiped;
             order.CustomerName = currOrder.CustomerName;
             order.CustomerAddress = currOrder.CustomerAddress;
             order.CustomerEmail = currOrder.CustomerEmail;
@@ -159,7 +159,7 @@ internal class BlOrder : BlApi.Iorder
                 order.OrderDate = currOrder.OrderDate;
                 order.ShipDate = currOrder.ShipDate;
                 order.DeliveryDate = DateTime.Now;
-                order.Status = BO.Enums.eOrderStatus.delivered;
+                order.Status = BO.eOrderStatus.delivered;
                 order.CustomerName = currOrder.CustomerName;
                 order.CustomerAddress = currOrder.CustomerAddress;
                 order.CustomerEmail = currOrder.CustomerEmail;
@@ -191,17 +191,17 @@ internal class BlOrder : BlApi.Iorder
             Dal.DO.Order currOrder = dal.order.ReadSingle(x=>x.ID==id);
             BO.OrderTracking orderTracking = new BO.OrderTracking();
             orderTracking.ID = currOrder.ID;
-            orderTracking.packageStatus?.Add(new Tuple<DateTime?, BO.Enums.eOrderStatus>(currOrder.OrderDate, (BO.Enums.eOrderStatus)0));
-            orderTracking.Status = (BO.Enums.eOrderStatus)0;
+            orderTracking.packageStatus?.Add(new Tuple<DateTime?, BO.eOrderStatus>(currOrder.OrderDate, BO.eOrderStatus.confirmed));
+            orderTracking.Status = BO.eOrderStatus.confirmed;
             if (currOrder.ShipDate <= DateTime.Now)
             {
-                orderTracking.packageStatus?.Add(new Tuple<DateTime?, BO.Enums.eOrderStatus>(currOrder.ShipDate, (BO.Enums.eOrderStatus)1));
-                orderTracking.Status = (BO.Enums.eOrderStatus)1;
+                orderTracking.packageStatus?.Add(new Tuple<DateTime?, BO.eOrderStatus>(currOrder.ShipDate, BO.eOrderStatus.shiped));
+                orderTracking.Status = BO.eOrderStatus.shiped;
             }
             if (currOrder.DeliveryDate <= DateTime.Now)
             {
-                orderTracking.packageStatus?.Add(new Tuple<DateTime?, BO.Enums.eOrderStatus>(currOrder.DeliveryDate, (BO.Enums.eOrderStatus)2));
-                orderTracking.Status = (BO.Enums.eOrderStatus)2;
+                orderTracking.packageStatus?.Add(new Tuple<DateTime?, BO.eOrderStatus>(currOrder.DeliveryDate, BO.eOrderStatus.delivered));
+                orderTracking.Status = BO.eOrderStatus.delivered;
             }
             return orderTracking;
         }
@@ -242,13 +242,13 @@ internal class BlOrder : BlApi.Iorder
     /// </summary>
     /// <param name="o"></param>
     /// <returns></returns>
-    private BO.Enums.eOrderStatus CheckStatus(Dal.DO.Order o)
+    private BO.eOrderStatus CheckStatus(Dal.DO.Order o)
     {
-        BO.Enums.eOrderStatus orderStatus = BO.Enums.eOrderStatus.confirmed;
+        BO.eOrderStatus orderStatus = BO.eOrderStatus.confirmed;
         if (o.ShipDate <= DateTime.Now)
-            orderStatus = BO.Enums.eOrderStatus.shiped;
+            orderStatus = BO.eOrderStatus.shiped;
         if (o.DeliveryDate <= DateTime.Now)
-            orderStatus = BO.Enums.eOrderStatus.delivered;
+            orderStatus = BO.eOrderStatus.delivered;
         //BO.Enums.eOrderStatus orderStatus = o.ShipDate > DateTime.Now ? BO.Enums.eOrderStatus.confirmed
         //    : (o.DeliveryDate > DateTime.Now ? BO.Enums.eOrderStatus.shiped
         //    : BO.Enums.eOrderStatus.delivered);

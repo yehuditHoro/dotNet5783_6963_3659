@@ -30,8 +30,7 @@ public partial class OrderTrackingWindow : Window
             bl = BL;
             oID = id;
             BO.OrderTracking current = bl.order.OrderTrack(id);
-            DataContext = current; //איך אפשר להציג את הנתונים מתוך הרשימה מסוג טאפל?
-       
+            DataContext = current;
         }
         catch (Exception ex)
         { MessageBox.Show(ex.Message); }
