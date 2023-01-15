@@ -27,6 +27,7 @@ public partial class AdminWindow : Window
         InitializeComponent();
         bl = BL;
     }
+
     /// <summary>
     /// move the user to the product window in order to see all the products
     /// </summary>

@@ -13,32 +13,32 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL
-{
-    /// <summary>
-    /// Interaction logic for OrderListWindow.xaml
-    /// </summary>
-    public partial class OrderListWindow : Window
-    {
-        private IBl bl;
-        public OrderListWindow(IBl BL)
-        {
-            try
-            {
-                InitializeComponent();
-                bl = BL;
-                OrdersView.ItemsSource = bl.order.GetOrdersList();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
+namespace PL;
 
-        private void GetOrder(object sender, MouseButtonEventArgs e)
+/// <summary>
+/// Interaction logic for OrderListWindow.xaml
+/// </summary>
+public partial class OrderListWindow : Window
+{
+    private IBl bl;
+    public OrderListWindow(IBl BL)
+    {
+        try
         {
-            new OrderWindow(bl, ((BO.OrderForList)OrdersView.SelectedItem).ID).Show();
-            Close();
+            InitializeComponent();
+            bl = BL;
+            OrdersView.ItemsSource = bl.order.GetOrdersList();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
         }
     }
+
+    private void GetOrder(object sender, MouseButtonEventArgs e)
+    {
+        new OrderWindow(bl, "manager", ((BO.OrderForList)OrdersView.SelectedItem).ID).Show();
+        Close();
+    }
 }
+

@@ -13,45 +13,46 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL
+namespace PL;
+
+/// <summary>
+/// Interaction logic for OrderWindow.xaml
+/// </summary>
+public partial class OrderWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for OrderWindow.xaml
-    /// </summary>
-    public partial class OrderWindow : Window
+    private IBl bl;
+    private bool isInitilize = false;
+    BO.OrderForList orderForList = new();
+    BO.Order order = new();
+    public OrderWindow(IBl BL, string user, int? oId = null)
     {
-        private IBl bl;
-        private bool isInitilize = false;
-        BO.OrderForList orderForList = new();
-        BO.Order order = new();
-        public OrderWindow(IBl BL,string user, int? oId = null)
+        try
         {
-            try
+            InitializeComponent();
+            bl = BL;
+            status.ItemsSource = BO.Enums.eOrderStatus.GetValues(typeof(BO.Enums.eOrderStatus));
+            order = bl.order.GetOrder((int)oId);
+            orderForList.ID = order.ID;
+            orderForList.CustomerName = order.CustomerName;
+            orderForList.Status = order.Status;
+            orderForList.AmountOfItems = order.Items.Count();
+            orderForList.TotalPrice = order.TotalPrice;
+            DataContext = orderForList;
+            if (user == "customer")
             {
-                InitializeComponent();
-                bl = BL;
-                status.ItemsSource = BO.Enums.eOrderStatus.GetValues(typeof(BO.Enums.eOrderStatus));
-                order = bl.order.GetOrder((int)oId);
-                orderForList.ID = order.ID;
-                orderForList.CustomerName = order.CustomerName;
-                orderForList.Status = order.Status;
-                orderForList.AmountOfItems = order.Items.Count();
-                orderForList.TotalPrice = order.TotalPrice;
-                DataContext = orderForList;
-                if (user == "customer")
-                {
-                    //(ComboBox as Label) איך עושים שלמנהל זה יהיה אשפרות לשנות וללקוח לא?
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
+                //(ComboBox as Label) איך עושים שלמנהל זה יהיה אשפרות לשנות וללקוח לא?
             }
         }
-
-        private void changeStatus(object sender, SelectionChangedEventArgs e)
+        catch (Exception ex)
         {
-            try { 
+            MessageBox.Show(ex.Message);
+        }
+    }
+
+    private void changeStatus(object sender, SelectionChangedEventArgs e)
+    {
+        try
+        {
             if (isInitilize)
             {
                 DataContext = orderForList;
@@ -65,11 +66,11 @@ namespace PL
                 this.Close();
             }
             else isInitilize = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
         }
     }
 }
+

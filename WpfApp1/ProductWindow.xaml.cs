@@ -14,10 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
 using BO;
-using PL;
 
-namespace MainWindow;
-
+namespace PL;
 /// <summary>
 /// Interaction logic for Window1.xaml
 /// </summary>
@@ -100,7 +98,6 @@ public partial class ProductWindow : Window
         }
         catch (Exception ex)
         { MessageBox.Show(ex.Message); }
-
     }
     
     /// <summary>
@@ -118,7 +115,6 @@ public partial class ProductWindow : Window
             this.Close();
         }
         catch (Exception ex)
-
         { MessageBox.Show(ex.Message); }
     }
 }

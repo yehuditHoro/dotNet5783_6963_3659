@@ -13,29 +13,34 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL
+namespace PL;
+
+/// <summary>
+/// Interaction logic for OrderTrackingWindow.xaml
+/// </summary>
+public partial class OrderTrackingWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for OrderTrackingWindow.xaml
-    /// </summary>
-    public partial class OrderTrackingWindow : Window
+    private IBl bl;
+    private int oID;
+    public OrderTrackingWindow(IBl BL, int id)
     {
-        private IBl bl;
-        private int oID;
-        public OrderTrackingWindow(IBl BL,int id)
+        try
         {
             InitializeComponent();
             bl = BL;
             oID = id;
-            BO.OrderTracking current=bl.order.OrderTrack(id);
+            BO.OrderTracking current = bl.order.OrderTrack(id);
             DataContext = current; //איך אפשר להציג את הנתונים מתוך הרשימה מסוג טאפל?
         }
+        catch (Exception ex)
+        { MessageBox.Show(ex.Message); }
+    }
 
-        private void OrderDetails(object sender, RoutedEventArgs e)
-        {
-            OrderWindow order = new(bl,"customer" ,oID);
-            order.Show();
-            this.Close();
-        }
+    private void OrderDetails(object sender, RoutedEventArgs e)
+    {
+        OrderWindow order = new(bl, "customer", oID);
+        order.Show();
+        this.Close();
     }
 }
+
