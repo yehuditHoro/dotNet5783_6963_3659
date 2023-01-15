@@ -178,6 +178,12 @@ internal class BlOrder : BlApi.Iorder
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BlIdNotFound"></exception>
     public BO.OrderTracking OrderTrack(int id)
     {
         try
@@ -186,17 +192,18 @@ internal class BlOrder : BlApi.Iorder
             BO.OrderTracking TOrder = new BO.OrderTracking();
             TOrder.ID = currOrder.ID;
             TOrder.packageStatus?.Add(new Tuple<DateTime, BO.Enums.eOrderStatus>(currOrder.OrderDate, (BO.Enums.eOrderStatus)0));
-                TOrder.Status = (BO.Enums.eOrderStatus)0;
+               // TOrder.Status = (BO.Enums.eOrderStatus)0;
             if (currOrder.ShipDate < DateTime.Now && currOrder.ShipDate != DateTime.MinValue)
             {
                 TOrder.packageStatus?.Add(new Tuple<DateTime, BO.Enums.eOrderStatus>(currOrder.ShipDate, (BO.Enums.eOrderStatus)1));
-                TOrder.Status = (BO.Enums.eOrderStatus)1;
+                //TOrder.Status = (BO.Enums.eOrderStatus)1;
             }
             if (currOrder.DeliveryDate < DateTime.Now && currOrder.DeliveryDate != DateTime.MinValue)
             {
                 TOrder.packageStatus?.Add(new Tuple<DateTime, BO.Enums.eOrderStatus>(currOrder.DeliveryDate, (BO.Enums.eOrderStatus)2));
-                TOrder.Status = (BO.Enums.eOrderStatus)2;
+                //TOrder.Status = (BO.Enums.eOrderStatus)2;
             }
+            TOrder.Status = CheckStatus(currOrder);
             return TOrder;
         }
         catch (DalApi.EntityNotFoundException)

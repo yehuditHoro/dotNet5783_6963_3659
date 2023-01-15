@@ -156,7 +156,6 @@ internal class BlCart : BlApi.Icart
         {
             throw new Exception("cant make the order " + e.Message);
         }
-
     }
 
     /// <summary>

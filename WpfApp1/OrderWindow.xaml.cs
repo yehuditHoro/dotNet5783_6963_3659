@@ -39,9 +39,8 @@ public partial class OrderWindow : Window
             orderForList.TotalPrice = order.TotalPrice;
             DataContext = orderForList;
             if (user == "customer")
-            {
-                //(ComboBox as Label) איך עושים שלמנהל זה יהיה אשפרות לשנות וללקוח לא?
-            }
+                status.Visibility = Visibility.Hidden;
+            else CustomerStatus.Visibility = Visibility.Hidden;
         }
         catch (Exception ex)
         {
