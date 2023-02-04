@@ -31,21 +31,27 @@ public partial class MainWindow : Window
     {
         AdminWindow adminWindow = new(bl);
         adminWindow.Show();
-        this.Close();
+        //this.Close();
     }
 
     private void Tracking(object sender, RoutedEventArgs e)
     {
+        try { 
         OrderTrackingWindow tracking = new(bl, Convert.ToInt32(orderId.Text));
         tracking.Show();
-        this.Close();
+        //this.Close();
+        }
+        catch
+        {
+            MessageBox.Show("No order number entered");
+        }
     }
 
     private void CustomerScreen(object sender, RoutedEventArgs e)
     {
         CatalogWindow catalogWindow = new(bl, cart);
         catalogWindow.Show();
-        this.Close();
+        //this.Close();
     }
 }
 

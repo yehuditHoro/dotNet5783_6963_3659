@@ -1,8 +1,6 @@
 ﻿
 namespace BO;
 
-//public class Enums
-//{
     public enum eCategory {
     men,
     women,
@@ -46,5 +44,5 @@ namespace BO;
     UpdateQuantity,
     MakeOrder
     };
-//}
+
 

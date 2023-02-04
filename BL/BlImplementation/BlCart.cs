@@ -120,14 +120,25 @@ internal class BlCart : BlApi.Icart
                 throw new BlNullException();
             if (IsValidEmail(email) == false)
                 throw new BlInvalidInputException("the email is not correct");
-            foreach (BO.OrderItem oi in c.Items)
-            {
-                //Dal?.product.ReadSingle(x => x.ID == oi.ID);
-                if (oi.Amount < 0)
-                    throw new BlInvalidInputException("invalid negative input for the amount");
-                if (oi.Amount > Dal?.product.ReadSingle(x => x.ID == oi.ProductID).InStock)
-                    throw new BlOutOfStockException();
-            }
+            var negativeAmount = from BO.OrderItem oi in c.Items
+                         where oi.Amount < 0
+                         select oi;
+            if(negativeAmount.Count() > 0)
+                throw new BlInvalidInputException("invalid negative input for the amount");
+            var amount = from BO.OrderItem oi in c.Items
+                                 let a = oi.Amount
+                                 where a > Dal?.product.ReadSingle(x => x.ID == oi.ProductID).InStock
+                                 select oi;
+            if (amount.Count() > 0)
+                throw new BlOutOfStockException();
+            //foreach (BO.OrderItem oi in c.Items)
+            //{
+            //    //Dal?.product.ReadSingle(x => x.ID == oi.ID);
+            //    if (oi.Amount < 0)
+            //        throw new BlInvalidInputException("invalid negative input for the amount");
+            //    if (oi.Amount > Dal?.product.ReadSingle(x => x.ID == oi.ProductID).InStock)
+            //        throw new BlOutOfStockException();
+            //}  
             Dal.DO.Order newOrder = new();
             newOrder.CustomerName = name;
             newOrder.CustomerEmail = email;
@@ -136,7 +147,7 @@ internal class BlCart : BlApi.Icart
             newOrder.ShipDate = null;
             newOrder.DeliveryDate = null;
             int id = Dal.order.Add(newOrder);
-            foreach (BO.OrderItem item in c.Items)
+            c.Items.Select(item =>
             {
                 Dal.DO.OrderItem cartItem = new();
                 cartItem.ID = 0;
@@ -146,7 +157,8 @@ internal class BlCart : BlApi.Icart
                 cartItem.ProductId = item.ProductID;
                 Dal.orderItem.Add(cartItem);
                 Dal.product.UpdateAmount(item.ID, item.Amount);
-            }
+                return cartItem;
+            }).ToList();
         }
         catch (Exception e)
         {

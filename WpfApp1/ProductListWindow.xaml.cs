@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BO;
 using BlApi;
+using System.Collections.ObjectModel;
+
 namespace PL;
 
 /// <summary>
@@ -21,7 +23,7 @@ namespace PL;
 public partial class ProductListWindow : Window
 {
     private IBl bl;
-
+    private ObservableCollection<ProductListWindow> productList;
     public ProductListWindow(IBl BL)
     {
         try
@@ -30,6 +32,7 @@ public partial class ProductListWindow : Window
             bl = BL;
             ProductsListview.ItemsSource = bl.product.GetProducts();
             ComboBoxSelector.ItemsSource = BO.eCategory.GetValues(typeof(BO.eCategory));
+            productList = (ObservableCollection<ProductListWindow>?)ProductsListview.ItemsSource;
         }
         catch (Exception ex)
         {

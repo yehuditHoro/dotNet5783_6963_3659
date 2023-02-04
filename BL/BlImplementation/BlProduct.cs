@@ -27,7 +27,7 @@ internal class BlProduct : BlApi.Iproduct
             {
                 throw new BlFailedToGet();
             }
-            var boProducts = from Dal.DO.Product p in getProducts
+            var boProducts = from Dal.DO.Product p in getProducts                   
                              select new BO.ProductForList
                              {
                                  ID = p.ID,

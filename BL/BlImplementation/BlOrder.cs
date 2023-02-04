@@ -249,9 +249,6 @@ internal class BlOrder : BlApi.Iorder
             orderStatus = BO.eOrderStatus.shiped;
         if (o.DeliveryDate <= DateTime.Now)
             orderStatus = BO.eOrderStatus.delivered;
-        //BO.Enums.eOrderStatus orderStatus = o.ShipDate > DateTime.Now ? BO.Enums.eOrderStatus.confirmed
-        //    : (o.DeliveryDate > DateTime.Now ? BO.Enums.eOrderStatus.shiped
-        //    : BO.Enums.eOrderStatus.delivered);
         return orderStatus;
     }
 }

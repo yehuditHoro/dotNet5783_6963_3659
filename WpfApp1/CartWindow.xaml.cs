@@ -30,7 +30,6 @@ public partial class CartWindow : Window
         c = cart;
         DataContext = cart;
     }
-
     private void MakeAnOrder(object sender, RoutedEventArgs e)
     {
         try
