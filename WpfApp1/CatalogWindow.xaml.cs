@@ -2,6 +2,7 @@
 using BO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,8 @@ public partial class CatalogWindow : Window
 {
     private IBl bl;
     private BO.Cart c;
+    private ObservableCollection<BO.ProductItem> p { get; set; }
+
     public CatalogWindow(IBl BL, BO.Cart cart)
     {
         try
@@ -32,7 +35,8 @@ public partial class CatalogWindow : Window
             c = cart;
             CategorySelector.ItemsSource = BO.eCategory.GetValues(typeof(BO.eCategory));
             IEnumerable <ProductItem?> productItems= bl.product.GetCatalog();
-            DataContext = productItems;
+            p = new ObservableCollection<BO.ProductItem?>(productItems);
+            CatalogListview.DataContext = productItems;
         }
         catch (Exception ex)
         {
@@ -44,13 +48,13 @@ public partial class CatalogWindow : Window
     {
         CartWindow cartWindow = new(bl, c);
         cartWindow.Show();
-        this.Close();
+        this.Hide();
     }
 
     private void AddProductToCart(object sender, MouseButtonEventArgs e)
     {
         new ProductWindow(bl, "customer", c, ((BO.ProductItem)CatalogListview.SelectedItem).ID).Show();
-        this.Close();
+        this.Hide();
     }
 
     private void Categories(object sender, SelectionChangedEventArgs e)

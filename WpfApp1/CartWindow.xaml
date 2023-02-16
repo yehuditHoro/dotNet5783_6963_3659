@@ -19,7 +19,7 @@
         <Label Content="Customer Address:" HorizontalAlignment="Left" Margin="34,90,0,0" VerticalAlignment="Top" Width="110"/>
         <TextBox x:Name="Address" Text="{Binding Path=CustomerAddress,Mode=TwoWay}" HorizontalAlignment="Left" Margin="177,95,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
         <Label Content="Items:" HorizontalAlignment="Left" Margin="34,120,0,0" VerticalAlignment="Top" Width="110"/>
-        <ListView Name="CartListview" ItemsSource="{Binding Items}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView x:Name="CartListview" ItemsSource="{Binding}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>
@@ -53,7 +53,7 @@
             </ListView.View>
         </ListView>
         <Label Content="TotalPrice:" HorizontalAlignment="Left" Margin="34,8,0,0" VerticalAlignment="Top" Width="110" Height="23" Grid.Row="2"/>
-        <Label Content="{Binding Path=TotalPrice,Mode=TwoWay}" HorizontalAlignment="Left" Margin="177,12,0,0"  VerticalAlignment="Top" Width="120" Height="24" RenderTransformOrigin="0.5,0.5" Grid.Row="2"/>
+        <Label x:Name="totalPriceLabel" Content="{Binding Path=TotalPrice, Mode=TwoWay}" HorizontalAlignment="Left" Margin="177,12,0,0"  VerticalAlignment="Top" Width="120" Height="24" RenderTransformOrigin="0.5,0.5" Grid.Row="2"/>
         <Button Content="make an order" HorizontalAlignment="Center" Margin="0,31,0,0" Grid.Row="2" VerticalAlignment="Top" Width="108" Height="21" Click="MakeAnOrder"/>
     </Grid>
 </Window>

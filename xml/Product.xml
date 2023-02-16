@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <products>
   <product ID="0" Name="dresses" Category="men" Price="436" InStock="0" />
-  <product ID="1" Name="shirts" Category="women" Price="66" InStock="764" />
-  <product ID="2" Name="pants" Category="boys" Price="49" InStock="517" />
-  <product ID="3" Name="shoes" Category="girls" Price="139" InStock="657" />
-  <product ID="4" Name="skirts" Category="babies" Price="74" InStock="119" />
-  <product ID="5" Name="socks" Category="men" Price="227" InStock="127" />
-  <product ID="6" Name="sweaters" Category="women" Price="275" InStock="445" />
+  <product ID="1" Name="shirts" Category="women" Price="66" InStock="759" />
+  <product ID="2" Name="pants" Category="boys" Price="49" InStock="505" />
+  <product ID="3" Name="shoes" Category="girls" Price="139" InStock="653" />
+  <product ID="4" Name="skirts" Category="babies" Price="74" InStock="118" />
+  <product ID="5" Name="socks" Category="men" Price="227" InStock="123" />
+  <product ID="6" Name="sweaters" Category="women" Price="275" InStock="441" />
   <product ID="7" Name="tights" Category="boys" Price="207" InStock="725" />
-  <product ID="8" Name="vests" Category="girls" Price="62" InStock="251" />
+  <product ID="8" Name="vests" Category="girls" Price="62" InStock="250" />
   <product ID="9" Name="coats" Category="babies" Price="366" InStock="744" />
   <product ID="10" Name="" Category="women" Price="65" InStock="339" />
 </products>
