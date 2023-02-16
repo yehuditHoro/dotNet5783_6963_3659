@@ -22,7 +22,7 @@
             <ComboBox ItemsSource="{Binding category}" Name="ComboBoxSelector" Grid.Column="1" Margin="156,12,55,10" SelectionChanged="ShowCategories"/>
             <Button Content="X" Name="deleteFilter" Grid.Column="1" HorizontalAlignment= "Left" Margin="350,12,0,10" Width="30" Click="DeleteFilter_Click"/>
         </Grid>
-        <ListView x:Name="ProductsListview" Grid.Row="1"  d:ItemsSource="{d:SampleData ItemCount=5}" Grid.ColumnSpan="2" RenderTransformOrigin="0.412,-0.045" MouseDoubleClick="Update" FontFamily="Sherbrooke Bold" FontSize="16" FontWeight="Normal" FontStyle="Normal"/>
+        <ListView x:Name="ProductsListview" ItemsSource="{Binding}" Grid.Row="1"  d:ItemsSource="{d:SampleData ItemCount=5}" Grid.ColumnSpan="2" RenderTransformOrigin="0.412,-0.045" MouseDoubleClick="Update" FontFamily="Sherbrooke Bold" FontSize="16" FontWeight="Normal" FontStyle="Normal"/>
         <Button Content="add item"  HorizontalAlignment="Center" Margin="0,50,0,50" FontSize="20" Grid.Row="2" VerticalAlignment="Top" Click="AddProduct" RenderTransformOrigin="3.424,-2.504" Height="40" Width="107" Background="#FFECE278" FontFamily="shirin "/>
 
     </Grid>

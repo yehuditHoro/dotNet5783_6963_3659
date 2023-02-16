@@ -53,7 +53,7 @@ public partial class CatalogWindow : Window
 
     private void AddProductToCart(object sender, MouseButtonEventArgs e)
     {
-        new ProductWindow(bl, "customer", c, ((BO.ProductItem)CatalogListview.SelectedItem).ID).Show();
+        new ProductWindow(bl, "customer",this, null, c, ((BO.ProductItem)CatalogListview.SelectedItem).ID).Show();
         this.Hide();
     }
 

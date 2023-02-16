@@ -23,16 +23,17 @@ namespace PL;
 public partial class ProductListWindow : Window
 {
     private IBl bl;
-    private ObservableCollection<ProductListWindow> productList;
+    private ObservableCollection<ProductForList?> productList { get; set; }
+
     public ProductListWindow(IBl BL)
     {
         try
         {
             InitializeComponent();
             bl = BL;
-            ProductsListview.ItemsSource = bl.product.GetProducts();
             ComboBoxSelector.ItemsSource = BO.eCategory.GetValues(typeof(BO.eCategory));
-            productList = (ObservableCollection<ProductListWindow>?)ProductsListview.ItemsSource;
+            productList = new ObservableCollection<ProductForList?>(bl.product.GetProducts());
+            ProductsListview.DataContext = productList;
         }
         catch (Exception ex)
         {
@@ -49,7 +50,8 @@ public partial class ProductListWindow : Window
     {
         try
         {
-            ProductsListview.ItemsSource = bl.product.GetProducts((BO.eCategory)ComboBoxSelector.SelectedItem);
+            productList = new ObservableCollection<ProductForList?>(bl.product.GetProducts((BO.eCategory)ComboBoxSelector.SelectedItem));
+            ProductsListview.DataContext = productList;
         }
         catch (Exception ex)
         {
@@ -64,9 +66,9 @@ public partial class ProductListWindow : Window
     /// <param name="e"></param>
     private void AddProduct(object sender, RoutedEventArgs e)
     {
-        ProductWindow window = new ProductWindow( bl,"manager");
+        ProductWindow window = new ProductWindow(bl, "manager", this, productList);
         window.Show();
-        this.Close();
+        this.Hide();
     }
 
     /// <summary>
@@ -78,8 +80,10 @@ public partial class ProductListWindow : Window
     {
         try
         {
-            ProductsListview.ItemsSource = bl.product.GetProducts();
-        }catch(Exception ex)
+            productList = new ObservableCollection<ProductForList?>(bl.product.GetProducts());
+            ProductsListview.DataContext = productList;
+        }
+        catch (Exception ex)
         { MessageBox.Show(ex.Message); }
     }
 
@@ -90,9 +94,8 @@ public partial class ProductListWindow : Window
     /// <param name="e"></param>
     private void Update(object sender, MouseButtonEventArgs e)
     {
-        ProductWindow productWindow = new(bl, "manager", null, ((BO.ProductForList)ProductsListview.SelectedItem).ID);
+        ProductWindow productWindow = new(bl, "manager", this, productList, null, ((BO.ProductForList)ProductsListview.SelectedItem).ID);
         productWindow.Show();
-        this.Close();
+        this.Hide();
     }
-
 }

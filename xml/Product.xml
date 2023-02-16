@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <products>
-  <product ID="0" Name="dresses" Category="men" Price="436" InStock="0" />
-  <product ID="1" Name="shirts" Category="women" Price="66" InStock="759" />
-  <product ID="2" Name="pants" Category="boys" Price="49" InStock="505" />
+  <product ID="0" Name="dresses" Category="men" Price="110" InStock="600" />
+  <product ID="1" Name="shirts" Category="women" Price="55" InStock="759" />
+  <product ID="2" Name="pants" Category="boys" Price="50" InStock="505" />
   <product ID="3" Name="shoes" Category="girls" Price="139" InStock="653" />
   <product ID="4" Name="skirts" Category="babies" Price="74" InStock="118" />
   <product ID="5" Name="socks" Category="men" Price="227" InStock="123" />
