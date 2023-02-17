@@ -51,9 +51,9 @@
                 </GridView>
 
             </ListView.View>
-        </ListView>
+        </ListView >
         <Label Content="TotalPrice:" HorizontalAlignment="Left" Margin="34,8,0,0" VerticalAlignment="Top" Width="110" Height="23" Grid.Row="2"/>
-        <Label x:Name="totalPriceLabel" Content="{Binding Path=TotalPrice, Mode=TwoWay}" HorizontalAlignment="Left" Margin="177,12,0,0"  VerticalAlignment="Top" Width="120" Height="24" RenderTransformOrigin="0.5,0.5" Grid.Row="2"/>
-        <Button Content="make an order" HorizontalAlignment="Center" Margin="0,31,0,0" Grid.Row="2" VerticalAlignment="Top" Width="108" Height="21" Click="MakeAnOrder"/>
+        <Label x:Name="totalPrice" Content="{Binding}" HorizontalAlignment="Left" Margin="177,12,0,0"  VerticalAlignment="Top" Width="120" Height="24" RenderTransformOrigin="0.5,0.5" Grid.Row="2"/>
+        <Button Content="make an order" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Background="{StaticResource myLinearGradientBrush}" Click="MakeAnOrder"/>
     </Grid>
 </Window>

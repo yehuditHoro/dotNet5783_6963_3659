@@ -87,6 +87,7 @@ public partial class ProductWindow : Window
                 bl.cart.addToCart(c, product.ID);
                 CatalogWindow catalog = new(bl, c);
                 catalog.Show();
+                this.Close();
             }
             else
             {

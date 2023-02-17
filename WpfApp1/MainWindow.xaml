@@ -6,10 +6,19 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontFamily" Value="Consolas" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Width" Value="107" />
+            <Setter Property="Height" Value="40" />
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Button Content="Admin" HorizontalAlignment="Left" Margin="130,101,0,0" VerticalAlignment="Top" Width="107" Height="30" Click="AdminScreen"/>
-        <Button Content="New Order" HorizontalAlignment="Left" Margin="130,250,0,0" VerticalAlignment="Top" Width="107" Height="30" Click="CustomerScreen"/>
-        <TextBox x:Name="orderId" HorizontalAlignment="Left" Margin="507,144,0,0" TextWrapping="Wrap" Text="Enter Order Id" VerticalAlignment="Top" Width="120" Height="27"/>
-        <Button Content="Track" HorizontalAlignment="Left" Margin="529,194,0,0" VerticalAlignment="Top" Width="76" Height="23"  Click="Tracking"/>
+        <Button Content="Admin" HorizontalAlignment="Left" Margin="130,101,0,0" VerticalAlignment="Top"  Background="{StaticResource myLinearGradientBrush}"  Click="AdminScreen"/>
+        <Button Content="New Order" HorizontalAlignment="Left" Margin="130,250,0,0" VerticalAlignment="Top"  Background="{StaticResource myLinearGradientBrush}"  Click="CustomerScreen"/>
+        <TextBox x:Name="orderId" HorizontalAlignment="Left" Margin="529,144,0,0" TextWrapping="Wrap" Text="Enter Order Id" FontSize="15" TextAlignment="Center" VerticalAlignment="Top" Width="107" Height="27"/>
+        <Button Content="Track" HorizontalAlignment="Left" Margin="529,194,0,0" VerticalAlignment="Top"  Background="{StaticResource myLinearGradientBrush}" Click="Tracking"/>
     </Grid>
 </Window>

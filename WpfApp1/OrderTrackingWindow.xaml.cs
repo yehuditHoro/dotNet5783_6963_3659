@@ -42,5 +42,10 @@ public partial class OrderTrackingWindow : Window
         order.Show();
         this.Close();
     }
+
+    private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+    }
 }
 

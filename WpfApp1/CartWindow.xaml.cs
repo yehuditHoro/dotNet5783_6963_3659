@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Schema;
 
 namespace PL;
 
@@ -33,11 +34,11 @@ public partial class CartWindow : Window
         c = cart;
         coll = new ObservableCollection<BO.OrderItem>(c.Items);
         CartListview.DataContext = coll;
-        totalPriceLabel.Content = c.TotalPrice;
+        totalPrice.DataContext = c.TotalPrice;
     }
 
     /// <summary>
-    /// make the order
+    /// get the items and the detailes from the customer and make an order
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -47,7 +48,6 @@ public partial class CartWindow : Window
         try
         {
             bl.cart.MakeAnOrder(c, (Name.Text), (Email.Text), (Address.Text));
-           // mainWindow.Show();
             this.Close();
         }
         catch (Exception ex)
@@ -56,8 +56,12 @@ public partial class CartWindow : Window
         }
     }
 
-
-              
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    
     private void Remove(object sender, RoutedEventArgs e)
     {
         try
@@ -72,7 +76,11 @@ public partial class CartWindow : Window
         }
     }
 
-
+/// <summary>
+/// 
+/// </summary>
+/// <param name="sender"></param>
+/// <param name="e"></param>
     private void Increase(object sender, RoutedEventArgs e)
     {
         try
@@ -86,14 +94,18 @@ public partial class CartWindow : Window
                 return item;
             }).ToList();
             CartListview.DataContext = coll;
-           // totalPriceLabel.DataContext = c.TotalPrice;
+            totalPrice.DataContext = c.TotalPrice;
         }
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message);
         }
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Decrease(object sender, RoutedEventArgs e)
     {
         try
@@ -101,14 +113,14 @@ public partial class CartWindow : Window
             OrderItem changed = (OrderItem)((Button)sender).DataContext;
             c=bl.cart.UpdateQuantity(c, changed.ProductID, changed.Amount - 1);
             coll = new();
-            //this.DataContext = c;
             c.Items.Select(item =>
             {
                 coll.Add(item);
                 return item;
             }).ToList();
-            //this.DataContext = c;
             CartListview.DataContext = coll;
+            totalPrice.DataContext = c.TotalPrice;
+
         }
         catch (Exception ex)
         {

@@ -4,6 +4,17 @@
              xmlns:local="clr-namespace:WpfApp1"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <LinearGradientBrush x:Key="myLinearGradientBrush" StartPoint="0,0" EndPoint="1,1" >
+            <GradientStop Color="Turquoise" Offset="0" />
+            <GradientStop Color="GreenYellow" Offset="1.0" />
+        </LinearGradientBrush>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontFamily" Value="Share-ItalicOSF" />
+            <Setter Property="BorderBrush" Value="#FF5281DE" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Width" Value="125" />
+            <Setter Property="Height" Value="40" />
+        </Style>
     </Application.Resources>
 </Application>

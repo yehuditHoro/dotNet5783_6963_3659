@@ -19,22 +19,22 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions >
                 <Label Content="Category:"  Grid.Column="1" HorizontalAlignment= "Left"  VerticalAlignment="Center" FontSize="20" FontWeight="Bold" FontFamily="AdamGorry-Inline" Margin="10,0,0,0"/>
-                <ComboBox ItemsSource="{Binding category}" Name="CategorySelector" Grid.Column="1" Margin="156,12,55,10" SelectionChanged="Categories"/>
-                <Button Content="X" Name="delete" Grid.Column="1" HorizontalAlignment= "Left" Margin="350,12,0,10" Width="30" Click="DeleteFilter"/>
+                <ComboBox ItemsSource="{Binding category}" Name="CategorySelector" Grid.Column="1" Margin="161,12,50,10" SelectionChanged="Categories" Height="25"/>
+                <Button Content="X" Name="delete" Grid.Column="1" HorizontalAlignment= "Center" Margin="350,12,0,10" Width="30" Height="25" Click="DeleteFilter"/>
             </Grid>
             <ListView ItemsSource="{Binding}" x:Name="CatalogListview"  d:ItemsSource="{d:SampleData ItemCount=5}" RenderTransformOrigin="0.412,-0.045" MouseDoubleClick="AddProductToCart" FontFamily="Sherbrooke Bold" FontSize="16" FontWeight="Normal" FontStyle="Normal" Grid.Row="1">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding ID}" Header="Id"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Category}" Header="Category"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Price}" Header="Price"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Amount}" Header="Amount"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding InStock}" Header="InStock"/>
+                        <GridViewColumn Width="80"  DisplayMemberBinding="{Binding ID}" Header="Id"/>
+                        <GridViewColumn Width="137" DisplayMemberBinding="{Binding Name}" Header="Name"/>
+                        <GridViewColumn Width="137" DisplayMemberBinding="{Binding Category}" Header="Category"/>
+                        <GridViewColumn Width="137" DisplayMemberBinding="{Binding Price}" Header="Price"/>
+                        <GridViewColumn Width="137" DisplayMemberBinding="{Binding Amount}" Header="Amount"/>
+                        <GridViewColumn Width="115" DisplayMemberBinding="{Binding InStock}" Header="InStock"/>
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button Content="show cart"  HorizontalAlignment="Center" FontSize="20" Grid.Row="2" VerticalAlignment="Center" Click="GetCart" RenderTransformOrigin="3.424,-2.504" Height="40" Width="118" Background="#FFECE278" FontFamily="shirin "/>
+            <Button Content="show cart"  HorizontalAlignment="Center" FontSize="20" Grid.Row="2" VerticalAlignment="Center" Click="GetCart" RenderTransformOrigin="3.424,-2.504"  Background="{StaticResource myLinearGradientBrush}"/>
 
         </Grid>
     </Grid>
