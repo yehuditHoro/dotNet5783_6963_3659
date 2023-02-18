@@ -172,7 +172,7 @@ internal class BlProduct : BlApi.Iproduct
     /// <exception cref="BlInvalidInputException"></exception>
     /// <exception cref="BlOutOfStockException"></exception>
     /// <exception cref="BlEntityDuplicate"></exception>
-    public void AddProduct(BO.Product p)
+    public int? AddProduct(BO.Product p)
     {
         try
         {
@@ -190,7 +190,8 @@ internal class BlProduct : BlApi.Iproduct
             prod.Price = p.Price;
             prod.Category = (Dal.DO.eCategory)p.Category;
             prod.InStock = p.InStock;
-            dal?.product.Add(prod);
+            int? id = dal?.product.Add(prod);
+            return id;
         }
         catch (DalApi.EntityDuplicateException)
         {

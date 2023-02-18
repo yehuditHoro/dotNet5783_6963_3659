@@ -39,8 +39,9 @@ internal class DalProduct : Iproduct
     {
         XElement? root = XDocument.Load("..\\xml\\Product.xml").Root;
         XElement? config = XDocument.Load("..\\xml\\Config.xml").Root;
+        p.ID = Convert.ToInt32(config?.Elements("productId")?.FirstOrDefault()?.Value);
         XElement element = new XElement("product",
-            new XAttribute("ID", Convert.ToInt32(config?.Elements("productId")?.FirstOrDefault()?.Value)),
+            new XAttribute("ID", p.ID),
             new XAttribute("Name", p.Name),
             new XAttribute("Category", p.Category),
             new XAttribute("Price", p.Price),

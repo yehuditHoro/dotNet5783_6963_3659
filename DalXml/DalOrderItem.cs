@@ -19,30 +19,6 @@ internal class DalOrderItem : IorderItem
     /// <exception cref="Exception"></exception>
     public int Add(OrderItem oi)
     {
-        //StreamReader rw = new("..\\xml\\Config.xml");
-        //XmlSerializer ser = new(typeof(Config));
-        //Config ids = (Config)ser.Deserialize(rw) ?? throw new Exception();
-        //rw.Close();
-        //ids.orderItemId++;
-        //StreamWriter sw = new("..\\xml\\Config.xml");
-        //XmlSerializer s = new(typeof(Config));
-        //s.Serialize(sw, ids);
-        //sw.Close();
-        //=========================================================================
-        //StreamReader configReader = new("..\\..\\..\\..\\xml\\Config.xml");
-        //XmlRootAttribute xRoot = new XmlRootAttribute();
-        //xRoot.ElementName = "Config";
-        //xRoot.IsNullable = true;
-        //XmlSerializer ser = new XmlSerializer(typeof(Config), xRoot);
-        //IDs = (Config?)ser.Deserialize(configReader);
-        //int id = IDs.OrderItemId;
-        //IDs.OrderItemId++;
-        //configReader.Close();
-        //StreamWriter configWriter = new("..\\..\\..\\..\\xml\\Config.xml");
-        //ser.Serialize(configWriter, IDs);
-        //configWriter.Close();
-        //return id;
-        //==========================================================================
         XElement? config = XDocument.Load("..\\xml\\Config.xml").Root;
         oi.ID = Convert.ToInt32(config?.Elements("orderItemId")?.FirstOrDefault()?.Value);
         config?.Element("orderItemId")?.SetValue(Convert.ToInt32(config?.Elements("orderItemId")?.FirstOrDefault()?.Value) + 1);

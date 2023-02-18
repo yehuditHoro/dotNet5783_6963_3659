@@ -14,4 +14,5 @@
   <product ID="14" Name="boots" Category="boys" Price="125" InStock="19" />
   <product ID="15" Name="black coat" Category="men" Price="200" InStock="50" />
   <product ID="16" Name="yoyo" Category="boys" Price="99" InStock="100" />
+  <product ID="19" Name="babygro" Category="babies" Price="80" InStock="200" />
 </products>

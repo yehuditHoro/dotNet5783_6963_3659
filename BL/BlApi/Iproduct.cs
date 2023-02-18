@@ -8,7 +8,7 @@ public interface Iproduct
     public IEnumerable<ProductItem?> GetCatalog(BO.eCategory? category = null);
     public Product GetProductItemsForManager(int id);
     public ProductItem GetProductItemsForCustomer(int id, BO.Cart c);
-    public void AddProduct(Product p);
+    public int? AddProduct(Product p);
     public void RemoveProduct(int id);
     public void UpdateProduct(Product p);
 }

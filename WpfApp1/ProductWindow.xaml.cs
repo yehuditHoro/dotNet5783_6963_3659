@@ -76,10 +76,11 @@ public partial class ProductWindow : Window
         {
             if (addOrUpdate.Content == "add")
             {
-                bl.product.AddProduct(product);
+                int? id = bl.product.AddProduct(product);
                 ProductForList pfl = ConvertProductForListToProduct(product);
-                productList?.Add(pfl);  //מה לעשות עם ת.ז. אפשר שהפונ תחזיר ?
-                this.Close();       
+                pfl.ID = (int)id;
+                productList?.Add(pfl);
+                this.Close();    
                 last.Show();
             }
             else if (addOrUpdate.Content == "add to cart")
