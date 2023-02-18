@@ -38,14 +38,10 @@ public partial class OrderTrackingWindow : Window
 
     private void OrderDetails(object sender, RoutedEventArgs e)
     {
-        OrderWindow order = new(bl, "customer", oID);
+        OrderWindow order = new(bl, "customer", this, null, oID);
         order.Show();
         this.Close();
     }
 
-    private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
-    }
 }
 

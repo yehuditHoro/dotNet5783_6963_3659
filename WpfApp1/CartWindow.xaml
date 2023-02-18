@@ -30,26 +30,25 @@
                     <GridViewColumn Header="Remove">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Click="Remove" Width="25" Margin="25,5,5,5">🚮</Button>
+                                <Button Click="Remove" Width="25" Height="25" Margin="25,5,5,5">🚮</Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="increase">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Click="Increase" Width="25" Margin="25,5,5,5">+</Button>
+                                <Button Click="Increase" Width="25" Height="25" Margin="25,5,5,5">+</Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="decrease">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Click="Decrease" Width="25" Margin="25,5,5,5">-</Button>
+                                <Button Click="Decrease" Width="25" Height="25" Margin="25,5,5,5">-</Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
-
             </ListView.View>
         </ListView >
         <Label Content="TotalPrice:" HorizontalAlignment="Left" Margin="34,8,0,0" VerticalAlignment="Top" Width="110" Height="23" Grid.Row="2"/>

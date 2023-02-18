@@ -42,7 +42,6 @@ public partial class CartWindow : Window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-
     private void MakeAnOrder(object sender, RoutedEventArgs e)
     {
         try
@@ -127,5 +126,4 @@ public partial class CartWindow : Window
             MessageBox.Show(ex.Message);
         }
     }
-
 }

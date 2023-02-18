@@ -31,7 +31,6 @@ public partial class MainWindow : Window
     {
         AdminWindow adminWindow = new(bl);
         adminWindow.Show();
-        //this.Close();
     }
 
     private void Tracking(object sender, RoutedEventArgs e)
@@ -39,7 +38,6 @@ public partial class MainWindow : Window
         try { 
         OrderTrackingWindow tracking = new(bl, Convert.ToInt32(orderId.Text));
         tracking.Show();
-        //this.Close();
         }
         catch
         {
@@ -51,7 +49,6 @@ public partial class MainWindow : Window
     {
         CatalogWindow catalogWindow = new(bl, cart);
         catalogWindow.Show();
-        //this.Close();
     }
 }
 

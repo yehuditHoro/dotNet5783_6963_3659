@@ -31,7 +31,7 @@ public partial class ProductListWindow : Window
         {
             InitializeComponent();
             bl = BL;
-            ComboBoxSelector.ItemsSource = BO.eCategory.GetValues(typeof(BO.eCategory));
+            ComboBoxCategories.ItemsSource = BO.eCategory.GetValues(typeof(BO.eCategory));
             productList = new ObservableCollection<ProductForList?>(bl.product.GetProducts());
             ProductsListview.DataContext = productList;
         }
@@ -50,7 +50,7 @@ public partial class ProductListWindow : Window
     {
         try
         {
-            productList = new ObservableCollection<ProductForList?>(bl.product.GetProducts((BO.eCategory)ComboBoxSelector.SelectedItem));
+            productList = new ObservableCollection<ProductForList?>(bl.product.GetProducts((BO.eCategory)ComboBoxCategories.SelectedItem));
             ProductsListview.DataContext = productList;
         }
         catch (Exception ex)
@@ -68,7 +68,6 @@ public partial class ProductListWindow : Window
     {
         ProductWindow window = new ProductWindow(bl, "manager", this, productList);
         window.Show();
-        this.Hide();
     }
 
     /// <summary>
@@ -96,6 +95,5 @@ public partial class ProductListWindow : Window
     {
         ProductWindow productWindow = new(bl, "manager", this, productList, null, ((BO.ProductForList)ProductsListview.SelectedItem).ID);
         productWindow.Show();
-        this.Hide();
     }
 }

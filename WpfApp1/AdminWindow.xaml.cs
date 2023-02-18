@@ -36,13 +36,11 @@ public partial class AdminWindow : Window
     {
         ProductListWindow ListWindow = new ProductListWindow(bl);
         ListWindow.Show();
-        //this.Close();
     }
 
     private void GetOrders(object sender, RoutedEventArgs e)
     {
         OrderListWindow OrderWindow = new(bl);
         OrderWindow.Show();
-        //this.Close();
     }
 }

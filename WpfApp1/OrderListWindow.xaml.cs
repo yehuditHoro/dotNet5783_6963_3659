@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,13 +22,16 @@ namespace PL;
 public partial class OrderListWindow : Window
 {
     private IBl bl;
+    private ObservableCollection<BO.OrderForList?> orderList { get; set; }
+
     public OrderListWindow(IBl BL)
     {
         try
         {
             InitializeComponent();
             bl = BL;
-            OrdersView.ItemsSource = bl.order.GetOrdersList();
+            orderList = new ObservableCollection<BO.OrderForList?>(bl.order.GetOrdersList());
+            OrdersView.DataContext = orderList;
         }
         catch (Exception ex)
         {
@@ -37,8 +41,7 @@ public partial class OrderListWindow : Window
 
     private void GetOrder(object sender, MouseButtonEventArgs e)
     {
-        new OrderWindow(bl, "manager", ((BO.OrderForList)OrdersView.SelectedItem).ID).Show();
-        Close();
+        new OrderWindow(bl, "manager", this, orderList, ((BO.OrderForList)OrdersView.SelectedItem).ID).Show();
     }
 }
 

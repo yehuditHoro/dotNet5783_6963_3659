@@ -120,6 +120,8 @@ internal class BlCart : BlApi.Icart
                 throw new BlNullException();
             if (IsValidEmail(email) == false)
                 throw new BlInvalidInputException("the email is not correct");
+            if (c.Items.Count() <= 0)
+                throw new Exception("there are not order items that be ordered");
             var negativeAmount = from BO.OrderItem oi in c.Items
                          where oi.Amount < 0
                          select oi;
@@ -131,14 +133,6 @@ internal class BlCart : BlApi.Icart
                                  select oi;
             if (amount.Count() > 0)
                 throw new BlOutOfStockException();
-            //foreach (BO.OrderItem oi in c.Items)
-            //{
-            //    //Dal?.product.ReadSingle(x => x.ID == oi.ID);
-            //    if (oi.Amount < 0)
-            //        throw new BlInvalidInputException("invalid negative input for the amount");
-            //    if (oi.Amount > Dal?.product.ReadSingle(x => x.ID == oi.ProductID).InStock)
-            //        throw new BlOutOfStockException();
-            //}  
             Dal.DO.Order newOrder = new();
             newOrder.CustomerName = name;
             newOrder.CustomerEmail = email;
@@ -162,7 +156,7 @@ internal class BlCart : BlApi.Icart
         }
         catch (Exception e)
         {
-            throw new Exception("cant make the order " + e.Message);
+            throw new Exception("cant make the order: " + e.Message);
         }
     }
 

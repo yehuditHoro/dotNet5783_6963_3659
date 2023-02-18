@@ -35,7 +35,6 @@
                 </ListView.View>
             </ListView>
             <Button Content="show cart"  HorizontalAlignment="Center" FontSize="20" Grid.Row="2" VerticalAlignment="Center" Click="GetCart" RenderTransformOrigin="3.424,-2.504"  Background="{StaticResource myLinearGradientBrush}"/>
-
         </Grid>
     </Grid>
 </Window>

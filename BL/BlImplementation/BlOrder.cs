@@ -31,14 +31,16 @@ internal class BlOrder : BlApi.Iorder
                 throw new BlFailedToGet();
             }
             List<BO.OrderForList> boOrders = new();
-            double sum = 0;
-            int itemsAmount = 0;
+            double sum;
+            int itemsAmount;
             getOrders?.Select(o =>
             {
                 BO.OrderForList boOrder = new();
                 boOrder.ID = o.ID;
                 boOrder.CustomerName = o.CustomerName;
                 boOrder.Status = CheckStatus(o);
+                sum = 0;
+                itemsAmount = 0;
                 allItems.Where(oi => oi.OrderId == o.ID).Select(oi =>
                 {
                     sum = sum + (double)(oi.Amount * oi.Price);

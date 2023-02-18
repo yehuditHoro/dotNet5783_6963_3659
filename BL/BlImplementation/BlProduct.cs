@@ -212,13 +212,12 @@ internal class BlProduct : BlApi.Iproduct
         try
         {
             IEnumerable<Dal.DO.OrderItem> AllOrderItems = dal.orderItem.ReadAll();
-            AllOrderItems = AllOrderItems.Where(item => item.ProductId == id);
-            if (AllOrderItems.Count() > 0)
-                foreach (Dal.DO.OrderItem item in AllOrderItems)
-                {
-                    if (dal.order.ReadSingle(o => o.ID == item.OrderId).DeliveryDate > DateTime.Now)
-                        throw new Exception("the product is already ordered");
-                }
+            var allOrderItems = from item in AllOrderItems
+                                where item.ProductId == id
+                                orderby item.ID
+                                select item;
+            if (allOrderItems.Count() > 0)
+                throw new Exception("the product is already ordered");
             dal.product.Delete(id);
         }
         catch (DalApi.EntityNotFoundException)

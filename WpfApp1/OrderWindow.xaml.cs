@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,14 +23,18 @@ public partial class OrderWindow : Window
 {
     private IBl bl;
     private bool isInitilize = false;
+    private Window last;
+    private ObservableCollection<BO.OrderForList?> orderList;
     BO.OrderForList orderForList = new();
     BO.Order order = new();
-    public OrderWindow(IBl BL, string user, int? oId = null)
+    public OrderWindow(IBl BL, string user, Window window, ObservableCollection<BO.OrderForList?> o = null, int? oId = null)
     {
         try
         {
             InitializeComponent();
             bl = BL;
+            last = window;
+            orderList = o;
             status.ItemsSource = BO.eOrderStatus.GetValues(typeof(BO.eOrderStatus));
             order = bl.order.GetOrder((int)oId);
             orderForList.ID = order.ID;
@@ -56,12 +61,25 @@ public partial class OrderWindow : Window
             {
                 DataContext = orderForList;
                 order.Status = (BO.eOrderStatus)status.SelectedItem;
+                BO.OrderForList? ofl = orderList?.Where(o => o?.ID == order.ID).FirstOrDefault();
+                int? idx = -1;
+                if (ofl != null)
+                {
+                    idx = orderList?.IndexOf(ofl);
+                    orderList?.Remove(orderList?.Where(o => o?.ID == order.ID).FirstOrDefault());
+                }
                 if (order.Status == (BO.eOrderStatus)1)
+                {
                     order = bl.order.ShipedOrder(orderForList.ID);
+                    ofl.Status = BO.eOrderStatus.shiped;
+                }
                 if (order.Status == (BO.eOrderStatus)2)
+                {
                     order = bl.order.DeliveredOrder(orderForList.ID);
-                OrderListWindow window = new(bl);
-                window.Show();
+                    ofl.Status = BO.eOrderStatus.delivered;
+                }
+                orderList?.Insert(idx ?? -1, ofl);
+                last.Show();
                 this.Close();
             }
             else isInitilize = true;

@@ -24,7 +24,6 @@ public partial class CatalogWindow : Window
 {
     private IBl bl;
     private BO.Cart c;
-    private ObservableCollection<BO.ProductItem> p { get; set; }
 
     public CatalogWindow(IBl BL, BO.Cart cart)
     {
@@ -34,9 +33,7 @@ public partial class CatalogWindow : Window
             bl = BL;
             c = cart;
             CategorySelector.ItemsSource = BO.eCategory.GetValues(typeof(BO.eCategory));
-            IEnumerable <ProductItem?> productItems= bl.product.GetCatalog();
-            p = new ObservableCollection<BO.ProductItem?>(productItems);
-            CatalogListview.DataContext = productItems;
+            CatalogListview.ItemsSource = bl.product.GetCatalog();
         }
         catch (Exception ex)
         {
@@ -48,13 +45,12 @@ public partial class CatalogWindow : Window
     {
         CartWindow cartWindow = new(bl, c);
         cartWindow.Show();
-        this.Hide();
+        //this.Hide();
     }
 
     private void AddProductToCart(object sender, MouseButtonEventArgs e)
     {
         new ProductWindow(bl, "customer",this, null, c, ((BO.ProductItem)CatalogListview.SelectedItem).ID).Show();
-        this.Hide();
     }
 
     private void Categories(object sender, SelectionChangedEventArgs e)

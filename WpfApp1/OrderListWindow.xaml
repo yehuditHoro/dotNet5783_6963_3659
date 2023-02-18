@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="OrderListWindow" Height="450" Width="800">
     <Grid>
-        <ListView Name="OrdersView" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="GetOrder"/>
+        <ListView Name="OrdersView" ItemsSource="{Binding}" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="GetOrder"/>
     </Grid>
 </Window>

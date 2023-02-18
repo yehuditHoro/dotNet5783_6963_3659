@@ -77,16 +77,15 @@ public partial class ProductWindow : Window
             if (addOrUpdate.Content == "add")
             {
                 bl.product.AddProduct(product);
-                this.Close();              
                 ProductForList pfl = ConvertProductForListToProduct(product);
-                productList?.Add(pfl);
+                productList?.Add(pfl);  //מה לעשות עם ת.ז. אפשר שהפונ תחזיר ?
+                this.Close();       
                 last.Show();
             }
             else if (addOrUpdate.Content == "add to cart")
             {
                 bl.cart.addToCart(c, product.ID);
-                CatalogWindow catalog = new(bl, c);
-                catalog.Show();
+                last.Show();
                 this.Close();
             }
             else
@@ -94,12 +93,15 @@ public partial class ProductWindow : Window
                 bl.product.UpdateProduct(product);
                 this.Close();
                 ProductForList? pfl = productList?.Where(p => p?.ID == product.ID).FirstOrDefault();
-                int? idx = productList?.IndexOf(pfl);
-                productList?.Remove(productList?.Where(p => p?.ID == product.ID).FirstOrDefault());
-                pfl.Name = product.Name;
-                pfl.Category = (eCategory)product.Category;
-                pfl.Price = product.Price;
-                productList?.Insert(idx ?? -1, pfl);
+                if (pfl != null)
+                {
+                    int? idx = productList?.IndexOf(pfl);
+                    productList?.Remove(productList?.Where(p => p?.ID == product.ID).FirstOrDefault());
+                    pfl.Name = product.Name;
+                    pfl.Category = (eCategory)product.Category;
+                    pfl.Price = product.Price;
+                    productList?.Insert(idx ?? -1, pfl);
+                }
                 last.Show();
             } 
         }
@@ -117,6 +119,7 @@ public partial class ProductWindow : Window
         try
         {
             bl.product.RemoveProduct(product.ID);
+            productList?.Remove(productList?.Where(p => p?.ID == product.ID).FirstOrDefault());
             this.Close();
         }
         catch (Exception ex)
@@ -132,5 +135,4 @@ public partial class ProductWindow : Window
         p.Category = (eCategory)product.Category;
         return p;
     }
-
 }
