@@ -58,7 +58,11 @@ public partial class OrderWindow : Window
             MessageBox.Show(ex.Message);
         }
     }
-
+    /// <summary>
+    ///  change the status of an order 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void changeStatus(object sender, SelectionChangedEventArgs e)
     {
         try
@@ -84,6 +88,7 @@ public partial class OrderWindow : Window
                     order = bl.order.DeliveredOrder(orderForList.ID);
                     ofl.Status = BO.eOrderStatus.delivered;
                 }
+                isInitilize = false;
                 orderList?.Insert(idx ?? -1, ofl);
                 last.Show();
                 this.Close();
