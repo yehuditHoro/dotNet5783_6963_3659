@@ -46,37 +46,52 @@ public partial class CatalogWindow : Window
             MessageBox.Show(ex.Message);
         }
     }
-
+    /// <summary>
+    /// move the user to the cart window and show him the item he choose
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void GetCart(object sender, RoutedEventArgs e)
     {
         CartWindow cartWindow = new(bl, c);
         cartWindow.Show();
         //this.Hide();
     }
-
+    /// <summary>
+    /// add an item to the user cart
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AddProductToCart(object sender, MouseButtonEventArgs e)
     {
         new ProductWindow(bl, "customer",this, null, c, ((BO.ProductItem)CatalogListview.SelectedItem).ID).Show();
     }
-
+    /// <summary>
+    /// filter the products by a category
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Categories(object sender, SelectionChangedEventArgs e)
     {
         try
         {
-           //tuple.Item2 = bl.product.GetCatalog((BO.eCategory)CategorySelector.SelectedItem);
-             CatalogListview.ItemsSource = bl.product.GetCatalog((BO.eCategory)CategorySelector.SelectedItem);
+           CatalogListview.ItemsSource = bl.product.GetCatalog((BO.eCategory)CategorySelector.SelectedItem);
         }
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message);
         }
     }
-
+    /// <summary>
+    /// show all the item- delete the filter
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void DeleteFilter(object sender, RoutedEventArgs e)
     {
         try
         {
-            //tuple.Item2 = bl.product.GetCatalog();
+            
             CatalogListview.ItemsSource = bl.product.GetCatalog();
         }
         catch (Exception ex)

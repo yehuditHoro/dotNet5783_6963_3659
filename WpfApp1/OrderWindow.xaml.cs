@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +28,8 @@ public partial class OrderWindow : Window
     private ObservableCollection<BO.OrderForList?> orderList;
     BO.OrderForList orderForList = new();
     BO.Order order = new();
+    bool IsCustomer;
+    Tuple<OrderForList, bool> tc;
     public OrderWindow(IBl BL, string user, Window window, ObservableCollection<BO.OrderForList?> o = null, int? oId = null)
     {
         try
@@ -42,10 +45,13 @@ public partial class OrderWindow : Window
             orderForList.Status = order.Status;
             orderForList.AmountOfItems = order.Items.Count();
             orderForList.TotalPrice = order.TotalPrice;
-            DataContext = orderForList;
             if (user == "customer")
-                status.Visibility = Visibility.Hidden;
-            else CustomerStatus.Visibility = Visibility.Hidden;
+                //status.Visibility = Visibility.Hidden;
+                IsCustomer = false;
+            else IsCustomer = true;
+            //CustomerStatus.Visibility = Visibility.Hidden;
+            tc = new Tuple<OrderForList, bool>(orderForList, IsCustomer);
+            DataContext = tc;
         }
         catch (Exception ex)
         {
@@ -59,7 +65,7 @@ public partial class OrderWindow : Window
         {
             if (isInitilize)
             {
-                DataContext = orderForList;
+                //DataContext = orderForList;
                 order.Status = (BO.eOrderStatus)status.SelectedItem;
                 BO.OrderForList? ofl = orderList?.Where(o => o?.ID == order.ID).FirstOrDefault();
                 int? idx = -1;

@@ -56,7 +56,7 @@ public partial class CartWindow : Window
     }
 
     /// <summary>
-    /// 
+    /// remove item from the cart
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -76,7 +76,7 @@ public partial class CartWindow : Window
     }
 
 /// <summary>
-/// 
+/// increase the amount of an item
 /// </summary>
 /// <param name="sender"></param>
 /// <param name="e"></param>
@@ -101,7 +101,7 @@ public partial class CartWindow : Window
         }
     }
     /// <summary>
-    /// 
+    /// decrease the amount of an item
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>

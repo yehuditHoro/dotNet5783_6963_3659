@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace PL;
-
+/// <summary>
+/// convert the visibility by checking the boolian value
+/// </summary>
 public class EnumToNumConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

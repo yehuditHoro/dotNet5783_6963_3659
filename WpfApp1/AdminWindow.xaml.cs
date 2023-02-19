@@ -28,7 +28,7 @@ public partial class AdminWindow : Window
     }
 
     /// <summary>
-    /// move the user to the product window in order to see all the products
+    /// move the admin to the product window in order to see all the products
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -37,7 +37,11 @@ public partial class AdminWindow : Window
         ProductListWindow ListWindow = new ProductListWindow(bl);
         ListWindow.Show();
     }
-
+    /// <summary>
+    /// move the admin to the product window in order to see all the products
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void GetOrders(object sender, RoutedEventArgs e)
     {
         OrderListWindow OrderWindow = new(bl);

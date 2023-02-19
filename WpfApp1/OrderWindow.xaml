@@ -12,11 +12,11 @@
         <Label Content="Status:" HorizontalAlignment="Left" Margin="170,140,0,0" VerticalAlignment="Top" Width="100"/>
         <Label Content="AmountOfItems:" HorizontalAlignment="Left" Margin="170,180,0,0" VerticalAlignment="Top" Width="100"/>
         <Label Content="TotalPrice:" HorizontalAlignment="Left" Margin="170,220,0,0" VerticalAlignment="Top" Width="100"/>
-        <Label Name="orderId" Content="{Binding Path=ID, Mode=TwoWay}" HorizontalAlignment="Left" Margin="300,60,0,0" VerticalAlignment="Top" Width="50"/>
-        <Label Name="customerName" Content="{Binding Path=CustomerName, Mode=TwoWay}" HorizontalAlignment="Left" Margin="300,100,0,0" VerticalAlignment="Top" Width="50"/>
-        <ComboBox Name="status" Text="{Binding Path=Status, Mode=TwoWay}" HorizontalAlignment="Left" Margin="300,140,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="changeStatus"/>
-        <Label Name="CustomerStatus" Content="{Binding Path=Status, Mode=TwoWay}" HorizontalAlignment="Left" Margin="300,140,0,0" VerticalAlignment="Top" Width="70"/>
-        <Label Name="amount" Content="{Binding Path=AmountOfItems, Mode=TwoWay}" HorizontalAlignment="Left" Margin="300,180,0,0" VerticalAlignment="Top" Width="50"/>
-        <Label Name="totalPrice" Content="{Binding Path=TotalPrice, Mode=TwoWay}" HorizontalAlignment="Left" Margin="300,220,0,0" VerticalAlignment="Top" Width="50"/>
+        <Label Name="orderId" Content="{Binding Path=Item1.ID, Mode=TwoWay}" HorizontalAlignment="Left" Margin="300,60,0,0" VerticalAlignment="Top" Width="50"/>
+        <Label Name="customerName" Content="{Binding Path=Item1.CustomerName, Mode=TwoWay}" HorizontalAlignment="Left" Margin="300,100,0,0" VerticalAlignment="Top" Width="50"/>
+        <ComboBox Name="status"  Visibility="{Binding Path= Item2, Converter={StaticResource EnumToNumConverter}}"  HorizontalAlignment="Left" Margin="300,140,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="changeStatus"/>
+        <Label Name="CustomerStatus" Content="{Binding Path=Item1.Status, Mode=TwoWay}" HorizontalAlignment="Left" Margin="300,140,0,0" VerticalAlignment="Top" Width="70"/>
+        <Label Name="amount" Content="{Binding Path=Item1.AmountOfItems, Mode=TwoWay}" HorizontalAlignment="Left" Margin="300,180,0,0" VerticalAlignment="Top" Width="50"/>
+        <Label Name="totalPrice" Content="{Binding Path=Item1.TotalPrice, Mode=TwoWay}" HorizontalAlignment="Left" Margin="300,220,0,0" VerticalAlignment="Top" Width="50"/>
     </Grid>
 </Window>

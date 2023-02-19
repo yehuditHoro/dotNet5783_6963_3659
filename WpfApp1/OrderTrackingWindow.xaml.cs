@@ -35,7 +35,11 @@ public partial class OrderTrackingWindow : Window
         catch (Exception ex)
         { MessageBox.Show(ex.Message); }
     }
-
+    /// <summary>
+    /// show the customer the status of the order and the date of each status
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OrderDetails(object sender, RoutedEventArgs e)
     {
         OrderWindow order = new(bl, "customer", this, null, oID);

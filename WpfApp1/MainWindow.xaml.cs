@@ -27,12 +27,21 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
+    /// <summary>
+    /// move the admin to his page and show hin his options
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AdminScreen(object sender, RoutedEventArgs e)
     {
         AdminWindow adminWindow = new(bl);
         adminWindow.Show();
     }
-
+    /// <summary>
+    /// gets number of orde and track its status
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Tracking(object sender, RoutedEventArgs e)
     {
         try { 
@@ -44,7 +53,11 @@ public partial class MainWindow : Window
             MessageBox.Show("No order number entered");
         }
     }
-
+    /// <summary>
+    /// move the customer to hus screen - new order window
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void CustomerScreen(object sender, RoutedEventArgs e)
     {
         CatalogWindow catalogWindow = new(bl, cart);
