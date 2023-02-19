@@ -24,7 +24,9 @@ public partial class CatalogWindow : Window
 {
     private IBl bl;
     private BO.Cart c;
-
+    //public Tuple<Array, IEnumerable<ProductItem?>> tuple;
+    //IEnumerable<ProductItem?> pi;
+    //Array arr;
     public CatalogWindow(IBl BL, BO.Cart cart)
     {
         try
@@ -32,6 +34,10 @@ public partial class CatalogWindow : Window
             InitializeComponent();
             bl = BL;
             c = cart;
+            //arr = BO.eCategory.GetValues(typeof(BO.eCategory));
+            //pi = bl.product.GetCatalog();
+            //tuple = new Tuple<Array, IEnumerable<ProductItem?>>(arr, pi);
+            //this.DataContext = tuple;
             CategorySelector.ItemsSource = BO.eCategory.GetValues(typeof(BO.eCategory));
             CatalogListview.ItemsSource = bl.product.GetCatalog();
         }
@@ -57,7 +63,8 @@ public partial class CatalogWindow : Window
     {
         try
         {
-            CatalogListview.ItemsSource = bl.product.GetCatalog((BO.eCategory)CategorySelector.SelectedItem);
+           //tuple.Item2 = bl.product.GetCatalog((BO.eCategory)CategorySelector.SelectedItem);
+             CatalogListview.ItemsSource = bl.product.GetCatalog((BO.eCategory)CategorySelector.SelectedItem);
         }
         catch (Exception ex)
         {
@@ -69,6 +76,7 @@ public partial class CatalogWindow : Window
     {
         try
         {
+            //tuple.Item2 = bl.product.GetCatalog();
             CatalogListview.ItemsSource = bl.product.GetCatalog();
         }
         catch (Exception ex)

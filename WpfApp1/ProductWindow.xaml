@@ -7,14 +7,13 @@
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800">
     <Grid Margin="0,0,0,0">
-        <TextBox x:Name="productName" HorizontalAlignment="Left" Margin="328,50,0,0" TextWrapping="Wrap" Background="White" TextAlignment="Center" Text="{Binding Path=Name, Mode=TwoWay}" VerticalAlignment="Top" Width="120" Height="27" />
+        <TextBox x:Name="productName" HorizontalAlignment="Left" Margin="328,50,0,0" TextWrapping="Wrap" Background="White" TextAlignment="Center" Text="{Binding Path=Item1.Name, Mode=TwoWay}" VerticalAlignment="Top" Width="120" Height="27" />
         <Label Content=" choose Category:" VerticalAlignment="Top" FontSize="12"   Margin="328,86,334,0"/>
-        <ComboBox x:Name="category" HorizontalAlignment="Left" Margin="328,117,0,0"  VerticalAlignment="Top" Background="{StaticResource myLinearGradientBrush}" Width="120" Text="{Binding Path=Category, Mode=TwoWay}" />
-        <TextBox x:Name="productPrice" HorizontalAlignment="Left" Margin="328,157,0,0" TextWrapping="Wrap" TextAlignment="Center" Text="{Binding Path=Price, Mode=TwoWay}" VerticalAlignment="Top" Width="120" Height="27" BorderBrush="#FF21232B" Background="White"/>
-        <TextBox x:Name="productAmount" HorizontalAlignment="Left" Margin="328,0,0,0" TextWrapping="Wrap" TextAlignment="Center" Text="{Binding Path=InStock, Mode=TwoWay}" VerticalAlignment="Center" Width="120" Height="27" BorderBrush="#FF1C1C1D" Background="White" Foreground="#FF252020"/>
+        <ComboBox x:Name="category" HorizontalAlignment="Left" Margin="328,117,0,0"  VerticalAlignment="Top" Background="{StaticResource myLinearGradientBrush}" Width="120" Text="{Binding Path=Item1.Category, Mode=TwoWay}" />
+        <TextBox x:Name="productPrice" HorizontalAlignment="Left" Margin="328,157,0,0" TextWrapping="Wrap" TextAlignment="Center" Text="{Binding Path=Item1.Price, Mode=TwoWay}" VerticalAlignment="Top" Width="120" Height="27" BorderBrush="#FF21232B" Background="White"/>
+        <TextBox x:Name="productAmount" HorizontalAlignment="Left" Margin="328,0,0,0" TextWrapping="Wrap" TextAlignment="Center" Text="{Binding Path=Item1.InStock, Mode=TwoWay}" VerticalAlignment="Center" Width="120" Height="27" BorderBrush="#FF1C1C1D" Background="White" Foreground="#FF252020"/>
         <Button x:Name="addOrUpdate" HorizontalAlignment="Left" Margin="328,245,0,0" VerticalAlignment="Top" Height="25" Width="120" Background="{StaticResource myLinearGradientBrush}" Click="Submit" FontFamily="Sherbrooke Bold"/>
-      
-        <Button x:Name="btnDelete" Content="delete" HorizontalAlignment="Left" Margin="328,260,0,90" Height="25" Width="120"  Click="Delete" Background="#FF10C5B8" FontFamily="Sherbrooke Bold"/>
+        <Button x:Name="btnDelete" Content="delete" HorizontalAlignment="Left" Margin="328,260,0,90" Height="25" Width="120"  Click="Delete" Background="#FF10C5B8" FontFamily="Sherbrooke Bold" Visibility="{Binding Path= Item2, Converter={StaticResource EnumToNumConverter}}" />
 
     </Grid>
 </Window>

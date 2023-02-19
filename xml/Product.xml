@@ -5,10 +5,10 @@
   <product ID="2" Name="pants" Category="boys" Price="55" InStock="500" />
   <product ID="3" Name="shoes" Category="girls" Price="139" InStock="652" />
   <product ID="4" Name="skirts" Category="babies" Price="74" InStock="115" />
-  <product ID="5" Name="socks" Category="men" Price="10" InStock="122" />
+  <product ID="5" Name="socks" Category="men" Price="10" InStock="119" />
   <product ID="6" Name="sweaters" Category="women" Price="275" InStock="439" />
-  <product ID="7" Name="tights" Category="boys" Price="207" InStock="722" />
-  <product ID="8" Name="vests" Category="girls" Price="62" InStock="249" />
+  <product ID="7" Name="tights" Category="women" Price="207" InStock="722" />
+  <product ID="8" Name="vests" Category="girls" Price="62" InStock="248" />
   <product ID="9" Name="coats" Category="babies" Price="366" InStock="744" />
   <product ID="10" Name="jacket" Category="women" Price="65" InStock="339" />
   <product ID="14" Name="boots" Category="boys" Price="125" InStock="19" />

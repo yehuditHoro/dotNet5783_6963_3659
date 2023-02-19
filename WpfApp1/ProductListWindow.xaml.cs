@@ -24,16 +24,18 @@ public partial class ProductListWindow : Window
 {
     private IBl bl;
     private ObservableCollection<ProductForList?> productList { get; set; }
-
+    Tuple<Array, ObservableCollection<ProductForList?>> tupleContext;
     public ProductListWindow(IBl BL)
     {
         try
         {
             InitializeComponent();
             bl = BL;
-            ComboBoxCategories.ItemsSource = BO.eCategory.GetValues(typeof(BO.eCategory));
+            //ComboBoxCategories.ItemsSource = BO.eCategory.GetValues(typeof(BO.eCategory));
             productList = new ObservableCollection<ProductForList?>(bl.product.GetProducts());
-            ProductsListview.DataContext = productList;
+            //ProductsListview.DataContext = productList;
+            tupleContext = new Tuple<Array, ObservableCollection<ProductForList?>>(BO.eCategory.GetValues(typeof(BO.eCategory)), productList);
+            this.DataContext= tupleContext;
         }
         catch (Exception ex)
         {
@@ -49,9 +51,17 @@ public partial class ProductListWindow : Window
     private void ShowCategories(object sender, SelectionChangedEventArgs e)
     {
         try
-        {
-            productList = new ObservableCollection<ProductForList?>(bl.product.GetProducts((BO.eCategory)ComboBoxCategories.SelectedItem));
-            ProductsListview.DataContext = productList;
+        {  
+            productList = new ObservableCollection<BO.ProductForList?> ();
+            ObservableCollection<BO.ProductForList?> t = new ObservableCollection<BO.ProductForList?>(bl.product.GetProducts());
+            BO.eCategory category = (BO.eCategory)ComboBoxCategories.SelectedItem;
+            var tmp = from product in t
+                      group product by product.Category into newGroup
+                      where newGroup.Key == category
+                      select newGroup.ToList();
+            this.productList = ConvertToProductList(tmp, productList);
+            tupleContext = new Tuple<Array, ObservableCollection<ProductForList?>>(BO.eCategory.GetValues(typeof(BO.eCategory)), productList);
+            this.DataContext = tupleContext;
         }
         catch (Exception ex)
         {
@@ -80,7 +90,9 @@ public partial class ProductListWindow : Window
         try
         {
             productList = new ObservableCollection<ProductForList?>(bl.product.GetProducts());
-            ProductsListview.DataContext = productList;
+            tupleContext = new Tuple<Array, ObservableCollection<ProductForList?>>(BO.eCategory.GetValues(typeof(BO.eCategory)), productList);
+            this.DataContext = tupleContext;
+            //ProductsListview.DataContext = productList;
         }
         catch (Exception ex)
         { MessageBox.Show(ex.Message); }
@@ -95,5 +107,20 @@ public partial class ProductListWindow : Window
     {
         ProductWindow productWindow = new(bl, "manager", this, productList, null, ((BO.ProductForList)ProductsListview.SelectedItem).ID);
         productWindow.Show();
+    }
+    private ObservableCollection<ProductForList?> ConvertToProductList(IEnumerable<List<BO.ProductForList?>> Blist, ObservableCollection<ProductForList?> p)
+    {
+        //ObservableCollection<ProductForList?> Plist = new();
+        //p.Clear();
+
+        foreach (var group in Blist)
+        {
+            foreach (var item in group)
+            {
+                p.Add(item);
+
+            }
+        }
+        return p;
     }
 }

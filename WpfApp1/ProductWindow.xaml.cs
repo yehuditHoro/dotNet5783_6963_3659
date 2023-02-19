@@ -27,6 +27,9 @@ public partial class ProductWindow : Window
     private Window last;
     private ObservableCollection<ProductForList?>? productList;
     BO.Product product = new();
+    bool displayBtn;
+    Tuple<Product, bool> dcT;
+
     public ProductWindow(IBl BL, string userType, Window window, ObservableCollection<ProductForList?>? o = null, BO.Cart? cart = null, int? pId = null)
     {
         try
@@ -39,25 +42,31 @@ public partial class ProductWindow : Window
             category.ItemsSource = BO.eCategory.GetValues(typeof(BO.eCategory));
             if (userType == "manager")
             {
+
                 if (pId == null)
-                {
+                {                
+                    displayBtn = false;
                     addOrUpdate.Content = "add";
-                    btnDelete.Visibility = Visibility.Hidden;
+                    //btnDelete.Visibility = Visibility.Hidden;
                 }
                 else
                 {
+                    displayBtn = true;
                     addOrUpdate.Content = "update";
                     product = bl.product.GetProductItemsForManager((int)pId);
                 }
-                DataContext = product;
+                //DataContext = product;
             }
             else
-            {
+            {                    
+                displayBtn = false;
                 addOrUpdate.Content = "add to cart";
-                btnDelete.Visibility = Visibility.Hidden;
+                //btnDelete.Visibility = Visibility.Hidden;
                 product = bl.product.GetProductItemsForManager((int)pId);
-                DataContext = product;
+                /*DataContext = product;*/
             }
+            dcT = new Tuple<Product, bool>(product, displayBtn);
+            DataContext = dcT;
         }
         catch (Exception ex)
         {
@@ -80,7 +89,7 @@ public partial class ProductWindow : Window
                 ProductForList pfl = ConvertProductForListToProduct(product);
                 pfl.ID = (int)id;
                 productList?.Add(pfl);
-                this.Close();    
+                this.Close();
                 last.Show();
             }
             else if (addOrUpdate.Content == "add to cart")
@@ -104,7 +113,7 @@ public partial class ProductWindow : Window
                     productList?.Insert(idx ?? -1, pfl);
                 }
                 last.Show();
-            } 
+            }
         }
         catch (Exception ex)
         { MessageBox.Show(ex.Message); }
