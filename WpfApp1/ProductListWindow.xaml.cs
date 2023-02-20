@@ -61,7 +61,7 @@ public partial class ProductListWindow : Window
                       select newGroup.ToList();
             this.productList = ConvertToProductList(tmp, productList);
             tupleContext = new Tuple<Array, ObservableCollection<ProductForList?>>(BO.eCategory.GetValues(typeof(BO.eCategory)), productList);
-            this.DataContext = tupleContext;
+            //this.DataContext = tupleContext;
         }
         catch (Exception ex)
         {
@@ -91,7 +91,7 @@ public partial class ProductListWindow : Window
         {
             productList = new ObservableCollection<ProductForList?>(bl.product.GetProducts());
             tupleContext = new Tuple<Array, ObservableCollection<ProductForList?>>(BO.eCategory.GetValues(typeof(BO.eCategory)), productList);
-            this.DataContext = tupleContext;
+            //this.DataContext = tupleContext;
             //ProductsListview.DataContext = productList;
         }
         catch (Exception ex)
@@ -112,13 +112,12 @@ public partial class ProductListWindow : Window
     {
         //ObservableCollection<ProductForList?> Plist = new();
         //p.Clear();
-
+        
         foreach (var group in Blist)
         {
             foreach (var item in group)
             {
                 p.Add(item);
-
             }
         }
         return p;

@@ -114,7 +114,7 @@ internal class BlOrder : BlApi.Iorder
         try
         {
             Dal.DO.Order currOrder = dal.order.ReadSingle(x => x.ID == id);
-            if (currOrder.ShipDate < DateTime.Now && currOrder.ShipDate!=DateTime.MinValue)
+            if (currOrder.ShipDate < DateTime.Now && currOrder.ShipDate!=null)
                 throw new BlFailedToUpdate();
             currOrder.ShipDate = DateTime.Now;
             dal.order.Update(currOrder);
@@ -152,7 +152,7 @@ internal class BlOrder : BlApi.Iorder
         try
         {
             Dal.DO.Order currOrder = dal.order.ReadSingle(x => x.ID == id);
-            if ((currOrder.DeliveryDate > DateTime.Now && currOrder.ShipDate < DateTime.Now) || currOrder.DeliveryDate==DateTime.MinValue)
+            if ((currOrder.DeliveryDate > DateTime.Now && currOrder.ShipDate < DateTime.Now) || currOrder.DeliveryDate==null)
             {
                 currOrder.DeliveryDate = DateTime.Now;
                 dal.order.Update(currOrder);

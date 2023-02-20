@@ -39,13 +39,15 @@ public partial class CatalogWindow : Window
             //tuple = new Tuple<Array, IEnumerable<ProductItem?>>(arr, pi);
             //this.DataContext = tuple;
             CategorySelector.ItemsSource = BO.eCategory.GetValues(typeof(BO.eCategory));
-            CatalogListview.ItemsSource = bl.product.GetCatalog();
+            this.DataContext = bl.product.GetCatalog();
+            //CatalogListview.ItemsSource = bl.product.GetCatalog();
         }
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message);
         }
     }
+
     /// <summary>
     /// move the user to the cart window and show him the item he choose
     /// </summary>
@@ -57,6 +59,7 @@ public partial class CatalogWindow : Window
         cartWindow.Show();
         //this.Hide();
     }
+
     /// <summary>
     /// add an item to the user cart
     /// </summary>
@@ -66,6 +69,7 @@ public partial class CatalogWindow : Window
     {
         new ProductWindow(bl, "customer",this, null, c, ((BO.ProductItem)CatalogListview.SelectedItem).ID).Show();
     }
+
     /// <summary>
     /// filter the products by a category
     /// </summary>
@@ -75,13 +79,15 @@ public partial class CatalogWindow : Window
     {
         try
         {
-           CatalogListview.ItemsSource = bl.product.GetCatalog((BO.eCategory)CategorySelector.SelectedItem);
+            DataContext = bl.product.GetCatalog((BO.eCategory)CategorySelector.SelectedItem);
+            //CatalogListview.ItemsSource = bl.product.GetCatalog((BO.eCategory)CategorySelector.SelectedItem);
         }
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message);
         }
     }
+
     /// <summary>
     /// show all the item- delete the filter
     /// </summary>
@@ -91,8 +97,8 @@ public partial class CatalogWindow : Window
     {
         try
         {
-            
-            CatalogListview.ItemsSource = bl.product.GetCatalog();
+            DataContext = bl.product.GetCatalog();
+            //CatalogListview.ItemsSource = bl.product.GetCatalog();
         }
         catch (Exception ex)
         { MessageBox.Show(ex.Message); }

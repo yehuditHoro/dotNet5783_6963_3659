@@ -67,33 +67,30 @@ public partial class OrderWindow : Window
     {
         try
         {
-            if (isInitilize)
+
+            //DataContext = orderForList;
+            order.Status = (BO.eOrderStatus)status.SelectedItem;
+            BO.OrderForList? ofl = orderList?.Where(o => o?.ID == order.ID).FirstOrDefault();
+            int? idx = -1;
+            if (ofl != null)
             {
-                //DataContext = orderForList;
-                order.Status = (BO.eOrderStatus)status.SelectedItem;
-                BO.OrderForList? ofl = orderList?.Where(o => o?.ID == order.ID).FirstOrDefault();
-                int? idx = -1;
-                if (ofl != null)
-                {
-                    idx = orderList?.IndexOf(ofl);
-                    orderList?.Remove(orderList?.Where(o => o?.ID == order.ID).FirstOrDefault());
-                }
-                if (order.Status == (BO.eOrderStatus)1)
-                {
-                    order = bl.order.ShipedOrder(orderForList.ID);
-                    ofl.Status = BO.eOrderStatus.shiped;
-                }
-                if (order.Status == (BO.eOrderStatus)2)
-                {
-                    order = bl.order.DeliveredOrder(orderForList.ID);
-                    ofl.Status = BO.eOrderStatus.delivered;
-                }
-                isInitilize = false;
-                orderList?.Insert(idx ?? -1, ofl);
-                last.Show();
-                this.Close();
+                idx = orderList?.IndexOf(ofl);
+                orderList?.Remove(orderList?.Where(o => o?.ID == order.ID).FirstOrDefault());
             }
-            else isInitilize = true;
+            if (order.Status == (BO.eOrderStatus)1)
+            {
+                order = bl.order.ShipedOrder(orderForList.ID);
+                ofl.Status = BO.eOrderStatus.shiped;
+            }
+            if (order.Status == (BO.eOrderStatus)2)
+            {
+                order = bl.order.DeliveredOrder(orderForList.ID);
+                ofl.Status = BO.eOrderStatus.delivered;
+            }
+            isInitilize = false;
+            orderList?.Insert(idx ?? -1, ofl);
+            last.Show();
+            this.Close();
         }
         catch (Exception ex)
         {

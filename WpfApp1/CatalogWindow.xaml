@@ -19,10 +19,10 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions >
                 <Label Content="Category:"  Grid.Column="1" HorizontalAlignment= "Left"  VerticalAlignment="Center" FontSize="20" FontWeight="Bold" FontFamily="AdamGorry-Inline" Margin="10,0,0,0"/>
-                <ComboBox ItemsSource="{Binding Item1}" Name="CategorySelector" Grid.Column="1" Margin="161,12,50,10" SelectionChanged="Categories" Height="25"/>
+                <ComboBox Name="CategorySelector" Grid.Column="1" Margin="161,12,50,10" SelectionChanged="Categories" Height="25"/>
                 <Button Content="X" Name="delete" Grid.Column="1" HorizontalAlignment= "Center" Margin="350,12,0,10" Width="30" Height="25" Click="DeleteFilter"/>
             </Grid>
-            <ListView ItemsSource="{Binding Item2}" x:Name="CatalogListview"  d:ItemsSource="{d:SampleData ItemCount=5}" RenderTransformOrigin="0.412,-0.045" MouseDoubleClick="AddProductToCart" FontFamily="Sherbrooke Bold" FontSize="16" FontWeight="Normal" FontStyle="Normal" Grid.Row="1">
+            <ListView ItemsSource="{Binding}" x:Name="CatalogListview"  d:ItemsSource="{d:SampleData ItemCount=5}" RenderTransformOrigin="0.412,-0.045" MouseDoubleClick="AddProductToCart" FontFamily="Sherbrooke Bold" FontSize="16" FontWeight="Normal" FontStyle="Normal" Grid.Row="1">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="80"  DisplayMemberBinding="{Binding ID}" Header="Id"/>

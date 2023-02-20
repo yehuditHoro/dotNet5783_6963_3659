@@ -31,7 +31,7 @@ public partial class OrderListWindow : Window
             InitializeComponent();
             bl = BL;
             orderList = new ObservableCollection<BO.OrderForList?>(bl.order.GetOrdersList());
-            OrdersView.DataContext = orderList;
+            DataContext = orderList;
         }
         catch (Exception ex)
         {
