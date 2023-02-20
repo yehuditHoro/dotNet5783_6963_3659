@@ -63,5 +63,11 @@ public partial class MainWindow : Window
         CatalogWindow catalogWindow = new(bl, cart);
         catalogWindow.Show();
     }
+
+    private void Simulation(object sender, RoutedEventArgs e)
+    {
+        SimulatorWindow simulator = new();
+        simulator.Show();
+    }
 }
 

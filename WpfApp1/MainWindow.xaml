@@ -18,7 +18,8 @@
     <Grid>
         <Button Content="Admin" HorizontalAlignment="Left" Margin="130,101,0,0" VerticalAlignment="Top"  Background="{StaticResource myLinearGradientBrush}"  Click="AdminScreen" Width="136"/>
         <Button Content="New Order" HorizontalAlignment="Left" Margin="130,250,0,0" VerticalAlignment="Top"  Background="{StaticResource myLinearGradientBrush}"  Click="CustomerScreen" Width="136"/>
-        <TextBox x:Name="orderId" HorizontalAlignment="Left" Margin="529,144,0,0" TextWrapping="Wrap" Text="Enter Order Id" FontSize="15" TextAlignment="Center" VerticalAlignment="Top" Width="124" Height="27"/>
-        <Button Content="Track" HorizontalAlignment="Left" Margin="529,194,0,0" VerticalAlignment="Top"  Background="{StaticResource myLinearGradientBrush}" Click="Tracking" Width="124"/>
+        <TextBox x:Name="orderId" HorizontalAlignment="Left" Margin="529,101,0,0" TextWrapping="Wrap" Text="Enter Order Id" FontSize="15" TextAlignment="Center" VerticalAlignment="Top" Width="124" Height="27"/>
+        <Button Content="Track" HorizontalAlignment="Left" Margin="529,148,0,0" VerticalAlignment="Top"  Background="{StaticResource myLinearGradientBrush}" Click="Tracking" Width="124"/>
+        <Button Content="Simulator" HorizontalAlignment="Left" Margin="529,250,0,0" VerticalAlignment="Top" Background="{StaticResource myLinearGradientBrush}" Width="124" Click="Simulation"/>
     </Grid>
 </Window>

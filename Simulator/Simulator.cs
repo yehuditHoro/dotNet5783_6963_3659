@@ -1,16 +1,16 @@
 ﻿using System.ComponentModel;
 
-namespace Simulator;
+//namespace Simulator;
 
-public static class Simulator
-{
-    public void Run() 
-    {
+//public static class Simulator
+//{
+//    public void Run() 
+//    {
 
-    }
+//    }
 
-    public void StopSimulation()
-    {
+//    public void StopSimulation()
+//    {
 
-    }
-}
+//    }
+//}
