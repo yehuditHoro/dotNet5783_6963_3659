@@ -61,7 +61,7 @@ public partial class ProductListWindow : Window
                       select newGroup.ToList();
             this.productList = ConvertToProductList(tmp, productList);
             tupleContext = new Tuple<Array, ObservableCollection<ProductForList?>>(BO.eCategory.GetValues(typeof(BO.eCategory)), productList);
-            //this.DataContext = tupleContext;
+            this.DataContext = tupleContext;
         }
         catch (Exception ex)
         {

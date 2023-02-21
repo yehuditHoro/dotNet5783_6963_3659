@@ -23,60 +23,60 @@ namespace PL;
 /// 
 public partial class SimulatorWindow : Window
 {
-    private Stopwatch stopWatch;
     private bool isTimerRun;
-    BackgroundWorker timerworker;
     BackgroundWorker background;
+    private string clock;
     public SimulatorWindow()
     {
         InitializeComponent();
         background = new BackgroundWorker();
         background.DoWork += Background_DoWork;
         background.ProgressChanged += Background_ProgressChanged;
+        background.RunWorkerCompleted += Background_RunWorkerCompleted;
         background.WorkerReportsProgress = true;
-        stopWatch = new Stopwatch();
-        timerworker = new BackgroundWorker();
-        timerworker.DoWork += Worker_DoWork;
-        timerworker.ProgressChanged += Worker_ProgressChanged;
-        timerworker.WorkerReportsProgress = true;
-        stopWatch.Restart();
+        clock = DateTime.Now.ToString();
+        DataContext = clock;
         isTimerRun = true;
-        timerworker.RunWorkerAsync();
+        background.RunWorkerAsync();
     }
- 
-    private void stopTimerButton_Click(object sender, RoutedEventArgs e)
+
+    private void Background_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
     {
         if (isTimerRun)
         {
-            stopWatch.Stop();
             isTimerRun = false;
         }
     }
 
-
-    private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-    {
-        string timerText = stopWatch.Elapsed.ToString();
-        timerText = timerText.Substring(0, 8);
-        this.timerTextBlock.Text = timerText;
-    }
-    private void Worker_DoWork(object sender, DoWorkEventArgs e)
-    {
-        while (isTimerRun)
-        {
-            timerworker.ReportProgress(1);
-            Thread.Sleep(1000);
-        }
-
-       
-    }
-    private void Background_ProgressChanged(object? sender, ProgressChangedEventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
+    //private void stopTimerButton_Click(object sender, RoutedEventArgs e)
+    //{
+    //    if (isTimerRun)
+    //    {
+    //        stopWatch.Stop();
+    //        isTimerRun = false;
+    //    }
+    //}
     private void Background_DoWork(object? sender, DoWorkEventArgs e)
     {
-        throw new NotImplementedException();
+        Simulator.Simulator.Run();
+        while (isTimerRun)
+        {
+            background.ReportProgress(1);
+            Thread.Sleep(1000);
+        }
     }
+
+    private void Background_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+    {
+        DataContext = DateTime.Now.ToString();
+    }
+
+    private void stop_Click(object sender, RoutedEventArgs e)
+    {
+        if (isTimerRun)
+        {
+            isTimerRun = false;
+        }
+    }
+
 }

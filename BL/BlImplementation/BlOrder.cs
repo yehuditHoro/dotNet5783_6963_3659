@@ -213,6 +213,20 @@ internal class BlOrder : BlApi.Iorder
         }
     }
 
+    public int? ChooseOrder()
+    {
+        IEnumerable<Dal.DO.Order>? confirmDateOrders = dal.order.ReadAll(o => o.ShipDate == null);
+        IEnumerable<Dal.DO.Order>? shipDateOrders = dal.order.ReadAll(o => (o.ShipDate != null && o.DeliveryDate == null));
+        DateTime? minConfirmDate = confirmDateOrders.Min(x => x.OrderDate);
+        DateTime? minShipDate = shipDateOrders.Min(x => x.ShipDate);
+        Dal.DO.Order minConfirmOrderDate = confirmDateOrders.Where(o => o.OrderDate == minConfirmDate).FirstOrDefault();
+        Dal.DO.Order minShipOrderDate = shipDateOrders.Where(o => o.ShipDate == minShipDate).FirstOrDefault();
+        if (confirmDateOrders == null && shipDateOrders == null) return null;
+        if (confirmDateOrders == null) return minShipOrderDate.ID;
+        if (shipDateOrders == null) return minConfirmOrderDate.ID;
+        return minConfirmDate < minShipDate ? minConfirmOrderDate.ID : minShipOrderDate.ID;
+    }
+
     /// <summary>
     /// the function convert item of type Dal.do to item of type BO
     /// </summary>

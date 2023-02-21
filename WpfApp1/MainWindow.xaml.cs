@@ -25,6 +25,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        int? id=bl.order.ChooseOrder();
     }
 
     /// <summary>

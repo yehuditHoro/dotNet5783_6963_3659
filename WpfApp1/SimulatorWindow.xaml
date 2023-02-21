@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="SimulatorWindow" Height="450" Width="800">
     <Grid>
-        <TextBlock x:Name="timerTextBlock" Text="00:00:00" FontSize="25" TextAlignment="cENTER"  Foreground="#FF37F10E" Margin="540,28,26,350"/>
+        <TextBlock x:Name="timerTextBlock" Text="{Binding}" FontSize="25" TextAlignment="cENTER"  Foreground="#FF37F10E" Margin="470,28,26,350"/>
+        <Button x:Name="stop" Content="Stop" HorizontalAlignment="Left" Margin="594,131,0,0" VerticalAlignment="Top" Background="{StaticResource myLinearGradientBrush}" Click="stop_Click"/>
     </Grid>
 </Window>
