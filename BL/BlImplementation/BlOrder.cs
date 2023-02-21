@@ -239,6 +239,20 @@ internal class BlOrder : BlApi.Iorder
         return (items, OrderTotalPrice);
     }
 
+    public int? ChooseOrder()
+    {
+        //IEnumerable<Dal.DO.Order>
+            Dal.DO.Order confirmDateOrder = dal.order.ReadAll(o => o.ShipDate == null).Min(x => x.ShipDate);
+        IEnumerable<Dal.DO.Order> shipDateOrders = dal.order.ReadAll(o => (o.ShipDate != null && o.DeliveryDate == null));
+        //confirmDateOrder;
+
+        /*var minDateOfShip = from order in shipDateOrders
+                            group order by order.ShipDate into minOrder
+                            where minOrder.Key < min
+                            select minOrder;*/
+        return confirmDateOrder.ID;
+    }
+
     /// <summary>
     /// globak function that checks the status of the order
     /// </summary>
