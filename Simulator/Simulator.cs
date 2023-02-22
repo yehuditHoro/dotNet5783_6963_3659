@@ -6,7 +6,6 @@ public static class Simulator
 {
     public static BO.Order? currentOrder;
     private static IBl? bl;
-    private static bool IsFinish = true;
     public static void Run()
     {
         Thread thread = new Thread(new ThreadStart(ChooseOrder));
