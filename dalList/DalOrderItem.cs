@@ -2,6 +2,7 @@
 using Dal.DO;
 namespace Dal;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using DalApi;
 public class DalOrderItem : IorderItem
 {
@@ -11,18 +12,20 @@ public class DalOrderItem : IorderItem
     /// <param name="newOrderItem"></param>
     /// <returns></returns>
     /// <exception cref="EntityDuplicateException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(OrderItem newOrderItem)
     {
         newOrderItem.ID = DataSource.config.OrderItemId;
         DataSource.OrderItemsList.Add(newOrderItem);
         return newOrderItem.ID;
     }
-   
+
 
     /// <summary>
     ///  returns all the order items in the order items list
     /// </summary>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem> ReadAll(Func<OrderItem, bool>? func = null)
     {
         try
@@ -41,6 +44,7 @@ public class DalOrderItem : IorderItem
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="EntityNotFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem ReadSingle(Func<OrderItem, bool> func)
     {
         return DataSource.OrderItemsList.Where(func).ToList()[0];
@@ -52,6 +56,7 @@ public class DalOrderItem : IorderItem
     /// </summary>
     /// <param name="newOrderItem"></param>
     /// <exception cref="EntityNotFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(OrderItem newOrderItem)
     {
         int idx = DataSource.OrderItemsList.FindIndex(O => O.ID == newOrderItem.ID);
@@ -65,7 +70,8 @@ public class DalOrderItem : IorderItem
     /// gets id and delete the specific item of the order item list
     /// </summary>
     /// <param name="id"></param>
-    /// <exception cref="EntityNotFoundException"></exception>
+    /// <exception cref="EntityNotFoundException"></exception>   
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         OrderItem? oi = DataSource.OrderItemsList.Find(O => O.ID == id);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -17,6 +18,7 @@ internal class DalOrderItem : IorderItem
     /// <param name="oi"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(OrderItem oi)
     {
         XElement? config = XDocument.Load("..\\xml\\Config.xml").Root;
@@ -46,6 +48,7 @@ internal class DalOrderItem : IorderItem
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<OrderItem> ReadAll(Func<OrderItem, bool>? func = null)
     {
         StreamReader rw = new("..\\xml\\OrderItem.xml");
@@ -64,6 +67,7 @@ internal class DalOrderItem : IorderItem
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem ReadSingle(Func<OrderItem, bool> func)
     {
         StreamReader rw = new("..\\xml\\OrderItem.xml");
@@ -79,6 +83,7 @@ internal class DalOrderItem : IorderItem
     /// </summary>
     /// <param name="oi"></param>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(OrderItem oi)
     {
         StreamReader rw = new("..\\xml\\OrderItem.xml");
@@ -100,6 +105,7 @@ internal class DalOrderItem : IorderItem
     /// </summary>
     /// <param name="id"></param>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         StreamReader rw = new("..\\xml\\OrderItem.xml");

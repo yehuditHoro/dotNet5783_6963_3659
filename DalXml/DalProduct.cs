@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -35,6 +36,7 @@ internal class DalProduct : Iproduct
     /// </summary>
     /// <param name="p"></param>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Product p)
     {
         XElement? root = XDocument.Load("..\\xml\\Product.xml").Root;
@@ -58,6 +60,7 @@ internal class DalProduct : Iproduct
     /// the product id the function delete this product in the Product.xml file
     /// </summary>
     /// <param name="id"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XElement? root = XDocument.Load("..\\xml\\Product.xml").Root;
@@ -72,6 +75,7 @@ internal class DalProduct : Iproduct
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Product> ReadAll(Func<Product, bool>? func = null)
     {
         XElement? root = XDocument.Load("..\\xml\\Product.xml").Root;
@@ -87,6 +91,7 @@ internal class DalProduct : Iproduct
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product ReadSingle(Func<Product, bool> func)
     {
         XElement? root = XDocument.Load("..\\xml\\Product.xml").Root;
@@ -100,6 +105,7 @@ internal class DalProduct : Iproduct
     /// according to the product id in the Product.xml file
     /// </summary>
     /// <param name="p"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Product p)
     {
         XElement? root = XDocument.Load("..\\xml\\Product.xml").Root;
@@ -119,6 +125,7 @@ internal class DalProduct : Iproduct
     /// </summary>
     /// <param name="id"></param>
     /// <param name="amount"></param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void UpdateAmount(int id, int amount)
     {
         XElement? root = XDocument.Load("..\\xml\\Product.xml").Root;

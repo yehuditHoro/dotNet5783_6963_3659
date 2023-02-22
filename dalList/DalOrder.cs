@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using Dal.DO;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 internal class DalOrder : Iorder
@@ -10,6 +11,7 @@ internal class DalOrder : Iorder
     /// <param name="newOrder"></param>
     /// <returns></returns>
     /// <exception cref="EntityDuplicateException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Order newOrder)
     {
         newOrder.ID = DataSource.config.OrderId;
@@ -21,6 +23,7 @@ internal class DalOrder : Iorder
     /// returns all the orders in the order list
     /// </summary>
     /// <returns></returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Order> ReadAll(Func<Order, bool>? func = null)
     {
         try
@@ -40,6 +43,7 @@ internal class DalOrder : Iorder
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="EntityNotFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order ReadSingle(Func<Order, bool> func)
     {
         return DataSource.OrdersList.Where(func).ToList()[0];
@@ -50,6 +54,7 @@ internal class DalOrder : Iorder
     /// </summary>
     /// <param name="newOrder"></param>
     /// <exception cref="EntityNotFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Order newOrder)
     {
         int idx = DataSource.OrdersList.FindIndex(O => O.ID == newOrder.ID);
@@ -63,6 +68,7 @@ internal class DalOrder : Iorder
     /// </summary>
     /// <param name="id"></param>
     /// <exception cref="EntityNotFoundException"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         Order? o = DataSource.OrdersList.Find(O => O.ID == id);

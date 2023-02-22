@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -17,6 +18,7 @@ internal class DalOrder : Iorder
     /// <param name="order"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Order order)
     {
         XElement? config = XDocument.Load("..\\xml\\Config.xml").Root;
@@ -46,6 +48,7 @@ internal class DalOrder : Iorder
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Order> ReadAll(Func<Order, bool>? func = null)
     {
         StreamReader rw = new("..\\xml\\Order.xml");
@@ -64,6 +67,7 @@ internal class DalOrder : Iorder
     /// <param name="func"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order ReadSingle(Func<Order, bool> func)
     {
         StreamReader rw = new("..\\xml\\Order.xml");
@@ -79,6 +83,7 @@ internal class DalOrder : Iorder
     /// </summary>
     /// <param name="order"></param>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Order order)
     {
         StreamReader rw = new("..\\xml\\Order.xml");
@@ -100,6 +105,7 @@ internal class DalOrder : Iorder
     /// </summary>
     /// <param name="id"></param>
     /// <exception cref="Exception"></exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         StreamReader rw = new("..\\xml\\Order.xml");

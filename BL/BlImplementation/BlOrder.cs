@@ -229,7 +229,7 @@ internal class BlOrder : BlApi.Iorder
 
     /// <summary>
     /// the function convert item of type Dal.do to item of type BO
-    /// </summary>
+    /// </summary> 
     /// <param name="DItems"></param>
     /// <param name="orderId"></param>
     /// <returns></returns>

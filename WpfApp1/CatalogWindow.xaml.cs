@@ -24,7 +24,7 @@ public partial class CatalogWindow : Window
 {
     private IBl bl;
     private BO.Cart c;
-    //public Tuple<Array, IEnumerable<ProductItem?>> tuple;
+    //public Tuple<Array, IEnumerable<ProductItem?>> tuple { get; set; }
     //IEnumerable<ProductItem?> pi;
     //Array arr;
     public CatalogWindow(IBl BL, BO.Cart cart)
@@ -67,7 +67,7 @@ public partial class CatalogWindow : Window
     /// <param name="e"></param>
     private void AddProductToCart(object sender, MouseButtonEventArgs e)
     {
-        new ProductWindow(bl, "customer",this, null, c, ((BO.ProductItem)CatalogListview.SelectedItem).ID).Show();
+        new ProductWindow(bl, "customer", this, null, c, ((BO.ProductItem)CatalogListview.SelectedItem).ID).Show();
     }
 
     /// <summary>
