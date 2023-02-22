@@ -9,10 +9,8 @@ public static class Simulator
     private static bool IsFinish = true;
     public static void Run()
     {
-
-            Thread thread = new Thread(new ThreadStart(ChooseOrder));
-            thread.Start();
-
+        Thread thread = new Thread(new ThreadStart(ChooseOrder));
+        thread.Start();
     }
 
     public static void ChooseOrder()
