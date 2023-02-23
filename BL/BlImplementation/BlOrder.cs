@@ -2,6 +2,7 @@
 using DalApi;
 using Dal;
 using System.Net.NetworkInformation;
+using BO;
 
 namespace BlImplementation;
 
@@ -213,18 +214,54 @@ internal class BlOrder : BlApi.Iorder
         }
     }
 
+    //public int? ChooseOrder()
+    //{
+
+    //    IEnumerable<Dal.DO.Order>? confirmDateOrders = dal.order.ReadAll(o => o.ShipDate == null);
+    //    if (confirmDateOrders.Count() == 0) { confirmDateOrders = null; }
+    //    IEnumerable<Dal.DO.Order>? shipDateOrders = dal.order.ReadAll(o => (o.ShipDate != null && o.DeliveryDate == null));
+    //    if (shipDateOrders.Count() == 0) { shipDateOrders = null; }
+    //    if (confirmDateOrders == null && shipDateOrders == null)
+    //        return null;
+    //    DateTime? minConfirmDate = confirmDateOrders?.Min(x => x.OrderDate);
+    //    DateTime? minShipDate = shipDateOrders?.Min(x => x.ShipDate);
+
+    //    Dal.DO.Order minConfirmOrderDate = confirmDateOrders.Where(o => o.OrderDate == minConfirmDate).FirstOrDefault();
+
+    //      Dal.DO.Order minShipOrderDate = shipDateOrders.Where(o => o.ShipDate == minShipDate).FirstOrDefault();
+
+    //    if (confirmDateOrders == null) return minShipOrderDate.ID;
+    //    if (shipDateOrders == null) return minConfirmOrderDate.ID;
+    //    return minConfirmDate < minShipDate ? minConfirmOrderDate.ID : minShipOrderDate.ID;
+    //}
     public int? ChooseOrder()
     {
-        IEnumerable<Dal.DO.Order>? confirmDateOrders = dal.order.ReadAll(o => o.ShipDate == null);
-        IEnumerable<Dal.DO.Order>? shipDateOrders = dal.order.ReadAll(o => (o.ShipDate != null && o.DeliveryDate == null));
-        DateTime? minConfirmDate = confirmDateOrders.Min(x => x.OrderDate);
-        DateTime? minShipDate = shipDateOrders.Min(x => x.ShipDate);
-        Dal.DO.Order minConfirmOrderDate = confirmDateOrders.Where(o => o.OrderDate == minConfirmDate).FirstOrDefault();
-        Dal.DO.Order minShipOrderDate = shipDateOrders.Where(o => o.ShipDate == minShipDate).FirstOrDefault();
-        if (confirmDateOrders == null && shipDateOrders == null) return null;
-        if (confirmDateOrders == null) return minShipOrderDate.ID;
-        if (shipDateOrders == null) return minConfirmOrderDate.ID;
-        return minConfirmDate < minShipDate ? minConfirmOrderDate.ID : minShipOrderDate.ID;
+        DateTime minDate = DateTime.Now;
+        int? orderId = null;
+        List<OrderForList>? orderList = GetOrdersList().ToList();
+        orderList?.ForEach(o =>
+        {
+            switch (o.Status)
+            {
+                case BO.eOrderStatus.confirmed:
+                    if (GetOrder(o.ID).OrderDate < minDate)
+                    {
+                        orderId = o.ID;
+                        minDate = (DateTime)GetOrder(o.ID).OrderDate;
+                    }
+                    break;
+                case BO.eOrderStatus.shiped:
+                    if (GetOrder(o.ID).ShipDate < minDate)
+                    {
+                        orderId = o.ID;
+                        minDate = (DateTime)GetOrder(o.ID).ShipDate;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
+        return orderId;
     }
 
     /// <summary>

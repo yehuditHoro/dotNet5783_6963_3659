@@ -17,5 +17,10 @@
         <Label Content="{Binding Item3}" HorizontalAlignment="Left" Margin="388,183,0,0" VerticalAlignment="Top"/>
         <Label Content="Estimated order processing time:" HorizontalAlignment="Left" Margin="298,213,0,0" VerticalAlignment="Top"/>
         <Label x:Name="timer" Content="{Binding Item4}" HorizontalAlignment="Left" Margin="492,213,0,0" VerticalAlignment="Top"/>
+       <StatusBar Name="SBar" Grid.Column="0" Grid.Row="5" VerticalAlignment="Bottom" Background="LightBlue">
+            <StatusBarItem Height="80">
+                <TextBlock Width="72" FontSize="20">Status:</TextBlock>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>

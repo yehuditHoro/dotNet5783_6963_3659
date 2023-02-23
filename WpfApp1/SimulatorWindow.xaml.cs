@@ -14,6 +14,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Simulator;
@@ -26,6 +27,11 @@ namespace PL;
 /// 
 public partial class SimulatorWindow : Window
 {
+
+    Duration duration;
+    DoubleAnimation doubleanimation;
+    ProgressBar ProgressBar;
+
     private bool isTimerRun;
     BackgroundWorker background;
     private string clock;
@@ -91,6 +97,7 @@ public partial class SimulatorWindow : Window
         }
         else
         {
+            ProgressBarStart(os.time);
             DataContext = tuple;
         }
     }
@@ -100,10 +107,33 @@ public partial class SimulatorWindow : Window
         timerTextBlock.DataContext = DateTime.Now.ToString();
     }
 
+    void ProgressBarStart(int sec)
+    {
+        if (ProgressBar != null)
+        {
+            SBar.Items.Remove(ProgressBar);
+        }
+        ProgressBar = new ProgressBar();
+        ProgressBar.IsIndeterminate = false;
+        ProgressBar.Orientation = Orientation.Horizontal;
+        ProgressBar.Width = 500;
+        ProgressBar.Height = 30;
+        duration = new Duration(TimeSpan.FromSeconds(sec * 2));
+        doubleanimation = new DoubleAnimation(200.0, duration);
+        ProgressBar.BeginAnimation(ProgressBar.ValueProperty, doubleanimation);
+        SBar.Items.Add(ProgressBar);
+    }
     private void stopSimulator(object? sender, EventArgs e)
     {
-        MessageBox.Show("complete updating");
-        this.Close();
+        if (!CheckAccess())
+        {
+            Dispatcher.BeginInvoke(stopSimulator, sender, e);
+        }
+        else
+        {
+            MessageBox.Show("complete updating");
+            this.Close();
+        }
     }
 
     private void stop_Click(object sender, RoutedEventArgs e)

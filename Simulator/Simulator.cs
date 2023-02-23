@@ -9,6 +9,7 @@ public static class Simulator
     public static event EventHandler stopSimulation;
     private static IBl? bl = BlApi.Factory.Get();
     private static bool IsFinished = true;
+    public static Random? rand;
     public static void Run()
     {
         Thread thread = new Thread(NextOrderToChange);
@@ -27,8 +28,8 @@ public static class Simulator
                     StopSimulation();
                 }
                 currentOrder = bl?.order.GetOrder((int)orderId);
-                Random rand = new Random();
-                int workTime = (int)rand.Next(5, 10);
+                rand = new Random();
+                int workTime = (int)rand.Next(3, 10);
                 OrderStatus orderStatus;
                 if (currentOrder?.Status == BO.eOrderStatus.confirmed)
                 {
