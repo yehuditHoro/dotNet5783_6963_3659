@@ -131,6 +131,7 @@ public partial class SimulatorWindow : Window
         }
         else
         {
+            if (background.WorkerSupportsCancellation == true) background.CancelAsync();
             MessageBox.Show("complete updating");
             this.Close();
         }
