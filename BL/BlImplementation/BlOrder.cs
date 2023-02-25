@@ -214,28 +214,9 @@ internal class BlOrder : BlApi.Iorder
         }
     }
 
-    //public int? ChooseOrder()
-    //{
-
-    //    IEnumerable<Dal.DO.Order>? confirmDateOrders = dal.order.ReadAll(o => o.ShipDate == null);
-    //    if (confirmDateOrders.Count() == 0) { confirmDateOrders = null; }
-    //    IEnumerable<Dal.DO.Order>? shipDateOrders = dal.order.ReadAll(o => (o.ShipDate != null && o.DeliveryDate == null));
-    //    if (shipDateOrders.Count() == 0) { shipDateOrders = null; }
-    //    if (confirmDateOrders == null && shipDateOrders == null)
-    //        return null;
-    //    DateTime? minConfirmDate = confirmDateOrders?.Min(x => x.OrderDate);
-    //    DateTime? minShipDate = shipDateOrders?.Min(x => x.ShipDate);
-
-    //    Dal.DO.Order minConfirmOrderDate = confirmDateOrders.Where(o => o.OrderDate == minConfirmDate).FirstOrDefault();
-
-    //      Dal.DO.Order minShipOrderDate = shipDateOrders.Where(o => o.ShipDate == minShipDate).FirstOrDefault();
-
-    //    if (confirmDateOrders == null) return minShipOrderDate.ID;
-    //    if (shipDateOrders == null) return minConfirmOrderDate.ID;
-    //    return minConfirmDate < minShipDate ? minConfirmOrderDate.ID : minShipOrderDate.ID;
-    //}
-    public int? ChooseOrder()
+    public int? ChooseOrder()  //מותר לגשת לביאל?
     {
+        try { 
         DateTime minDate = DateTime.Now;
         int? orderId = null;
         List<OrderForList>? orderList = GetOrdersList().ToList();
@@ -262,6 +243,40 @@ internal class BlOrder : BlApi.Iorder
             }
         });
         return orderId;
+        }
+        catch( Exception  ex ) { throw new Exception(ex.Message); }
+    }
+
+    public Order UpdateOrder(int o_id, int quantity)  //מותר לעדכן אם זה באוניה?
+    {
+        try
+        {
+            Dal.DO.Order currOrder = dal.order.ReadSingle(x => x.ID == o_id);
+            if (currOrder.DeliveryDate == null && currOrder.ShipDate == null)
+            {
+                BO.Order order = new BO.Order();
+                order.ID = currOrder.ID;
+                order.OrderDate = currOrder.OrderDate;
+                order.ShipDate = currOrder.ShipDate;
+                order.DeliveryDate = currOrder.DeliveryDate;
+                order.Status = CheckStatus(currOrder);
+                order.CustomerName = currOrder.CustomerName;
+                order.CustomerAddress = currOrder.CustomerAddress;
+                order.CustomerEmail = currOrder.CustomerEmail;
+                (order.Items, order.TotalPrice) = convertDToB(allItems, currOrder.ID);
+                
+                return order;
+            }
+            throw new BlFailedToUpdate();
+        }
+        catch (DalApi.EntityNotFoundException)
+        {
+            throw new BlIdNotFound();
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
     }
 
     /// <summary>

@@ -35,6 +35,7 @@ public partial class OrderTrackingWindow : Window
         catch (Exception ex)
         { MessageBox.Show(ex.Message); }
     }
+
     /// <summary>
     /// show the customer the status of the order and the date of each status
     /// </summary>

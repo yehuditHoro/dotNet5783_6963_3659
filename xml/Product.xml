@@ -2,19 +2,19 @@
 <products>
   <product ID="0" Name="cool dresses" Category="women" Price="110" InStock="598" />
   <product ID="1" Name="ffff  shirts" Category="women" Price="55" InStock="758" />
-  <product ID="2" Name="pants" Category="boys" Price="55" InStock="498" />
-  <product ID="3" Name="cooo shoes" Category="girls" Price="139" InStock="650" />
-  <product ID="4" Name="skirts" Category="babies" Price="74" InStock="115" />
-  <product ID="5" Name="socks" Category="men" Price="10" InStock="118" />
-  <product ID="6" Name="sweaters" Category="women" Price="275" InStock="438" />
+  <product ID="2" Name="pants" Category="boys" Price="55" InStock="497" />
+  <product ID="3" Name="cooo shoes" Category="girls" Price="139" InStock="649" />
+  <product ID="4" Name="skirts" Category="babies" Price="74" InStock="113" />
+  <product ID="5" Name="socks" Category="men" Price="10" InStock="116" />
+  <product ID="6" Name="sweaters" Category="women" Price="275" InStock="437" />
   <product ID="7" Name="tights" Category="women" Price="207" InStock="722" />
-  <product ID="8" Name="vests" Category="girls" Price="62" InStock="247" />
+  <product ID="8" Name="vests" Category="girls" Price="62" InStock="246" />
   <product ID="9" Name="coats" Category="babies" Price="366" InStock="744" />
   <product ID="10" Name="jacket" Category="women" Price="65" InStock="339" />
   <product ID="14" Name="boots" Category="boys" Price="125" InStock="19" />
-  <product ID="15" Name="black coat" Category="men" Price="200" InStock="50" />
+  <product ID="15" Name="black coat" Category="men" Price="200" InStock="49" />
   <product ID="16" Name="yoyo" Category="boys" Price="99" InStock="100" />
-  <product ID="19" Name="babygro" Category="babies" Price="80" InStock="200" />
+  <product ID="19" Name="babygro" Category="babies" Price="80" InStock="199" />
   <product ID="20" Name="mali" Category="women" Price="5" InStock="5" />
   <product ID="21" Name="hhhh" Category="boys" Price="3" InStock="30" />
 </products>

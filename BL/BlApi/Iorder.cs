@@ -9,7 +9,5 @@ public interface Iorder
     public Order DeliveredOrder(int id);
     public OrderTracking OrderTrack(int id);
     public int? ChooseOrder();
-    
-    //public void UpdateOrder(int id); //bonus
-   
+    public Order UpdateOrder(int id, int quantity);
 }

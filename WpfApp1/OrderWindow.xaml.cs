@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using BlImplementation;
 using BO;
 using System;
 using System.Collections.Generic;
@@ -26,10 +27,10 @@ public partial class OrderWindow : Window
     private bool isInitilize = false;
     private Window last;
     private ObservableCollection<BO.OrderForList?> orderList;
-    BO.OrderForList orderForList = new();
+    //BO.OrderForList orderForList = new();
     BO.Order order = new();
     bool IsCustomer;
-    Tuple<OrderForList, bool> tc;
+    Tuple<Order, bool> tupleContext;
     public OrderWindow(IBl BL, string user, Window window, ObservableCollection<BO.OrderForList?> o = null, int? oId = null)
     {
         try
@@ -40,18 +41,11 @@ public partial class OrderWindow : Window
             orderList = o;
             status.ItemsSource = BO.eOrderStatus.GetValues(typeof(BO.eOrderStatus));
             order = bl.order.GetOrder((int)oId);
-            orderForList.ID = order.ID;
-            orderForList.CustomerName = order.CustomerName;
-            orderForList.Status = order.Status;
-            orderForList.AmountOfItems = order.Items.Count();
-            orderForList.TotalPrice = order.TotalPrice;
             if (user == "customer")
-                //status.Visibility = Visibility.Hidden;
                 IsCustomer = false;
             else IsCustomer = true;
-            //CustomerStatus.Visibility = Visibility.Hidden;
-            tc = new Tuple<OrderForList, bool>(orderForList, IsCustomer);
-            DataContext = tc;
+            tupleContext = new Tuple<Order, bool>(order, IsCustomer);
+            DataContext = tupleContext;
         }
         catch (Exception ex)
         {
@@ -67,8 +61,6 @@ public partial class OrderWindow : Window
     {
         try
         {
-
-            //DataContext = orderForList;
             order.Status = (BO.eOrderStatus)status.SelectedItem;
             BO.OrderForList? ofl = orderList?.Where(o => o?.ID == order.ID).FirstOrDefault();
             int? idx = -1;
@@ -79,12 +71,12 @@ public partial class OrderWindow : Window
             }
             if (order.Status == (BO.eOrderStatus)1)
             {
-                order = bl.order.ShipedOrder(orderForList.ID);
+                order = bl.order.ShipedOrder(order.ID);
                 ofl.Status = BO.eOrderStatus.shiped;
             }
             if (order.Status == (BO.eOrderStatus)2)
             {
-                order = bl.order.DeliveredOrder(orderForList.ID);
+                order = bl.order.DeliveredOrder(order.ID);
                 ofl.Status = BO.eOrderStatus.delivered;
             }
             isInitilize = false;
@@ -96,6 +88,77 @@ public partial class OrderWindow : Window
         {
             MessageBox.Show(ex.Message);
         }
+    }
+
+    /// <summary>
+    /// remove item from the cart
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param> 
+    private void Remove(object sender, RoutedEventArgs e)
+    {
+        //try
+        //{
+        //    OrderItem changed = (OrderItem)((Button)sender).DataContext;
+        //    c = bl.cart.UpdateQuantity(c, changed.ProductID, 0);
+        //    coll.Remove(changed);
+        //}
+        //catch (Exception ex)
+        //{
+        //    MessageBox.Show(ex.Message);
+        //}
+    }
+
+    /// <summary>
+    /// increase the amount of an item
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void Increase(object sender, RoutedEventArgs e)
+    {
+        //try
+        //{
+        //    OrderItem changed = (OrderItem)((Button)sender).DataContext;
+        //    c = bl.cart.UpdateQuantity(c, changed.ProductID, changed.Amount + 1);
+        //    coll = new();
+        //    c.Items.Select(item =>
+        //    {
+        //        coll.Add(item);
+        //        return item;
+        //    }).ToList();
+        //    CartListview.DataContext = coll;
+        //    totalPrice.DataContext = c.TotalPrice;
+        //}
+        //catch (Exception ex)
+        //{
+        //    MessageBox.Show(ex.Message);
+        //}
+    }
+    /// <summary>
+    /// decrease the amount of an item
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void Decrease(object sender, RoutedEventArgs e)
+    {
+        //try
+        //{
+        //    OrderItem changed = (OrderItem)((Button)sender).DataContext;
+        //    c = bl.cart.UpdateQuantity(c, changed.ProductID, changed.Amount - 1);
+        //    coll = new();
+        //    c.Items.Select(item =>
+        //    {
+        //        coll.Add(item);
+        //        return item;
+        //    }).ToList();
+        //    CartListview.DataContext = coll;
+        //    totalPrice.DataContext = c.TotalPrice;
+
+        //}
+        //catch (Exception ex)
+        //{
+        //    MessageBox.Show(ex.Message);
+        //}
     }
 }
 

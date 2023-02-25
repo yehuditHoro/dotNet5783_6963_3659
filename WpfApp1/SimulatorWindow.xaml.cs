@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -35,7 +36,7 @@ public partial class SimulatorWindow : Window
     private bool isTimerRun;
     BackgroundWorker background;
     private string clock;
-    public Tuple<int, BO.eOrderStatus, BO.eOrderStatus, int> tuple;
+    public Tuple<int, BO.eOrderStatus, BO.eOrderStatus, int, string> tuple;
     private const int GWL_STYLE = -16;
     private const int WS_SYSMENU = 0x80000;
     [DllImport("user32.dll", SetLastError = true)]
@@ -63,15 +64,6 @@ public partial class SimulatorWindow : Window
         SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
     }
 
-    private void Background_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
-    {
-        if (isTimerRun)
-        {
-            isTimerRun = false;
-            Simulator.Simulator.StopSimulation();
-        }
-    }
-
     private void Background_DoWork(object? sender, DoWorkEventArgs e)
     {
         Simulator.Simulator.Run();
@@ -90,7 +82,7 @@ public partial class SimulatorWindow : Window
             return;
         OrderStatus os = e as OrderStatus;
         if (os == null) return;
-        tuple = new Tuple<int, BO.eOrderStatus, BO.eOrderStatus, int>(os.orderId, os.oldStatus, os.newStatus, os.time);
+        tuple = new Tuple<int, BO.eOrderStatus, BO.eOrderStatus, int,string>(os.orderId, os.oldStatus, os.newStatus, os.time, DateTime.Now.ToString());
         if (!CheckAccess())
         {
             Dispatcher.BeginInvoke(updateView, sender, e);
@@ -111,7 +103,7 @@ public partial class SimulatorWindow : Window
     {
         if (ProgressBar != null)
         {
-            SBar.Items.Remove(ProgressBar);
+            statusBar.Items.Remove(ProgressBar);
         }
         ProgressBar = new ProgressBar();
         ProgressBar.IsIndeterminate = false;
@@ -121,8 +113,20 @@ public partial class SimulatorWindow : Window
         duration = new Duration(TimeSpan.FromSeconds(sec * 2));
         doubleanimation = new DoubleAnimation(200.0, duration);
         ProgressBar.BeginAnimation(ProgressBar.ValueProperty, doubleanimation);
-        SBar.Items.Add(ProgressBar);
+        statusBar.Items.Add(ProgressBar);
     }
+
+    private void Background_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
+    {
+        if (isTimerRun)
+        {
+            isTimerRun = false;
+            Simulator.Simulator.progreesChange -= updateView;
+            Simulator.Simulator.stopSimulation -= stopSimulator;
+            Simulator.Simulator.StopSimulation();
+        }
+    }
+
     private void stopSimulator(object? sender, EventArgs e)
     {
         if (!CheckAccess())

@@ -59,8 +59,7 @@ public partial class CartWindow : Window
     /// remove item from the cart
     /// </summary>
     /// <param name="sender"></param>
-    /// <param name="e"></param>
-    
+    /// <param name="e"></param> 
     private void Remove(object sender, RoutedEventArgs e)
     {
         try

@@ -15,9 +15,11 @@
         <Label Content="{Binding Item2}" HorizontalAlignment="Left" Margin="388,153,0,0" VerticalAlignment="Top"/>
         <Label Content="New Status:" HorizontalAlignment="Left" Margin="298,183,0,0" VerticalAlignment="Top"/>
         <Label Content="{Binding Item3}" HorizontalAlignment="Left" Margin="388,183,0,0" VerticalAlignment="Top"/>
-        <Label Content="Estimated order processing time:" HorizontalAlignment="Left" Margin="298,213,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="timer" Content="{Binding Item4}" HorizontalAlignment="Left" Margin="492,213,0,0" VerticalAlignment="Top"/>
-       <StatusBar Name="SBar" Grid.Column="0" Grid.Row="5" VerticalAlignment="Bottom" Background="LightBlue">
+        <Label Content="Process start time:" HorizontalAlignment="Left" Margin="298,213,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Item5}" HorizontalAlignment="Left" Margin="420,213,0,0" VerticalAlignment="Top"/>
+        <Label Content="Estimated order processing time:" HorizontalAlignment="Left" Margin="298,243,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="timer" Content="{Binding Item4}" HorizontalAlignment="Left" Margin="492,243,0,0" VerticalAlignment="Top"/>
+        <StatusBar Name="statusBar" Grid.Column="0" Grid.Row="5" VerticalAlignment="Bottom" Background="White">
             <StatusBarItem Height="80">
                 <TextBlock Width="72" FontSize="20">Status:</TextBlock>
             </StatusBarItem>

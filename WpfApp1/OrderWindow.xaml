@@ -7,16 +7,61 @@
         mc:Ignorable="d"
         Title="OrderWindow" Height="450" Width="800">
     <Grid Margin="0,0,0,0">
-        <Label Content="ID:" HorizontalAlignment="Left" Margin="170,60,0,0" VerticalAlignment="Top" Width="100"/>
-        <Label Content="CustomerName:" HorizontalAlignment="Left" Margin="170,100,0,0" VerticalAlignment="Top" Width="100"/>
-        <Label Content="Status:" HorizontalAlignment="Left" Margin="170,140,0,0" VerticalAlignment="Top" Width="100"/>
-        <Label Content="AmountOfItems:" HorizontalAlignment="Left" Margin="170,180,0,0" VerticalAlignment="Top" Width="100"/>
-        <Label Content="TotalPrice:" HorizontalAlignment="Left" Margin="170,220,0,0" VerticalAlignment="Top" Width="100"/>
-        <Label Name="orderId" Content="{Binding Path=Item1.ID, Mode=TwoWay}" HorizontalAlignment="Left" Margin="300,60,0,0" VerticalAlignment="Top" Width="50"/>
-        <Label Name="customerName" Content="{Binding Path=Item1.CustomerName, Mode=TwoWay}" HorizontalAlignment="Left" Margin="300,100,0,0" VerticalAlignment="Top" Width="50"/>
-        <ComboBox Name="status"  Visibility="{Binding Path= Item2, Converter={StaticResource EnumToNumConverter}}"  HorizontalAlignment="Left" Margin="300,140,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="changeStatus"/>
-        <Label Name="CustomerStatus" Content="{Binding Path=Item1.Status, Mode=TwoWay}" HorizontalAlignment="Left" Margin="300,140,0,0" VerticalAlignment="Top" Width="70"/>
-        <Label Name="amount" Content="{Binding Path=Item1.AmountOfItems, Mode=TwoWay}" HorizontalAlignment="Left" Margin="300,180,0,0" VerticalAlignment="Top" Width="50"/>
-        <Label Name="totalPrice" Content="{Binding Path=Item1.TotalPrice, Mode=TwoWay}" HorizontalAlignment="Left" Margin="300,220,0,0" VerticalAlignment="Top" Width="50"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Label Content="ID:" HorizontalAlignment="Left" Margin="30,10,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label Content="Customer Name:" HorizontalAlignment="Left" Margin="30,30,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label Content="Customer Email:" HorizontalAlignment="Left" Margin="30,50,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label Content="Customer Address:" HorizontalAlignment="Left" Margin="30,70,0,0" VerticalAlignment="Top" Width="113"/>
+        <Label Content="Order Date:" HorizontalAlignment="Left" Margin="30,90,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Ship Date:" HorizontalAlignment="Left" Margin="30,110,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Delivery Date:" HorizontalAlignment="Left" Margin="30,130,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Status:" HorizontalAlignment="Left" Margin="30,150,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label Content="TotalPrice:" HorizontalAlignment="Left" Margin="30,170,0,0" VerticalAlignment="Top" Width="100" Grid.RowSpan="2"/>
+        <Label Name="orderId" Content="{Binding Path=Item1.ID, Mode=TwoWay}" HorizontalAlignment="Left" Margin="160,10,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label Name="customerName" Content="{Binding Path=Item1.CustomerName, Mode=TwoWay}" HorizontalAlignment="Left" Margin="160,30,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label Name="customerEmail" Content="{Binding Path=Item1.CustomerEmail, Mode=TwoWay}" HorizontalAlignment="Left" Margin="160,50,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label Name="customerAddress" Content="{Binding Path=Item1.CustomerAddress, Mode=TwoWay}" HorizontalAlignment="Left" Margin="160,70,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label Name="orderDate" Content="{Binding Path=Item1.OrderDate, Mode=TwoWay}" HorizontalAlignment="Left" Margin="160,90,0,0" VerticalAlignment="Top" Width="130"/>
+        <Label Name="shipDate" Content="{Binding Path=Item1.ShipDate, Mode=TwoWay}" HorizontalAlignment="Left" Margin="160,110,0,0" VerticalAlignment="Top" Width="130"/>
+        <Label Name="deliveryDate" Content="{Binding Path=Item1.DeliveryDate, Mode=TwoWay}" HorizontalAlignment="Left" Margin="160,130,0,0" VerticalAlignment="Top" Width="130"/>
+        <ComboBox Name="status" Visibility="{Binding Path= Item2, Converter={StaticResource EnumToNumConverter}}"  HorizontalAlignment="Left" Margin="160,155,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="changeStatus" Height="15"/>
+        <Label Name="CustomerStatus" Content="{Binding Path=Item1.Status, Mode=TwoWay}" HorizontalAlignment="Left" Margin="160,150,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label Name="totalPrice" Content="{Binding Path=Item1.TotalPrice, Mode=TwoWay}" HorizontalAlignment="Left" Margin="160,170,0,0" VerticalAlignment="Top" Width="100" Grid.RowSpan="2"/>
+        <Label Content="Items:" HorizontalAlignment="Left" Margin="30,190,0,0" VerticalAlignment="Top" Width="100" Grid.RowSpan="1"/>
+        <ListView x:Name="ItemsListview" ItemsSource="{Binding Item1.Items}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding ProductID}" Header="ProductID"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Price}" Header="Price"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Amount}" Header="Amount"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding TotalPrice}" Header="TotalPrice"/>
+                    <GridViewColumn Header="Remove">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Click="Remove" Visibility="{Binding Item2}" Width="25" Height="25" Margin="25,5,5,5">🚮</Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="increase">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Click="Increase" Width="25" Height="25" Margin="25,5,5,5">+</Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="decrease">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Click="Decrease" Width="25" Height="25" Margin="25,5,5,5">-</Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView >
     </Grid>
 </Window>
