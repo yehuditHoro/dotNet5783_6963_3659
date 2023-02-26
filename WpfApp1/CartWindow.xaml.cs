@@ -98,14 +98,14 @@ public partial class CartWindow : Window
             BoCart=Converts.ConvertToBoCart(PoCart);
             BoCart=bl.cart.UpdateQuantity(BoCart, changed.ProductID, changed.Amount + 1);
             PoCart = Converts.ConvertToPoCart(BoCart, PoCart);
-            //coll = new();
-            //PoCart.Items.Select(item =>
-            //{
-            //    coll.Add(item);
-            //    return item;
-            //}).ToList();
-            //CartListview.DataContext = coll;
-            //totalPrice.DataContext = PoCart.TotalPrice;
+            coll = new();
+            PoCart.Items.Select(item =>
+            {
+                coll.Add(item);
+                return item;
+            }).ToList();
+            CartListview.DataContext = coll;
+            totalPrice.DataContext = PoCart.TotalPrice;
         }
         catch (Exception ex)
         {
