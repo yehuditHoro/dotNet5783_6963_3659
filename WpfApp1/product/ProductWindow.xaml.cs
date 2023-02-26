@@ -86,7 +86,7 @@ public partial class ProductWindow : Window
             if (addOrUpdate.Content == "add")
             {
                 int? id = bl.product.AddProduct(product);
-                ProductForList pfl = ConvertProductForListToProduct(product);
+                ProductForList pfl = Converts.ConvertProductForListToProduct(product);
                 pfl.ID = (int)id;
                 productList?.Add(pfl);
                 this.Close();
@@ -136,13 +136,5 @@ public partial class ProductWindow : Window
         { MessageBox.Show(ex.Message); }
     }
 
-    ProductForList ConvertProductForListToProduct(Product product)
-    {
-        ProductForList p = new();
-        p.ID = product.ID;
-        p.Name = product.Name;
-        p.Price = product.Price;
-        p.Category = (eCategory)product.Category;
-        return p;
-    }
+  
 }

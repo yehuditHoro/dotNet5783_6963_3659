@@ -43,7 +43,10 @@ public partial class OrderWindow : Window
             order = bl.order.GetOrder((int)oId);
             if (user == "customer")
                 IsCustomer = false;
-            else IsCustomer = true;
+            else {
+                IsCustomer = true;
+                removeBtn.
+            }
             tupleContext = new Tuple<Order, bool>(order, IsCustomer);
             DataContext = tupleContext;
         }

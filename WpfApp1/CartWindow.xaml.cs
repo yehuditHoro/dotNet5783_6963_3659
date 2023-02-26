@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using PL.PO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,17 +25,21 @@ namespace PL;
 public partial class CartWindow : Window
 {
     private IBl bl;
-    private BO.Cart c;
+    private PO.Cart PoCart=new();
+    private BO.Cart BoCart=new();
 
     private ObservableCollection<BO.OrderItem> coll { get; set; }
+    Tuple<Array,ObservableCollection<BO.OrderItem>,PO.Cart> tupleContext { get; set; }
     public CartWindow(IBl BL, BO.Cart cart)
     {
         InitializeComponent();
         bl = BL;
-        c = cart;
-        coll = new ObservableCollection<BO.OrderItem>(c.Items);
-        CartListview.DataContext = coll;
-        totalPrice.DataContext = c.TotalPrice;
+        PoCart = Converts.ConvertToPoCart(cart, PoCart);
+        coll = new ObservableCollection<BO.OrderItem>(PoCart.Items);
+        tupleContext = new Tuple<Array, ObservableCollection<OrderItem>,PO.Cart>(BO.eCategory.GetValues(typeof(BO.eCategory)), coll,PoCart);
+        this.DataContext = tupleContext;
+        CartListview.DataContext =coll;
+        totalPrice.DataContext = PoCart.TotalPrice;
     }
 
     /// <summary>
@@ -46,7 +51,8 @@ public partial class CartWindow : Window
     {
         try
         {
-            bl.cart.MakeAnOrder(c, (Name.Text), (Email.Text), (Address.Text));
+            BoCart = Converts.ConvertToBoCart(PoCart);
+            bl.cart.MakeAnOrder(BoCart, (Name.Text), (Email.Text), (Address.Text));
             this.Close();
         }
         catch (Exception ex)
@@ -65,8 +71,13 @@ public partial class CartWindow : Window
         try
         {
             OrderItem changed = (OrderItem)((Button)sender).DataContext;
-            c=bl.cart.UpdateQuantity(c, changed.ProductID, 0);
+            BoCart = Converts.ConvertToBoCart(PoCart);
+            BoCart= bl.cart.UpdateQuantity(BoCart, changed.ProductID, 0);
+            PoCart = Converts.ConvertToPoCart(BoCart, PoCart);
             coll.Remove(changed);
+            CartListview.DataContext =coll;
+            totalPrice.DataContext = PoCart.TotalPrice;
+
         }
         catch (Exception ex)
         {
@@ -84,15 +95,17 @@ public partial class CartWindow : Window
         try
         {
             OrderItem changed = (OrderItem)((Button)sender).DataContext;
-            c=bl.cart.UpdateQuantity(c, changed.ProductID, changed.Amount + 1);
-            coll = new();
-            c.Items.Select(item =>
-            {
-                coll.Add(item);
-                return item;
-            }).ToList();
-            CartListview.DataContext = coll;
-            totalPrice.DataContext = c.TotalPrice;
+            BoCart=Converts.ConvertToBoCart(PoCart);
+            BoCart=bl.cart.UpdateQuantity(BoCart, changed.ProductID, changed.Amount + 1);
+            PoCart = Converts.ConvertToPoCart(BoCart, PoCart);
+            //coll = new();
+            //PoCart.Items.Select(item =>
+            //{
+            //    coll.Add(item);
+            //    return item;
+            //}).ToList();
+            //CartListview.DataContext = coll;
+            //totalPrice.DataContext = PoCart.TotalPrice;
         }
         catch (Exception ex)
         {
@@ -109,15 +122,17 @@ public partial class CartWindow : Window
         try
         {
             OrderItem changed = (OrderItem)((Button)sender).DataContext;
-            c=bl.cart.UpdateQuantity(c, changed.ProductID, changed.Amount - 1);
+            BoCart= Converts.ConvertToBoCart(PoCart);
+            BoCart = bl.cart.UpdateQuantity(BoCart, changed.ProductID, changed.Amount - 1);
+            PoCart = Converts.ConvertToPoCart(BoCart, PoCart);
             coll = new();
-            c.Items.Select(item =>
+            PoCart.Items.Select(item =>
             {
                 coll.Add(item);
                 return item;
             }).ToList();
             CartListview.DataContext = coll;
-            totalPrice.DataContext = c.TotalPrice;
+            totalPrice.DataContext = PoCart.TotalPrice;
 
         }
         catch (Exception ex)
@@ -125,4 +140,5 @@ public partial class CartWindow : Window
             MessageBox.Show(ex.Message);
         }
     }
+
 }

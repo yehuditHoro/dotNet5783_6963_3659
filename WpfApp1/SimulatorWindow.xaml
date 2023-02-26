@@ -10,15 +10,15 @@
         <TextBlock x:Name="timerTextBlock" Text="{Binding}" FontSize="25" TextAlignment="Center"  Foreground="#FF37F10E" Margin="20,28,476,350"/>
         <Button x:Name="stop" Content="Stop Simulation" HorizontalAlignment="Left" Margin="594,42,0,0" VerticalAlignment="Top" Background="{StaticResource myLinearGradientBrush}" Click="stop_Click"/>
         <Label Content="Order Id:" HorizontalAlignment="Left" Margin="298,123,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding Item1}" HorizontalAlignment="Left" Margin="388,123,0,0" VerticalAlignment="Top"/>
+        <TextBlock Text="{Binding Item1}" HorizontalAlignment="Left" Margin="388,123,0,0" VerticalAlignment="Top"/>
         <Label Content="Old Status:" HorizontalAlignment="Left" Margin="298,153,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding Item2}" HorizontalAlignment="Left" Margin="388,153,0,0" VerticalAlignment="Top"/>
+        <TextBlock Text="{Binding Item2}" HorizontalAlignment="Left" Margin="388,153,0,0" VerticalAlignment="Top"/>
         <Label Content="New Status:" HorizontalAlignment="Left" Margin="298,183,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding Item3}" HorizontalAlignment="Left" Margin="388,183,0,0" VerticalAlignment="Top"/>
+        <TextBlock Text="{Binding Item3}" HorizontalAlignment="Left" Margin="388,183,0,0" VerticalAlignment="Top"/>
         <Label Content="Process start time:" HorizontalAlignment="Left" Margin="298,213,0,0" VerticalAlignment="Top"/>
-        <Label Content="{Binding Item5}" HorizontalAlignment="Left" Margin="420,213,0,0" VerticalAlignment="Top"/>
+        <TextBlock Text="{Binding Item5}" HorizontalAlignment="Left" Margin="420,213,0,0" VerticalAlignment="Top"/>
         <Label Content="Estimated order processing time:" HorizontalAlignment="Left" Margin="298,243,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="timer" Content="{Binding Item4}" HorizontalAlignment="Left" Margin="492,243,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="timer" Text="{Binding Item4}" HorizontalAlignment="Left" Margin="492,243,0,0" VerticalAlignment="Top"/>
         <StatusBar Name="statusBar" Grid.Column="0" Grid.Row="5" VerticalAlignment="Bottom" Background="White">
             <StatusBarItem Height="80">
                 <TextBlock Width="72" FontSize="20">Status:</TextBlock>

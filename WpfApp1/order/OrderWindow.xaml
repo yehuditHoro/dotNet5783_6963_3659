@@ -42,21 +42,21 @@
                     <GridViewColumn Header="Remove">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Click="Remove" Visibility="{Binding Item2}" Width="25" Height="25" Margin="25,5,5,5">🚮</Button>
+                                <Button x:Name="removeBtn" Visibility="Visible" Click="Remove" Width="25" Height="25" Margin="25,5,5,5">🚮</Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="increase">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Click="Increase" Width="25" Height="25" Margin="25,5,5,5">+</Button>
+                                <Button x:Name="increaseBtn" Visibility="Visible" Click="Increase" Width="25" Height="25" Margin="25,5,5,5">+</Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn Header="decrease">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Click="Decrease" Width="25" Height="25" Margin="25,5,5,5">-</Button>
+                                <Button x:Name="decreaseBtn" Visibility="Visible" Click="Decrease" Width="25" Height="25" Margin="25,5,5,5">-</Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

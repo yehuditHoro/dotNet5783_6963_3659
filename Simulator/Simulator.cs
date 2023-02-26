@@ -18,6 +18,7 @@ public static class Simulator
 
     public static void NextOrderToChange()
     {
+        progreesChange(null, EventArgs.Empty);
         try
         {
             while (IsFinished)

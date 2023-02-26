@@ -13,13 +13,13 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Label Content="Customer Name:" HorizontalAlignment="Left" Margin="34,30,0,0" VerticalAlignment="Top" Width="110"/>
-        <TextBox x:Name="Name" Text="{Binding Path=CustomerName,Mode=TwoWay}" HorizontalAlignment="Left" Margin="177,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="Name" Text="{Binding Path=Item3.CustomerName,Mode=TwoWay}" HorizontalAlignment="Left" Margin="177,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Customer Email:" HorizontalAlignment="Left" Margin="34,60,0,0" VerticalAlignment="Top" Width="110"/>
-        <TextBox x:Name="Email" Text="{Binding Path=CustomerEmail,Mode=TwoWay}" HorizontalAlignment="Left" Margin="177,64,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="Email" Text="{Binding Path=Item3.CustomerEmail,Mode=TwoWay}" HorizontalAlignment="Left" Margin="177,64,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
         <Label Content="Customer Address:" HorizontalAlignment="Left" Margin="34,90,0,0" VerticalAlignment="Top" Width="110"/>
-        <TextBox x:Name="Address" Text="{Binding Path=CustomerAddress,Mode=TwoWay}" HorizontalAlignment="Left" Margin="177,95,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="Address" Text="{Binding Path=Item3.CustomerAddress,Mode=TwoWay}" HorizontalAlignment="Left" Margin="177,95,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
         <Label Content="Items:" HorizontalAlignment="Left" Margin="34,120,0,0" VerticalAlignment="Top" Width="110"/>
-        <ListView x:Name="CartListview" ItemsSource="{Binding}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView x:Name="CartListview" ItemsSource="{Binding}" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>

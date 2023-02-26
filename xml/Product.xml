@@ -2,12 +2,12 @@
 <products>
   <product ID="0" Name="cool dresses" Category="women" Price="110" InStock="598" />
   <product ID="1" Name="ffff  shirts" Category="women" Price="55" InStock="758" />
-  <product ID="2" Name="pants" Category="boys" Price="55" InStock="497" />
+  <product ID="2" Name="pants" Category="boys" Price="55" InStock="496" />
   <product ID="3" Name="cooo shoes" Category="girls" Price="139" InStock="649" />
-  <product ID="4" Name="skirts" Category="babies" Price="74" InStock="113" />
+  <product ID="4" Name="skirts" Category="babies" Price="74" InStock="112" />
   <product ID="5" Name="socks" Category="men" Price="10" InStock="116" />
   <product ID="6" Name="sweaters" Category="women" Price="275" InStock="437" />
-  <product ID="7" Name="tights" Category="women" Price="207" InStock="722" />
+  <product ID="7" Name="tights" Category="women" Price="207" InStock="721" />
   <product ID="8" Name="vests" Category="girls" Price="62" InStock="246" />
   <product ID="9" Name="coats" Category="babies" Price="366" InStock="744" />
   <product ID="10" Name="jacket" Category="women" Price="65" InStock="339" />

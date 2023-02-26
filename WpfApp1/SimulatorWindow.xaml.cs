@@ -53,7 +53,7 @@ public partial class SimulatorWindow : Window
         background.WorkerReportsProgress = true;
         background.WorkerSupportsCancellation = true;
         clock = DateTime.Now.ToString();
-        DataContext = clock;
+        timerTextBlock.DataContext = clock;
         isTimerRun = true;
         background.RunWorkerAsync();
     }
@@ -82,7 +82,7 @@ public partial class SimulatorWindow : Window
             return;
         OrderStatus os = e as OrderStatus;
         if (os == null) return;
-        tuple = new Tuple<int, BO.eOrderStatus, BO.eOrderStatus, int,string>(os.orderId, os.oldStatus, os.newStatus, os.time, DateTime.Now.ToString());
+        tuple = new Tuple<int, BO.eOrderStatus, BO.eOrderStatus, int,string>( os.orderId, os.oldStatus, os.newStatus, os.time, DateTime.Now.ToString());
         if (!CheckAccess())
         {
             Dispatcher.BeginInvoke(updateView, sender, e);
