@@ -13,7 +13,10 @@ internal class BlOrder : BlApi.Iorder
     public BlOrder()
     {
         dal = DalApi.Factory.Get();
-        allItems = dal.orderItem.ReadAll().ToList();
+        lock (dal)
+        {
+            allItems = dal.orderItem.ReadAll().ToList();
+        }
     }
 
     /// <summary>
@@ -26,7 +29,12 @@ internal class BlOrder : BlApi.Iorder
     {
         try
         {
-            IEnumerable<Dal.DO.Order>? getOrders = dal?.order.ReadAll();
+            IEnumerable<Dal.DO.Order>? getOrders;
+            lock (dal)
+            {
+                getOrders = dal?.order.ReadAll();
+            }
+
             if (getOrders?.Count() <= 0)
             {
                 throw new BlFailedToGet();
@@ -61,7 +69,7 @@ internal class BlOrder : BlApi.Iorder
         }
         catch (Exception e)
         {
-            throw new Exception( e.Message);
+            throw new Exception(e.Message);
         }
     }
 
@@ -78,7 +86,12 @@ internal class BlOrder : BlApi.Iorder
         {
             if (id > 0)
             {
-                Dal.DO.Order currOrder = dal.order.ReadSingle(x => x.ID == id);
+                Dal.DO.Order currOrder;
+                lock (dal)
+                {
+                    currOrder = dal.order.ReadSingle(x => x.ID == id);
+                }
+
                 BO.Order newO = new();
                 newO.ID = currOrder.ID;
                 newO.CustomerName = currOrder.CustomerName;
@@ -114,8 +127,11 @@ internal class BlOrder : BlApi.Iorder
     {
         try
         {
-            Dal.DO.Order currOrder = dal.order.ReadSingle(x => x.ID == id);
-            if (currOrder.ShipDate < DateTime.Now && currOrder.ShipDate!=null)
+            Dal.DO.Order currOrder;
+            lock (dal){
+                currOrder = dal.order.ReadSingle(x => x.ID == id);
+            };
+            if (currOrder.ShipDate < DateTime.Now && currOrder.ShipDate != null)
                 throw new BlFailedToUpdate();
             currOrder.ShipDate = DateTime.Now;
             dal.order.Update(currOrder);
@@ -152,8 +168,12 @@ internal class BlOrder : BlApi.Iorder
     {
         try
         {
-            Dal.DO.Order currOrder = dal.order.ReadSingle(x => x.ID == id);
-            if ((currOrder.DeliveryDate > DateTime.Now && currOrder.ShipDate < DateTime.Now) || currOrder.DeliveryDate==null)
+            Dal.DO.Order currOrder;
+            lock (dal)
+            {
+                currOrder= dal.order.ReadSingle(x => x.ID == id);
+            }
+            if ((currOrder.DeliveryDate > DateTime.Now && currOrder.ShipDate < DateTime.Now) || currOrder.DeliveryDate == null)
             {
                 currOrder.DeliveryDate = DateTime.Now;
                 dal.order.Update(currOrder);
@@ -191,7 +211,10 @@ internal class BlOrder : BlApi.Iorder
     {
         try
         {
-            Dal.DO.Order currOrder = dal.order.ReadSingle(x=>x.ID==id);
+            Dal.DO.Order currOrder;
+            lock (dal){
+                currOrder=dal.order.ReadSingle(x => x.ID == id);
+            } 
             BO.OrderTracking orderTracking = new BO.OrderTracking();
             orderTracking.ID = currOrder.ID;
             orderTracking.packageStatus?.Add(new Tuple<DateTime?, BO.eOrderStatus>(currOrder.OrderDate, BO.eOrderStatus.confirmed));
@@ -216,42 +239,47 @@ internal class BlOrder : BlApi.Iorder
 
     public int? ChooseOrder()  //מותר לגשת לביאל?
     {
-        try { 
-        DateTime minDate = DateTime.Now;
-        int? orderId = null;
-        List<OrderForList>? orderList = GetOrdersList().ToList();
-        orderList?.ForEach(o =>
+        try
         {
-            switch (o.Status)
+            DateTime minDate = DateTime.Now;
+            int? orderId = null;
+            List<OrderForList>? orderList = GetOrdersList().ToList();
+            orderList?.ForEach(o =>
             {
-                case BO.eOrderStatus.confirmed:
-                    if (GetOrder(o.ID).OrderDate < minDate)
-                    {
-                        orderId = o.ID;
-                        minDate = (DateTime)GetOrder(o.ID).OrderDate;
-                    }
-                    break;
-                case BO.eOrderStatus.shiped:
-                    if (GetOrder(o.ID).ShipDate < minDate)
-                    {
-                        orderId = o.ID;
-                        minDate = (DateTime)GetOrder(o.ID).ShipDate;
-                    }
-                    break;
-                default:
-                    break;
-            }
-        });
-        return orderId;
+                switch (o.Status)
+                {
+                    case BO.eOrderStatus.confirmed:
+                        if (GetOrder(o.ID).OrderDate < minDate)
+                        {
+                            orderId = o.ID;
+                            minDate = (DateTime)GetOrder(o.ID).OrderDate;
+                        }
+                        break;
+                    case BO.eOrderStatus.shiped:
+                        if (GetOrder(o.ID).ShipDate < minDate)
+                        {
+                            orderId = o.ID;
+                            minDate = (DateTime)GetOrder(o.ID).ShipDate;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            });
+            return orderId;
         }
-        catch( Exception  ex ) { throw new Exception(ex.Message); }
+        catch (Exception ex) { throw new Exception(ex.Message); }
     }
 
     public Order UpdateOrder(int o_id, int quantity)  //מותר לעדכן אם זה באוניה?
     {
         try
         {
-            Dal.DO.Order currOrder = dal.order.ReadSingle(x => x.ID == o_id);
+            Dal.DO.Order currOrder;
+            lock (dal)
+            {
+                currOrder = dal.order.ReadSingle(x => x.ID == o_id);
+            }
             if (currOrder.DeliveryDate == null && currOrder.ShipDate == null)
             {
                 BO.Order order = new BO.Order();
@@ -264,7 +292,7 @@ internal class BlOrder : BlApi.Iorder
                 order.CustomerAddress = currOrder.CustomerAddress;
                 order.CustomerEmail = currOrder.CustomerEmail;
                 (order.Items, order.TotalPrice) = convertDToB(allItems, currOrder.ID);
-                
+
                 return order;
             }
             throw new BlFailedToUpdate();

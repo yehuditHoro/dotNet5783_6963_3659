@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <products>
-  <product ID="0" Name="cool dresses" Category="women" Price="110" InStock="598" />
-  <product ID="1" Name="ffff  shirts" Category="women" Price="55" InStock="758" />
-  <product ID="2" Name="pants" Category="boys" Price="55" InStock="496" />
+  <product ID="0" Name="dresses" Category="women" Price="110" InStock="598" />
+  <product ID="1" Name="ffff  shirts" Category="women" Price="55" InStock="757" />
+  <product ID="2" Name="boys pants" Category="boys" Price="55" InStock="496" />
   <product ID="3" Name="cooo shoes" Category="girls" Price="139" InStock="649" />
-  <product ID="4" Name="skirts" Category="babies" Price="74" InStock="112" />
+  <product ID="4" Name="skirts" Category="babies" Price="74" InStock="111" />
   <product ID="5" Name="socks" Category="men" Price="10" InStock="116" />
   <product ID="6" Name="sweaters" Category="women" Price="275" InStock="437" />
   <product ID="7" Name="tights" Category="women" Price="207" InStock="721" />
@@ -16,5 +16,7 @@
   <product ID="16" Name="yoyo" Category="boys" Price="99" InStock="100" />
   <product ID="19" Name="babygro" Category="babies" Price="80" InStock="199" />
   <product ID="20" Name="mali" Category="women" Price="5" InStock="5" />
-  <product ID="21" Name="hhhh" Category="boys" Price="3" InStock="30" />
+  <product ID="21" Name="boots" Category="boys" Price="3" InStock="30" />
+  <product ID="22" Name="nnnnnn" Category="women" Price="30" InStock="30" />
+  <product ID="23" Name="kkkk" Category="girls" Price="4" InStock="4" />
 </products>

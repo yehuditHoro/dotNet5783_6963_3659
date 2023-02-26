@@ -14,7 +14,8 @@
             <Setter Property="Width" Value="107" />
             <Setter Property="Height" Value="40" />
         </Style>
-    </Window.Resources>
+    </Window.Resources>
+
     <Grid>
         <Button Content="Admin" HorizontalAlignment="Left" Margin="130,101,0,0" VerticalAlignment="Top"  Background="{StaticResource myLinearGradientBrush}"  Click="AdminScreen" Width="136"/>
         <Button Content="New Order" HorizontalAlignment="Left" Margin="130,250,0,0" VerticalAlignment="Top"  Background="{StaticResource myLinearGradientBrush}"  Click="CustomerScreen" Width="136"/>

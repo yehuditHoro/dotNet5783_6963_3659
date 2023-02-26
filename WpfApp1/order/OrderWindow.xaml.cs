@@ -45,7 +45,7 @@ public partial class OrderWindow : Window
                 IsCustomer = false;
             else {
                 IsCustomer = true;
-                removeBtn.
+                
             }
             tupleContext = new Tuple<Order, bool>(order, IsCustomer);
             DataContext = tupleContext;
@@ -144,24 +144,15 @@ public partial class OrderWindow : Window
     /// <param name="e"></param>
     private void Decrease(object sender, RoutedEventArgs e)
     {
-        //try
-        //{
-        //    OrderItem changed = (OrderItem)((Button)sender).DataContext;
-        //    c = bl.cart.UpdateQuantity(c, changed.ProductID, changed.Amount - 1);
-        //    coll = new();
-        //    c.Items.Select(item =>
-        //    {
-        //        coll.Add(item);
-        //        return item;
-        //    }).ToList();
-        //    CartListview.DataContext = coll;
-        //    totalPrice.DataContext = c.TotalPrice;
+    /*    try
+        {
+            bl.order.UpdateOrder
 
-        //}
-        //catch (Exception ex)
-        //{
-        //    MessageBox.Show(ex.Message);
-        //}
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }*/
     }
 }
 

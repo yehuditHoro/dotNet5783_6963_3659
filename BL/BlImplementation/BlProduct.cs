@@ -21,13 +21,22 @@ internal class BlProduct : BlApi.Iproduct
         {
             IEnumerable<Dal.DO.Product> getProducts;
             if (category == null)
-                getProducts = dal.product.ReadAll();
-            else { getProducts = dal.product.ReadAll(x => (BO.eCategory)x.Category == category); }
+                lock (dal)
+                {
+                    getProducts = dal.product.ReadAll();
+                }
+            else
+            {
+                lock (dal)
+                {
+                    getProducts = dal.product.ReadAll(x => (BO.eCategory)x.Category == category);
+                }
+            }
             if (getProducts.Count() <= 0)
             {
                 throw new BlFailedToGet();
             }
-            var boProducts = from Dal.DO.Product p in getProducts                   
+            var boProducts = from Dal.DO.Product p in getProducts
                              select new BO.ProductForList
                              {
                                  ID = p.ID,
@@ -60,9 +69,15 @@ internal class BlProduct : BlApi.Iproduct
         {
             IEnumerable<Dal.DO.Product> getCatalog;
             if (category == null)
-                getCatalog = dal.product.ReadAll();
+                lock (dal)
+                {
+                    getCatalog = dal.product.ReadAll();
+                }
             else
-                getCatalog= dal.product.ReadAll(x => (BO.eCategory)x.Category == category);
+                lock (dal)
+                {
+                    getCatalog = dal.product.ReadAll(x => (BO.eCategory)x.Category == category);
+                }
             if (getCatalog.Count() <= 0)
             {
                 throw new BlFailedToGet();
@@ -102,7 +117,11 @@ internal class BlProduct : BlApi.Iproduct
         {
             if (id >= 0)
             {
-                Dal.DO.Product p = dal.product.ReadSingle(x => x.ID == id);
+                Dal.DO.Product p;
+                lock (dal)
+                {
+                    p = dal.product.ReadSingle(x => x.ID == id);
+                }
                 BO.Product prod = new BO.Product();
                 prod.ID = p.ID;
                 prod.Name = p.Name;
@@ -134,9 +153,13 @@ internal class BlProduct : BlApi.Iproduct
     {
         try
         {
+            Dal.DO.Product p;
             if (id >= 0)
             {
-                Dal.DO.Product p = dal.product.ReadSingle(x => x.ID == id);
+                lock (dal)
+                {
+                    p= dal.product.ReadSingle(x => x.ID == id);
+                }
                 if (c.Items.Count() <= 0)
                     throw new BlNullException();
                 BO.ProductItem pi = (from oi in c.Items
@@ -190,8 +213,12 @@ internal class BlProduct : BlApi.Iproduct
             prod.Price = p.Price;
             prod.Category = (Dal.DO.eCategory)p.Category;
             prod.InStock = p.InStock;
-            int? id = dal?.product.Add(prod);
-            return id;
+            int? id; 
+                lock (dal)
+            {
+                id=dal?.product.Add(prod);
+            }
+                return id;
         }
         catch (DalApi.EntityDuplicateException)
         {
@@ -212,7 +239,11 @@ internal class BlProduct : BlApi.Iproduct
     {
         try
         {
-            IEnumerable<Dal.DO.OrderItem> AllOrderItems = dal.orderItem.ReadAll();
+            IEnumerable<Dal.DO.OrderItem> AllOrderItems;
+            lock (dal)
+            {
+                AllOrderItems = dal.orderItem.ReadAll();
+            }
             var allOrderItems = from item in AllOrderItems
                                 where item.ProductId == id
                                 orderby item.ID
@@ -255,7 +286,10 @@ internal class BlProduct : BlApi.Iproduct
             prod.Price = p.Price;
             prod.Category = (Dal.DO.eCategory)p.Category;
             prod.InStock = p.InStock;
-            dal?.product.Update(prod);
+            lock (dal)
+            {
+                dal?.product.Update(prod);
+            }
         }
         catch (DalApi.EntityNotFoundException)
         {

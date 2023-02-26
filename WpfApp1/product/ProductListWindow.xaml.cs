@@ -91,8 +91,8 @@ public partial class ProductListWindow : Window
         {
             productList = new ObservableCollection<ProductForList?>(bl.product.GetProducts());
             tupleContext = new Tuple<Array, ObservableCollection<ProductForList?>>(BO.eCategory.GetValues(typeof(BO.eCategory)), productList);
-            this.DataContext = tupleContext;
-            ProductsListview.DataContext = productList;
+            ProductsListview.DataContext = tupleContext;
+                
         }
         catch (Exception ex)
         { MessageBox.Show(ex.Message); }

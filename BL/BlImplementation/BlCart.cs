@@ -19,7 +19,11 @@ internal class BlCart : BlApi.Icart
     {
         try
         {
-            Dal.DO.Product prod = Dal.product.ReadSingle(x => x.ID == pId);
+            Dal.DO.Product prod;
+            lock (Dal)
+            {
+                prod = Dal.product.ReadSingle(x => x.ID == pId);
+            }
             if (c.Items.Count() != 0)
             {
                 BO.OrderItem? oi = c.Items.Find(x => x.ProductID == pId);
