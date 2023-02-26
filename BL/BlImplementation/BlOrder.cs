@@ -237,7 +237,7 @@ internal class BlOrder : BlApi.Iorder
         }
     }
 
-    public int? ChooseOrder()  //מותר לגשת לביאל?
+    public int? ChooseOrder()
     {
         try
         {
@@ -271,7 +271,7 @@ internal class BlOrder : BlApi.Iorder
         catch (Exception ex) { throw new Exception(ex.Message); }
     }
 
-    public Order UpdateOrder(int o_id, int quantity)  //מותר לעדכן אם זה באוניה?
+    public Order UpdateOrder(int o_id, int quantity)
     {
         try
         {
