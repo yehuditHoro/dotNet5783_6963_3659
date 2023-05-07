@@ -16,6 +16,7 @@ sealed internal class DalXml : IDal
     public Iproduct product { get; } = new Dal.DalProduct();
     public Iorder order { get; } = new Dal.DalOrder();
     public IorderItem orderItem { get; } = new Dal.DalOrderItem();
+    // initial arrayes for the xml pages.
 
     //readonly Random rand = new Random();
 

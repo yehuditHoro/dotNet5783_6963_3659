@@ -11,11 +11,14 @@ namespace PL
     public static class Converts
     {
 
-
+        /// <summary>
+        /// get ienumerable list and convert it into list of products.
+        /// </summary>
+        /// <param name="Blist"></param>
+        /// <param name="p"></param>
+        /// <returns></returns>
         public static ObservableCollection<ProductForList?> ConvertToProductList(IEnumerable<List<BO.ProductForList?>> Blist, ObservableCollection<ProductForList?> p)
         {
-            //ObservableCollection<ProductForList?> Plist = new();
-            //p.Clear();
 
             foreach (var group in Blist)
             {
@@ -26,7 +29,7 @@ namespace PL
             }
             return p;
         }
-
+ 
         public static BO.Cart ConvertToBoCart(PO.Cart Bp)
         {
             BO.Cart item = new()

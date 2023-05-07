@@ -5,7 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Dal;
-
+/// <summary>
+/// configuration for the id.
+/// </summary>
 internal class Config
 {
     public int productId { get; set; }

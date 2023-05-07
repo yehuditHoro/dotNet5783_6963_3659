@@ -1,4 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
+/*
+ // test to see check the bl.
 using BlApi;
 using BlImplementation;
 using dalList;
@@ -227,3 +229,4 @@ void CartOption()
             break;
     }
 }
+*/

@@ -15,7 +15,9 @@ public static class Simulator
         Thread thread = new Thread(NextOrderToChange);
         thread.Start();
     }
-
+    /// <summary>
+    /// search the next order to change and change it
+    /// </summary>
     public static void NextOrderToChange()
     {
         progreesChange(null, EventArgs.Empty);
@@ -52,7 +54,9 @@ public static class Simulator
             Console.WriteLine(ex.Message);
         }
     }
-
+    /// <summary>
+    /// stop the simulator and change the flag to false
+    /// </summary>
     public static void StopSimulation()
     {
         IsFinished = false;
