@@ -1,5 +1,4 @@
-﻿
-using Dal.DO;
+﻿using Dal.DO;
 namespace Dal;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
