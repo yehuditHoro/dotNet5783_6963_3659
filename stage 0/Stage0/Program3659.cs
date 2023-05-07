@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+/// add new friend to the conversation
 namespace Targil0
 {
     partial class Program

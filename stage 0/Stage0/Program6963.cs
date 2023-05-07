@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 //Console.WriteLine("Hello, World!");
-
+/// stage0 - get to know c#
 using System;
 namespace Targil0
 {
